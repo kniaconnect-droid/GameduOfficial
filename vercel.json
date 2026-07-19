@@ -1,9 +1,10 @@
 {
   "functions": {
-    "api/**/*.ts": {
+    "api/*.ts": {
       "maxDuration": 10
     },
     "api/games/*.ts": {
+      "maxDuration": 10,
       "includeFiles": "server/games/**"
     }
   }
