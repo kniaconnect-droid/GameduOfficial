@@ -3,7 +3,7 @@
     "api/**/*.ts": {
       "maxDuration": 10
     },
-    "api/games/[gameId].ts": {
+    "api/games/*.ts": {
       "includeFiles": "server/games/**"
     }
   }
