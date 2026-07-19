@@ -1,0 +1,42 @@
+rules_version = '2';
+
+// Deploy dengan: firebase deploy --only firestore:rules
+// (atau tempel manual di Firebase Console > Firestore Database > Rules)
+//
+// PENTING (fix bug keamanan): sebelumnya rule ini kasih izin user nulis BEBAS
+// ke dokumennya sendiri, termasuk field "premiumUntil". Karena status premium
+// beneran dicek dari field itu (lihat api/_lib/verifyAuth.ts), user yang ngerti
+// Firebase SDK bisa nulis premiumUntil sendiri lewat browser console dan
+// otomatis jadi premium tanpa bayar / tanpa admin.
+//
+// Sekarang: user cuma boleh BACA dokumennya sendiri. Untuk WRITE, field-field
+// yang berhubungan sama status premium (premiumUntil, lastActivatedAt,
+// lastActivatedMonths) diblokir total dari client -- cuma bisa diubah lewat
+// Admin SDK di server (api/admin-upgrade.ts), yang otomatis bypass rules ini.
+// Field profil biasa (name, studentName, studentAge, role) tetap boleh
+// diubah user sendiri.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+
+      allow create: if request.auth != null && request.auth.uid == userId
+        && !("premiumUntil" in request.resource.data)
+        && !("lastActivatedAt" in request.resource.data)
+        && !("lastActivatedMonths" in request.resource.data);
+
+      allow update: if request.auth != null && request.auth.uid == userId
+        && !request.resource.data.diff(resource.data).affectedKeys()
+              .hasAny(["premiumUntil", "lastActivatedAt", "lastActivatedMonths"]);
+
+      match /notes/{noteId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      match /history/{recordId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "GamEdu",
+  "description": "Platform E-Learning & Game Edukasi Anak Interaktif Berdasarkan Tahap Perkembangan Usia",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

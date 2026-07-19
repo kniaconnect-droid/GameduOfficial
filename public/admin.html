@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GamEdu — Admin Aktivasi Langganan</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f1f5f9; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;
+  }
+  .card {
+    width: 100%; max-width: 420px; background: #fff; border-radius: 24px; padding: 32px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08); border: 1px solid #e2e8f0;
+  }
+  h1 { font-size: 20px; margin: 0 0 4px; color: #0f172a; }
+  .sub { font-size: 13px; color: #64748b; margin: 0 0 24px; }
+  label { font-size: 12px; font-weight: 700; color: #334155; display: block; margin-bottom: 6px; }
+  input, select {
+    width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid #cbd5e1;
+    font-size: 14px; margin-bottom: 16px; outline: none;
+  }
+  input:focus, select:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+  button {
+    width: 100%; padding: 13px; border: none; border-radius: 12px; font-weight: 700; font-size: 14px;
+    cursor: pointer; transition: opacity 0.15s;
+  }
+  button:disabled { opacity: 0.6; cursor: not-allowed; }
+  .btn-primary { background: #2563eb; color: #fff; }
+  .btn-secondary { background: #f1f5f9; color: #334155; margin-top: 8px; }
+  .status { font-size: 13px; padding: 12px 14px; border-radius: 12px; margin-bottom: 16px; display: none; }
+  .status.show { display: block; }
+  .status.ok { background: #dcfce7; color: #166534; }
+  .status.err { background: #fee2e2; color: #991b1b; }
+  .status.info { background: #eff6ff; color: #1e40af; }
+  .hidden { display: none; }
+  .lookup-box { font-size: 13px; color: #475569; background: #f8fafc; border: 1px dashed #cbd5e1; padding: 12px 14px; border-radius: 12px; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div id="loginView">
+    <h1>🔐 Admin GamEdu</h1>
+    <p class="sub">Masukkan password admin buat lanjut.</p>
+    <label>Password Admin</label>
+    <input type="password" id="adminSecretInput" placeholder="Password admin">
+    <div id="loginStatus" class="status err"></div>
+    <button class="btn-primary" onclick="unlockAdmin()">Masuk</button>
+  </div>
+
+  <div id="panelView" class="hidden">
+    <h1>🎮 Aktivasi Langganan</h1>
+    <p class="sub">Isi email user yang sudah bayar, lalu pilih durasinya.</p>
+
+    <label>Email User</label>
+    <input type="email" id="emailInput" placeholder="user@email.com" onblur="checkStatus()">
+
+    <div id="lookupBox" class="lookup-box hidden"></div>
+
+    <label>Durasi Langganan</label>
+    <select id="monthsInput">
+      <option value="1">1 Bulan</option>
+      <option value="2">2 Bulan</option>
+      <option value="3">3 Bulan</option>
+      <option value="6">6 Bulan</option>
+      <option value="12">12 Bulan</option>
+    </select>
+
+    <div id="activateStatus" class="status"></div>
+
+    <button class="btn-primary" id="activateBtn" onclick="activate()">Aktifkan Langganan</button>
+    <button class="btn-secondary" onclick="lockAdmin()">Keluar</button>
+  </div>
+</div>
+
+<script>
+  let adminSecret = "";
+
+  function unlockAdmin() {
+    const val = document.getElementById("adminSecretInput").value.trim();
+    if (!val) return;
+    adminSecret = val;
+    document.getElementById("loginView").classList.add("hidden");
+    document.getElementById("panelView").classList.remove("hidden");
+  }
+
+  function lockAdmin() {
+    adminSecret = "";
+    document.getElementById("adminSecretInput").value = "";
+    document.getElementById("panelView").classList.add("hidden");
+    document.getElementById("loginView").classList.remove("hidden");
+  }
+
+  async function checkStatus() {
+    const email = document.getElementById("emailInput").value.trim();
+    const box = document.getElementById("lookupBox");
+    if (!email) { box.classList.add("hidden"); return; }
+
+    box.classList.remove("hidden");
+    box.textContent = "Mengecek status...";
+
+    try {
+      const res = await fetch("/api/admin-lookup?email=" + encodeURIComponent(email), {
+        headers: { "X-Admin-Secret": adminSecret }
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        if (res.status === 401) { alert("Password admin salah. Silakan masuk ulang."); lockAdmin(); return; }
+        box.textContent = "⚠️ " + (data.error || "User belum terdaftar.");
+        return;
+      }
+
+      box.textContent = data.isPremiumNow
+        ? "✅ Sudah Premium sampai " + data.premiumUntilLabel + " (aktivasi baru akan ditambahkan ke tanggal ini)"
+        : "ℹ️ Belum Premium / sudah expired.";
+    } catch (e) {
+      box.textContent = "Gagal mengecek status. Coba lagi.";
+    }
+  }
+
+  async function activate() {
+    const email = document.getElementById("emailInput").value.trim();
+    const months = document.getElementById("monthsInput").value;
+    const statusEl = document.getElementById("activateStatus");
+    const btn = document.getElementById("activateBtn");
+
+    if (!email) { alert("Isi email dulu."); return; }
+
+    btn.disabled = true;
+    btn.textContent = "Memproses...";
+    statusEl.className = "status";
+
+    try {
+      const res = await fetch("/api/admin-upgrade", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Admin-Secret": adminSecret },
+        body: JSON.stringify({ email, months: Number(months) })
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        if (res.status === 401) { alert("Password admin salah. Silakan masuk ulang."); lockAdmin(); return; }
+        statusEl.textContent = "❌ " + (data.error || "Gagal mengaktifkan.");
+        statusEl.className = "status err show";
+        return;
+      }
+
+      statusEl.textContent = "✅ Berhasil! " + data.email + " premium sampai " + data.premiumUntilLabel;
+      statusEl.className = "status ok show";
+      checkStatus();
+    } catch (e) {
+      statusEl.textContent = "Gagal menghubungi server. Coba lagi.";
+      statusEl.className = "status err show";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Aktifkan Langganan";
+    }
+  }
+</script>
+
+</body>
+</html>
