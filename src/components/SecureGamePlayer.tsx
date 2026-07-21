@@ -42,6 +42,21 @@ export default function SecureGamePlayer({
         headers: token ? { Authorization: `Bearer ${token}` } : {},
         cache: "no-store",
       });
+
+      // Kalau server error (mis. 500 karena env var Firebase belum diset di
+      // Vercel), jangan tampilkan HTML error mentahnya di dalam iframe --
+      // itu bisa kelihatan seperti game "aneh"/rusak. Tampilkan pesan yang
+      // jelas supaya gampang di-debug dan gak disalahartikan sebagai bug lock premium.
+      if (!res.ok) {
+        console.error(`[SecureGamePlayer] /api/games/${gameId} -> ${res.status}`);
+        setLoadError(
+          res.status === 500
+            ? "Server sedang bermasalah (500). Kemungkinan konfigurasi server belum lengkap. Coba lagi nanti atau hubungi admin."
+            : "Game gagal dimuat. Coba periksa koneksi internet lalu ulangi."
+        );
+        return;
+      }
+
       const html = await res.text();
       setGameHtml(html);
     } catch (err) {
