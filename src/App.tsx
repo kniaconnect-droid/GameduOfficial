@@ -323,7 +323,26 @@ export default function App() {
             <GameGallery
               age={selectedAge !== null ? selectedAge : 3}
               games={games}
-              onPlayGame={(gameId) => setActiveGameId(gameId)}
+              onPlayGame={(gameId) => {
+                const game = games.find((g) => g.id === gameId);
+                const isLocked = !!game?.premium && !user.isPremium;
+
+                // Lapis pertahanan tambahan di client: kalau game premium dan
+                // user belum premium, jangan buka SecureGamePlayer sama sekali.
+                // Arahkan langsung ke alur upgrade (daftar/login dulu kalau
+                // belum login, baru munculin PaymentModal). Proteksi utama
+                // tetap di server (api/games/[gameId].ts via verifyRequest),
+                // ini cuma bikin pengalaman usernya jelas & konsisten.
+                if (isLocked) {
+                  if (!authUser) {
+                    setShowAuthModal(true);
+                  }
+                  setShowPaymentModal(true);
+                  return;
+                }
+
+                setActiveGameId(gameId);
+              }}
               onBack={() => {
                 setCurrentPage(2);
               }}
