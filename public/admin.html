@@ -55,7 +55,7 @@
     <p class="sub">Isi email user yang sudah bayar, lalu pilih durasinya.</p>
 
     <label>Email User</label>
-    <input type="email" id="emailInput" placeholder="user@email.com" onblur="checkStatus()">
+    <input type="email" id="emailInput" placeholder="user@email.com" oninput="resetLookup()" onblur="checkStatus()">
 
     <div id="lookupBox" class="lookup-box hidden"></div>
 
@@ -97,6 +97,11 @@
     document.getElementById("loginView").classList.remove("hidden");
   }
 
+  function resetLookup() {
+    document.getElementById("lookupBox").classList.add("hidden");
+    document.getElementById("buyerWaInput").value = "";
+  }
+
   async function checkStatus() {
     const email = document.getElementById("emailInput").value.trim();
     const box = document.getElementById("lookupBox");
@@ -117,9 +122,19 @@
         return;
       }
 
-      box.textContent = data.isPremiumNow
+      const namaLabel = data.name ? data.name : "(nama belum diisi)";
+      const waLabel = data.whatsapp ? data.whatsapp : "(WA belum diisi)";
+      box.textContent = namaLabel + " · WA: " + waLabel + " — " + (data.isPremiumNow
         ? "✅ Sudah Premium sampai " + data.premiumUntilLabel + " (aktivasi baru akan ditambahkan ke tanggal ini)"
-        : "ℹ️ Belum Premium / sudah expired.";
+        : "ℹ️ Belum Premium / sudah expired.");
+
+      // Auto-isi nomor WA pembeli dari akun yang terdaftar, biar admin gak
+      // perlu ketik manual lagi. Kalau admin udah sempat isi manual duluan,
+      // jangan ditimpa.
+      const buyerWaInput = document.getElementById("buyerWaInput");
+      if (data.whatsapp && !buyerWaInput.value.trim()) {
+        buyerWaInput.value = data.whatsapp;
+      }
     } catch (e) {
       box.textContent = "Gagal mengecek status. Coba lagi.";
     }
