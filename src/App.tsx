@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import SecureGamePlayer from "./components/SecureGamePlayer";
 import PaymentModal from "./components/PaymentModal";
 import AuthModal from "./components/AuthModal";
+import PremiumStatusBanner from "./components/PremiumStatusBanner";
 
 import { UserProfile, CustomNote, Game } from "./types";
 import { useAuth } from "./lib/useAuth";
@@ -48,6 +49,9 @@ export default function App() {
   const [activeGameId, setActiveGameId] = useState<string | null>(null);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  // Banner welcoming + reminder expired buat member Premium, muncul otomatis
+  // habis login / habis profil ke-load kalau statusnya masih Premium.
+  const [showPremiumBanner, setShowPremiumBanner] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1); // Page 1: Home, Page 2: Choose Age, Page 3: Game Gallery
 
   // List of all games available on the server (all moved to Age 3 as requested)
@@ -98,6 +102,9 @@ export default function App() {
       .then((data) => {
         setUser(data.user);
         setCustomNotes(data.customNotes);
+        if (data.user?.isPremium && data.user?.premiumUntil) {
+          setShowPremiumBanner(true);
+        }
       })
       .catch((err) => {
         console.warn("[GamEdu] Menggunakan data lokal (Fallback):", err);
@@ -279,6 +286,16 @@ export default function App() {
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900 antialiased selection:bg-blue-100 selection:text-blue-900 flex flex-col justify-between">
       <div>
+        {/* WELCOME + REMINDER EXPIRED BUAT MEMBER PREMIUM (muncul saat login) */}
+        {showPremiumBanner && user.isPremium && user.premiumUntil && (
+          <PremiumStatusBanner
+            name={user.name}
+            premiumUntil={user.premiumUntil}
+            userEmail={authUser?.email}
+            onClose={() => setShowPremiumBanner(false)}
+          />
+        )}
+
         <Navbar
           user={user}
           isLoggedIn={!!authUser}

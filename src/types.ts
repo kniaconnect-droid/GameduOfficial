@@ -20,6 +20,9 @@ export interface UserProfile {
   name: string;
   role: "parent" | "teacher" | "therapist";
   isPremium: boolean;
+  // Timestamp (ms) kapan langganan premium berakhir. Dipakai buat nampilin
+  // teks welcoming + reminder expired di PremiumStatusBanner.
+  premiumUntil?: number | null;
   studentName: string;
   studentAge: number;
   history: GameRecord[];
