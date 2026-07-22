@@ -44,12 +44,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   if (req.method === "POST") {
-    const { name, studentName, studentAge, role } = req.body || {};
+    const { name, studentName, studentAge, role, whatsapp } = req.body || {};
     const update: Record<string, unknown> = {};
     if (name) update.name = name;
     if (studentAge) update.studentAge = Number(studentAge);
     if (studentName) update.studentName = studentName;
     if (role) update.role = role;
+    if (whatsapp) update.whatsapp = String(whatsapp).replace(/[^0-9]/g, "");
 
     await userRef.set(update, { merge: true });
     const snap = await userRef.get();

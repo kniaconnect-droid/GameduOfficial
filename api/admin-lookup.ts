@@ -31,9 +31,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const snap = await db.collection("users").doc(targetUser.uid).get();
   const premiumUntil = (snap.data()?.premiumUntil as number | undefined) ?? null;
   const isPremiumNow = premiumUntil !== null && premiumUntil > Date.now();
+  const whatsapp = (snap.data()?.whatsapp as string | undefined) ?? null;
+  const name = (snap.data()?.name as string | undefined) ?? null;
 
   return res.status(200).json({
     email: targetUser.email,
+    name,
+    whatsapp,
     isPremiumNow,
     premiumUntil,
     premiumUntilLabel: premiumUntil
