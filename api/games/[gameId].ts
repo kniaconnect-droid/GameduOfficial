@@ -9,8 +9,12 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import fs from "fs";
 import path from "path";
-import { verifyRequest } from "../_lib/verifyAuth.js";
 import { findGame } from "../_lib/gamesCatalog.js";
+// verifyRequest (dan Firebase Admin SDK yang berat buat di-init) sengaja
+// di-import DINAMIS di bawah, cuma pas game-nya premium. Static import di sini
+// bikin Firebase Admin ke-init di SETIAP cold start function ini -- termasuk
+// buat game gratis yang sama sekali gak butuh Firebase. Ini penyumbang utama
+// loading lambat, apalagi kalau game gratis makin banyak ke depannya.
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "GET") {
@@ -24,10 +28,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(404).send("<h2>Game tidak ditemukan</h2>");
   }
 
-  // Auth opsional buat game gratis (biar anak bisa langsung main tanpa login),
-  // tapi WAJIB buat game premium.
-  const auth = await verifyRequest(req);
-  const isPremiumUser = auth?.premium === true;
+  // Auth opsional buat game gratis (biar anak bisa langsung main tanpa login,
+  // dan tanpa nunggu Firebase Admin ke-init sama sekali), tapi WAJIB buat game
+  // premium.
+  let isPremiumUser = false;
+  if (game.premium) {
+    const { verifyRequest } = await import("../_lib/verifyAuth.js");
+    const auth = await verifyRequest(req);
+    isPremiumUser = auth?.premium === true;
+  }
 
   if (game.premium && !isPremiumUser) {
     res.setHeader("Content-Type", "text/html");
