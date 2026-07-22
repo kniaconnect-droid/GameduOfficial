@@ -16,6 +16,7 @@ import { useAuth } from "./lib/useAuth";
 // Import generated imagery
 import berburuAngkaCover from "./assets/images/game_berburu_angka_cover_1783908422344.jpg";
 import susunKataCover from "./assets/images/game_susun_kata_cover_1783908434702.jpg";
+import berhitungCeriaCover from "./assets/images/game_berhitung_ceria_cover.jpg";
 
 // Profil "tamu" dipakai selama user belum login, supaya Homepage, pilih usia,
 // dan game trial tetap bisa diakses tanpa perlu daftar/login dulu. Login cuma
@@ -66,6 +67,14 @@ export default function App() {
       premium: true,
       description: "Asah kemampuan mengeja kosa kata anatomi tubuh dasar (mata, mulut, hidung, telinga) dengan menyusun huruf-huruf abjad interaktif yang ceria.",
       coverImage: susunKataCover
+    },
+    {
+      id: "berhitung_ceria",
+      name: "Berhitung Ceria",
+      ageRange: "3 Tahun",
+      premium: true,
+      description: "Cocokkan angka 1–5 dengan jumlah benda pada gambar asli yang ceria. Melatih pengenalan angka awal dan konsentrasi anak lewat 5 soal interaktif.",
+      coverImage: berhitungCeriaCover
     }
   ];
 
