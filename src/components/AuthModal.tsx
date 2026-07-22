@@ -16,8 +16,10 @@ interface AuthModalProps {
 // beneran butuh akun: mau lanjut ke Premium, atau klik "Masuk" di navbar
 // (misalnya member lama yang sudah diaktifin admin, mau login lagi).
 export default function AuthModal({ onClose, contextMessage, initialMode = "register" }: AuthModalProps) {
-  const { register, login } = useAuth();
+  const { register, login, getIdToken } = useAuth();
   const [mode, setMode] = useState<"login" | "register">(initialMode);
+  const [name, setName] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -30,6 +32,23 @@ export default function AuthModal({ onClose, contextMessage, initialMode = "regi
     try {
       if (mode === "register") {
         await register(email, password);
+        // Simpan nama & nomor WhatsApp ke profil user begitu akun dibuat.
+        // Nama dipakai di teks welcoming (PremiumStatusBanner), nomor
+        // WhatsApp dipakai admin buat auto-notif pas aktifin langganan
+        // (lihat api/admin-lookup.ts & public/admin.html).
+        try {
+          const token = await getIdToken();
+          if (token) {
+            await fetch("/api/user-profile", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+              body: JSON.stringify({ name, whatsapp })
+            });
+          }
+        } catch {
+          // Kalau gagal simpan nama/WA, biarin aja -- akun tetap kebuat,
+          // user masih bisa login normal. Nama/WA bisa dilengkapi lagi nanti.
+        }
       } else {
         await login(email, password);
       }
@@ -65,6 +84,35 @@ export default function AuthModal({ onClose, contextMessage, initialMode = "regi
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-3">
+          {mode === "register" && (
+            <>
+              <div>
+                <label className="text-xs font-bold text-slate-600 block mb-1">Nama</label>
+                <input
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="Nama Anda"
+                />
+              </div>
+              <div>
+                <label className="text-xs font-bold text-slate-600 block mb-1">No. WhatsApp</label>
+                <input
+                  type="tel"
+                  required
+                  value={whatsapp}
+                  onChange={(e) => setWhatsapp(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="Contoh: 6281234567890"
+                />
+                <p className="text-[10px] text-slate-400 mt-1">
+                  Dipakai admin buat notifikasi WhatsApp otomatis pas paket Premium diaktifkan.
+                </p>
+              </div>
+            </>
+          )}
           <div>
             <label className="text-xs font-bold text-slate-600 block mb-1">Email</label>
             <input
