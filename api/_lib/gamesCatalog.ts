@@ -28,6 +28,12 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     ageRange: "4-5 Tahun",
     premium: true,
   },
+  {
+    id: "berhitung_ceria",
+    name: "Berhitung Ceria",
+    ageRange: "3 Tahun",
+    premium: true,
+  },
   // TODO: tambahkan 48 game lainnya di sini, format sama seperti di atas.
 ];
 
