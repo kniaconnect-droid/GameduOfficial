@@ -23,6 +23,9 @@ export interface UserProfile {
   // Timestamp (ms) kapan langganan premium berakhir. Dipakai buat nampilin
   // teks welcoming + reminder expired di PremiumStatusBanner.
   premiumUntil?: number | null;
+  // Nomor WhatsApp user, diisi pas daftar. Dipakai admin buat auto-notif
+  // WA pas aktifin langganan (lihat api/admin-lookup.ts & admin.html).
+  whatsapp?: string;
   studentName: string;
   studentAge: number;
   history: GameRecord[];
