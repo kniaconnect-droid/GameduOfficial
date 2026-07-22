@@ -68,9 +68,13 @@
       <option value="12">12 Bulan</option>
     </select>
 
+    <label>No. WhatsApp Pembeli <span style="font-weight:400;color:#94a3b8;">(opsional, buat notifikasi otomatis)</span></label>
+    <input type="tel" id="buyerWaInput" placeholder="Contoh: 6281234567890">
+
     <div id="activateStatus" class="status"></div>
 
     <button class="btn-primary" id="activateBtn" onclick="activate()">Aktifkan Langganan</button>
+    <button class="btn-secondary" id="sendWaBtn" onclick="sendWaManually()" style="display:none;">📲 Kirim Ulang Notif WA ke Pembeli</button>
     <button class="btn-secondary" onclick="lockAdmin()">Keluar</button>
   </div>
 </div>
@@ -121,17 +125,40 @@
     }
   }
 
+  const MONTHS_LABEL = { "1": "1 Bulan", "2": "2 Bulan", "3": "3 Bulan", "6": "6 Bulan", "12": "12 Bulan" };
+
+  // Nomor WA pembeli & durasi terakhir yang berhasil diaktifkan, disimpan
+  // sementara biar tombol "Kirim Ulang Notif WA" bisa dipakai kalau
+  // popup wa.me sempat keblokir browser.
+  let lastBuyerWa = "";
+  let lastMonthsLabel = "";
+  let lastPremiumUntilLabel = "";
+
+  function buildBuyerWaLink(waNumber, monthsLabel, premiumUntilLabel) {
+    const cleanNumber = waNumber.replace(/[^0-9]/g, "");
+    const msg = "Halo ka, Paket " + monthsLabel + " sudah aktif. Berlaku sampai " + premiumUntilLabel + ". Selamat belajar bareng GamEdu ya! 🎓✨";
+    return "https://wa.me/" + cleanNumber + "?text=" + encodeURIComponent(msg);
+  }
+
+  function sendWaManually() {
+    if (!lastBuyerWa) return;
+    window.open(buildBuyerWaLink(lastBuyerWa, lastMonthsLabel, lastPremiumUntilLabel), "_blank");
+  }
+
   async function activate() {
     const email = document.getElementById("emailInput").value.trim();
     const months = document.getElementById("monthsInput").value;
+    const buyerWa = document.getElementById("buyerWaInput").value.trim();
     const statusEl = document.getElementById("activateStatus");
     const btn = document.getElementById("activateBtn");
+    const sendWaBtn = document.getElementById("sendWaBtn");
 
     if (!email) { alert("Isi email dulu."); return; }
 
     btn.disabled = true;
     btn.textContent = "Memproses...";
     statusEl.className = "status";
+    sendWaBtn.style.display = "none";
 
     try {
       const res = await fetch("/api/admin-upgrade", {
@@ -150,6 +177,17 @@
 
       statusEl.textContent = "✅ Berhasil! " + data.email + " premium sampai " + data.premiumUntilLabel;
       statusEl.className = "status ok show";
+
+      // Otomatis arahkan ke WhatsApp pembeli kalau nomornya diisi.
+      if (buyerWa) {
+        const monthsLabel = MONTHS_LABEL[months] || (months + " Bulan");
+        lastBuyerWa = buyerWa;
+        lastMonthsLabel = monthsLabel;
+        lastPremiumUntilLabel = data.premiumUntilLabel;
+        sendWaBtn.style.display = "block";
+        window.open(buildBuyerWaLink(buyerWa, monthsLabel, data.premiumUntilLabel), "_blank");
+      }
+
       checkStatus();
     } catch (e) {
       statusEl.textContent = "Gagal menghubungi server. Coba lagi.";
