@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>📚 Berhitung Ceria — Belajar Mengenal Angka 1–5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   BERHITUNG CERIA — STYLE
+   Palet pastel ceria untuk anak PAUD, dengan tipografi bulat & lembut,
+   ilustrasi CSS (matahari, lebah, pegunungan, bunga) dan animasi lembut.
+   ========================================================================== */
+
+:root {
+  /* Palet warna */
+  --sky-top: #6EC3EA;
+  --sky-bottom: #CDEEFB;
+  --sun-color: #FFD34D;
+  --sun-glow: #FFEA9E;
+  --grass-back: #8ED97A;
+  --grass-front: #6FCB57;
+  --grass-dark: #4FAE3E;
+  --pink: #FF9AC1;
+  --pink-deep: #FF6FA0;
+  --purple: #9B7BE0;
+  --purple-deep: #7E5CD9;
+  --cream: #FFFDF6;
+  --text-dark: #3B3358;
+  --text-soft: #6C6289;
+  --success: #4CAF6D;
+  --error: #FF6B6B;
+  --shadow-soft: 0 12px 28px rgba(59, 51, 88, 0.16);
+  --shadow-btn: 0 8px 0 rgba(0,0,0,0.12);
+  --radius-lg: 32px;
+  --radius-md: 22px;
+  --radius-sm: 14px;
+  --font-display: "Baloo 2", "Nunito", sans-serif;
+  --font-body: "Nunito", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  color: var(--text-dark);
+  background: var(--sky-bottom);
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  background: none;
+}
+
+/* ============================== BACKGROUND SCENE ============================== */
+.scene {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 70%);
+}
+
+.sun {
+  position: absolute;
+  top: 6%;
+  right: 8%;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #FFF3C4, var(--sun-color) 65%);
+  box-shadow: 0 0 0 18px rgba(255, 211, 77, 0.28), 0 0 60px 10px var(--sun-glow);
+  animation: sun-pulse 4s ease-in-out infinite;
+}
+.sun-face { position: relative; width: 100%; height: 100%; }
+.sun-eye {
+  position: absolute; top: 42%; width: 8px; height: 12px;
+  background: #B8791F; border-radius: 50%;
+}
+.sun-eye.left { left: 34%; }
+.sun-eye.right { right: 34%; }
+.sun-smile {
+  position: absolute; bottom: 30%; left: 50%; width: 26px; height: 13px;
+  border-bottom: 5px solid #B8791F; border-radius: 0 0 20px 20px;
+  transform: translateX(-50%);
+}
+@keyframes sun-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+.rainbow {
+  position: absolute;
+  top: 4%;
+  left: 50%;
+  width: min(600px, 80vw);
+  transform: translateX(-50%);
+  opacity: 0.85;
+  animation: rainbow-float 8s ease-in-out infinite;
+}
+.rainbow svg { width: 100%; height: auto; display: block; }
+@keyframes rainbow-float {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+.cloud {
+  position: absolute;
+  font-size: 46px;
+  filter: drop-shadow(0 6px 6px rgba(0,0,0,0.06));
+  animation: drift 30s linear infinite;
+  opacity: 0.9;
+}
+.cloud-1 { top: 14%; left: -10%; font-size: 60px; animation-duration: 38s; }
+.cloud-2 { top: 26%; left: -20%; font-size: 40px; animation-duration: 26s; animation-delay: -8s; }
+.cloud-3 { top: 8%; left: -30%; font-size: 34px; animation-duration: 44s; animation-delay: -18s; }
+@keyframes drift {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(140vw); }
+}
+
+.butterfly {
+  position: absolute;
+  font-size: 26px;
+  animation: butterfly-flit 9s ease-in-out infinite;
+}
+.bfly-1 { top: 40%; left: 12%; animation-delay: 0s; }
+.bfly-2 { top: 55%; right: 15%; animation-delay: -3s; }
+.bfly-3 { top: 68%; left: 30%; animation-delay: -6s; }
+@keyframes butterfly-flit {
+  0%, 100% { transform: translate(0,0) rotate(0deg); }
+  25% { transform: translate(20px, -18px) rotate(8deg); }
+  50% { transform: translate(0, -30px) rotate(-6deg); }
+  75% { transform: translate(-18px, -10px) rotate(4deg); }
+}
+
+.particles {
+  position: absolute;
+  inset: 0;
+}
+.particle {
+  position: absolute;
+  bottom: -20px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  animation: particle-rise linear infinite;
+}
+@keyframes particle-rise {
+  0% { transform: translateY(0) scale(0.6); opacity: 0; }
+  10% { opacity: 0.9; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-110vh) scale(1.1); opacity: 0; }
+}
+
+.ground {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 34%;
+}
+.hill {
+  position: absolute;
+  bottom: -10%;
+  left: -10%;
+  width: 120%;
+  height: 100%;
+  border-radius: 50% 50% 0 0 / 60% 60% 0 0;
+}
+.hill-back { background: var(--grass-back); bottom: -6%; opacity: 0.9; }
+.hill-front { background: var(--grass-front); bottom: -14%; }
+.tree { position: absolute; font-size: 54px; bottom: 8%; animation: sway 6s ease-in-out infinite; }
+.tree-1 { left: 4%; animation-delay: 0s; }
+.tree-2 { right: 6%; font-size: 46px; animation-delay: -2s; }
+.flower { position: absolute; font-size: 28px; bottom: 2%; animation: sway 5s ease-in-out infinite; }
+.flower-1 { left: 18%; animation-delay: -1s; }
+.flower-2 { left: 34%; bottom: 4%; font-size: 22px; animation-delay: -2.5s; }
+.flower-3 { left: 55%; animation-delay: -0.5s; }
+.flower-4 { left: 70%; bottom: 5%; font-size: 20px; animation-delay: -3s; }
+.flower-5 { left: 88%; animation-delay: -1.8s; }
+@keyframes sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+/* ============================== SCREENS ============================== */
+.screen {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(10px, 3vh, 24px) clamp(12px, 4vw, 24px);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+.screen.active { display: flex; }
+
+/* ============================== OPENING SCREEN ============================== */
+.opening-card {
+  background: rgba(255, 253, 246, 0.92);
+  backdrop-filter: blur(6px);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: clamp(18px, 4vh, 40px) clamp(20px, 5vw, 36px) clamp(16px, 3.5vh, 34px);
+  max-width: 460px;
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  text-align: center;
+  animation: card-pop 0.6s cubic-bezier(.3,1.4,.5,1);
+  border: 4px solid #fff;
+  margin: auto;
+}
+@keyframes card-pop {
+  0% { opacity: 0; transform: scale(0.85) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.badge {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--purple-deep);
+  margin: 0 0 6px;
+  letter-spacing: 0.5px;
+}
+.opening-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.4rem, 5vh, 2.1rem);
+  line-height: 1.15;
+  color: var(--text-dark);
+  margin: 0 0 clamp(6px, 1.5vh, 10px);
+}
+.opening-subtitle {
+  font-size: clamp(0.9rem, 2.4vh, 1.05rem);
+  font-weight: 700;
+  color: var(--text-soft);
+  margin: 0 0 clamp(10px, 2vh, 18px);
+}
+
+/* Hero showcase — menampilkan aset gambar hitung asli (bukan ikon CSS)
+   sebagai kartu-kartu kecil yang tersebar rapi di layar pembuka. */
+.hero-showcase {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0;
+  margin: 4px 0 10px;
+  height: clamp(70px, 14vh, 108px);
+}
+.asset-card {
+  position: relative;
+  width: clamp(50px, 10vh, 76px);
+  height: clamp(50px, 10vh, 76px);
+  background: #fff;
+  border-radius: 18px;
+  border: 3px solid #fff;
+  box-shadow: 0 10px 18px rgba(59,51,88,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 -10px;
+  animation: asset-bob 3.4s ease-in-out infinite;
+  transition: transform 0.2s ease;
+}
+.asset-card:hover { transform: translateY(-6px) scale(1.05) !important; z-index: 10; }
+.asset-card img {
+  width: 82%;
+  height: 82%;
+  object-fit: contain;
+  border-radius: 12px;
+}
+.asset-badge {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #fff;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  border: 2px solid #fff;
+}
+.ac-1 { transform: rotate(-14deg) translateY(6px); z-index: 1; }
+.ac-1 .asset-badge { background: var(--pink-deep); }
+.ac-2 { transform: rotate(-7deg) translateY(-2px); z-index: 2; }
+.ac-2 .asset-badge { background: #F2A93B; }
+.ac-3 { transform: rotate(0deg) translateY(-8px); z-index: 3; width: clamp(56px, 11vh, 84px); height: clamp(56px, 11vh, 84px); }
+.ac-3 .asset-badge { background: var(--success); }
+.ac-4 { transform: rotate(7deg) translateY(-2px); z-index: 2; }
+.ac-4 .asset-badge { background: #4AA9D9; }
+.ac-5 { transform: rotate(14deg) translateY(6px); z-index: 1; }
+.ac-5 .asset-badge { background: var(--purple-deep); }
+.asset-card.ac-1 { animation-delay: -0.2s; }
+.asset-card.ac-2 { animation-delay: -1.1s; }
+.asset-card.ac-3 { animation-delay: -0.6s; }
+.asset-card.ac-4 { animation-delay: -1.8s; }
+.asset-card.ac-5 { animation-delay: -0.9s; }
+@keyframes asset-bob {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: -8px; }
+}
+.hero-caption {
+  font-size: clamp(0.8rem, 2.1vh, 0.92rem);
+  font-weight: 700;
+  color: var(--text-soft);
+  margin: 0 0 clamp(10px, 2vh, 18px);
+}
+
+.loading-note {
+  margin-top: clamp(8px, 2vh, 16px);
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  min-height: 1.2em;
+  transition: opacity 0.4s ease;
+}
+.loading-note.hidden { opacity: 0; }
+
+/* ============================== BUTTONS ============================== */
+.btn {
+  font-family: var(--font-display);
+  font-weight: 700;
+  border-radius: 999px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+}
+.btn:active { transform: translateY(4px); box-shadow: none !important; }
+.btn:focus-visible { outline: 3px solid var(--purple); outline-offset: 3px; }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; filter: grayscale(0.2); }
+.btn:disabled:hover { transform: none; }
+
+.btn-primary {
+  background: linear-gradient(180deg, #FFB05C, #FF8A3D);
+  color: #fff;
+  box-shadow: 0 6px 0 #E06A1F, 0 10px 20px rgba(224,106,31,0.3);
+}
+.btn-primary:hover { filter: brightness(1.06); transform: translateY(-2px); }
+
+.btn-secondary {
+  background: linear-gradient(180deg, #B7A6F0, var(--purple));
+  color: #fff;
+  box-shadow: 0 6px 0 var(--purple-deep), 0 10px 20px rgba(126,92,217,0.3);
+}
+.btn-secondary:hover { filter: brightness(1.06); transform: translateY(-2px); }
+
+.btn-large {
+  font-size: clamp(1rem, 2.6vh, 1.2rem);
+  padding: clamp(12px, 2.4vh, 16px) clamp(22px, 5vw, 34px);
+  min-height: clamp(46px, 8vh, 56px);
+}
+
+.btn-pill {
+  background: #fff;
+  color: var(--text-dark);
+  font-size: 0.95rem;
+  padding: 10px 18px;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.08), 0 6px 12px rgba(0,0,0,0.08);
+  border: 2px solid #F0ECFF;
+}
+.btn-pill:hover { transform: translateY(-2px); }
+.btn-pill[aria-pressed="false"] { opacity: 0.55; }
+
+.opening-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+@keyframes bounce-in {
+  0% { transform: scale(0.9); }
+  40% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+.btn-start-anim { animation: bounce-in 0.5s ease; }
+
+/* ============================== GAME SCREEN ============================== */
+#game-screen {
+  max-width: 640px;
+  width: 100%;
+  margin: auto;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.game-top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: clamp(8px, 2vh, 18px);
+}
+
+.icon-btn {
+  width: clamp(36px, 7vh, 48px); height: clamp(36px, 7vh, 48px);
+  border-radius: 50%;
+  background: #fff;
+  font-size: 1.3rem;
+  box-shadow: var(--shadow-soft);
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+.icon-btn:hover { transform: scale(1.08); }
+.icon-btn[aria-pressed="false"] { opacity: 0.5; }
+
+.hud-center { flex: 1; text-align: center; }
+.question-counter {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+}
+
+.progress-track {
+  position: relative;
+  height: 16px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 999px;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.12);
+  overflow: visible;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #FF9AA2, #FFD98A, #B4EFC9, #A6DDF0, #C6B4F0);
+  transition: width 0.6s cubic-bezier(.4,1.4,.4,1);
+}
+.progress-mascot {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-50%, -50%);
+  font-size: 1.4rem;
+  transition: left 0.6s cubic-bezier(.4,1.4,.4,1);
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.25));
+}
+
+.score-pill {
+  background: #fff;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-dark);
+  box-shadow: var(--shadow-soft);
+  flex-shrink: 0;
+}
+
+.question-card {
+  background: rgba(255,253,246,0.94);
+  border-radius: var(--radius-lg);
+  padding: clamp(12px, 2.6vh, 22px) clamp(14px, 3vw, 20px) clamp(14px, 3vh, 26px);
+  text-align: center;
+  width: 100%;
+  box-shadow: var(--shadow-soft);
+  border: 4px solid #fff;
+  margin-bottom: clamp(10px, 2.6vh, 22px);
+  animation: card-pop 0.5s cubic-bezier(.3,1.4,.5,1);
+}
+.question-prompt {
+  font-size: clamp(0.9rem, 2.4vh, 1.05rem);
+  font-weight: 700;
+  color: var(--text-soft);
+  margin: 0 0 6px;
+}
+.target-number {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.6rem, 8vh, 5rem);
+  line-height: 1;
+  color: var(--purple-deep);
+  text-shadow: 3px 3px 0 rgba(255,255,255,0.8);
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: clamp(10px, 2.2vh, 18px);
+  width: 100%;
+  max-width: min(380px, 92vw, 46vh);
+  margin: 0 auto;
+}
+@media (min-width: 520px) {
+  .cards-grid { max-width: min(460px, 92vw, 50vh); gap: clamp(10px, 2.2vh, 22px); }
+}
+
+.answer-card {
+  background: #fff;
+  border-radius: var(--radius-md);
+  border: 4px solid #F0ECFF;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.06), var(--shadow-soft);
+  padding: 8px;
+  aspect-ratio: 1 / 1;
+  min-height: 48px;
+  min-width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.answer-card img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.answer-card:hover:not(.disabled) { transform: translateY(-4px) scale(1.04); }
+.answer-card:active:not(.disabled) { transform: scale(0.96); }
+.answer-card.disabled { cursor: default; }
+
+.answer-card.correct {
+  border-color: var(--success);
+  box-shadow: 0 0 0 6px rgba(76,175,109,0.25), 0 6px 0 rgba(0,0,0,0.06);
+  animation: card-correct 0.5s ease;
+}
+@keyframes card-correct {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.12); }
+  100% { transform: scale(1.04); }
+}
+.answer-card.wrong {
+  border-color: var(--error);
+  animation: card-shake 0.45s ease;
+}
+@keyframes card-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+}
+.answer-card.dimmed { opacity: 0.45; filter: grayscale(0.3); }
+
+.feedback-text {
+  margin-top: clamp(8px, 2vh, 18px);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1rem, 2.6vh, 1.15rem);
+  min-height: 1.6em;
+  color: var(--text-dark);
+}
+.feedback-text.correct { color: var(--success); }
+.feedback-text.wrong { color: #D9534F; }
+
+.btn-next {
+  margin-top: clamp(6px, 2vh, 18px);
+  margin-bottom: env(safe-area-inset-bottom, 0px);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.btn-next.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Sparkle burst for correct answers */
+.sparkle {
+  position: fixed;
+  font-size: 1.4rem;
+  pointer-events: none;
+  animation: sparkle-pop 0.8s ease-out forwards;
+  z-index: 50;
+}
+@keyframes sparkle-pop {
+  0% { transform: translate(0,0) scale(0.4) rotate(0deg); opacity: 1; }
+  100% { transform: var(--sparkle-move) scale(1.2) rotate(120deg); opacity: 0; }
+}
+
+/* ============================== RESULT SCREEN ============================== */
+#result-screen { position: relative; }
+#fx-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.result-card {
+  position: relative;
+  z-index: 3;
+  background: rgba(255,253,246,0.95);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: clamp(20px, 5vh, 40px) clamp(20px, 5vw, 32px);
+  max-width: 440px;
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  text-align: center;
+  border: 4px solid #fff;
+  animation: card-pop 0.6s cubic-bezier(.3,1.4,.5,1);
+  margin: auto;
+}
+.result-emoji { font-size: clamp(2rem, 6vh, 3rem); margin: 0 0 4px; }
+.result-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.4rem, 5vh, 2rem);
+  color: var(--purple-deep);
+  margin: 0 0 8px;
+}
+.result-message {
+  font-size: clamp(0.9rem, 2.4vh, 1.05rem);
+  font-weight: 700;
+  color: var(--text-soft);
+  margin: 0 0 clamp(10px, 2vh, 18px);
+}
+.result-score {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 3vh, 1.3rem);
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+.stars {
+  font-size: clamp(1.6rem, 4.5vh, 2.2rem);
+  letter-spacing: 6px;
+  margin-bottom: clamp(14px, 3vh, 24px);
+}
+.result-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ============================== ACCESSIBILITY / RESPONSIVE ============================== */
+@media (max-width: 400px) {
+  .opening-title { font-size: clamp(1.4rem, 5vh, 1.7rem); }
+  .target-number { font-size: clamp(2.6rem, 8vh, 3.8rem); }
+  .opening-card, .result-card { padding: clamp(18px, 4vh, 28px) 20px clamp(16px, 3.5vh, 24px); }
+}
+
+/* Tablet & laptop: layar lebih lebar sekaligus lebih pendek dari HP.
+   Batasi tinggi elemen dekoratif & perbesar sedikit lebar kartu supaya
+   semua konten (termasuk tombol Selanjutnya) selalu tampil utuh tanpa scroll. */
+@media (min-width: 700px) {
+  .opening-card { max-width: 500px; }
+  .cards-grid { max-width: min(480px, 42vw, 50vh); }
+}
+
+/* Layar pendek (tablet/laptop landscape, atau HP landscape):
+   perketat semua jarak vertikal supaya kartu jawaban + tombol tidak terpotong. */
+@media (max-height: 560px) {
+  .screen { padding-top: 6px; padding-bottom: 6px; }
+  .hero-showcase { height: clamp(50px, 12vh, 80px); margin: 2px 0 6px; }
+  .opening-subtitle, .hero-caption { margin-bottom: 8px; }
+  .opening-actions { margin-top: 10px; }
+  .game-top { margin-bottom: 8px; }
+  .question-card { padding: 10px 14px 12px; margin-bottom: 10px; }
+  .target-number { font-size: clamp(2rem, 7vh, 3.2rem); }
+  .cards-grid { max-width: min(360px, 90vw, 40vh); gap: 10px; }
+  .feedback-text { margin-top: 6px; min-height: 1.3em; }
+  .btn-next { margin-top: 6px; }
+  .btn-large { padding: 10px 22px; min-height: 42px; font-size: 1rem; }
+  .result-card { padding: 16px 24px; }
+  .stars { margin-bottom: 10px; font-size: 1.6rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============ BACKGROUND SCENE (dekorasi hidup di seluruh aplikasi) ============ -->
+<div class="scene" aria-hidden="true">
+  <div class="sky"></div>
+  <div class="sun">
+    <div class="sun-face">
+      <div class="sun-eye left"></div>
+      <div class="sun-eye right"></div>
+      <div class="sun-smile"></div>
+    </div>
+  </div>
+  <div class="rainbow">
+    <svg viewBox="0 0 600 300" preserveAspectRatio="none">
+      <path d="M10,300 A290,290 0 0,1 590,300" fill="none" stroke="#FF9AA2" stroke-width="26"/>
+      <path d="M42,300 A258,258 0 0,1 558,300" fill="none" stroke="#FFD98A" stroke-width="26"/>
+      <path d="M74,300 A226,226 0 0,1 526,300" fill="none" stroke="#FFF3A0" stroke-width="26"/>
+      <path d="M106,300 A194,194 0 0,1 494,300" fill="none" stroke="#B4EFC9" stroke-width="26"/>
+      <path d="M138,300 A162,162 0 0,1 462,300" fill="none" stroke="#A6DDF0" stroke-width="26"/>
+      <path d="M170,300 A130,130 0 0,1 430,300" fill="none" stroke="#C6B4F0" stroke-width="26"/>
+    </svg>
+  </div>
+  <div class="cloud cloud-1">☁️</div>
+  <div class="cloud cloud-2">☁️</div>
+  <div class="cloud cloud-3">☁️</div>
+  <div class="butterfly bfly-1">🦋</div>
+  <div class="butterfly bfly-2">🦋</div>
+  <div class="butterfly bfly-3">🦋</div>
+  <div class="particles" id="particles"></div>
+  <div class="ground">
+    <div class="hill hill-back"></div>
+    <div class="hill hill-front"></div>
+    <div class="tree tree-1">🌳</div>
+    <div class="tree tree-2">🌳</div>
+    <div class="flower flower-1">🌼</div>
+    <div class="flower flower-2">🌸</div>
+    <div class="flower flower-3">🌼</div>
+    <div class="flower flower-4">🌸</div>
+    <div class="flower flower-5">🌼</div>
+  </div>
+</div>
+
+<!-- ============ OPENING SCREEN ============ -->
+<main id="opening-screen" class="screen active" aria-label="Layar pembuka">
+  <div class="opening-card">
+    <p class="badge">📚 BERHITUNG CERIA</p>
+    <h1 class="opening-title">Belajar Mengenal<br>Angka 1–5</h1>
+    <p class="opening-subtitle">Ayo Cocokkan Angka dengan Jumlah Benda</p>
+
+    <div class="hero-showcase" id="hero-showcase" aria-hidden="true">
+      <div class="asset-card ac-1"><span class="asset-badge">1</span><img id="hero-img-1" alt=""></div>
+      <div class="asset-card ac-2"><span class="asset-badge">2</span><img id="hero-img-2" alt=""></div>
+      <div class="asset-card ac-3"><span class="asset-badge">3</span><img id="hero-img-3" alt=""></div>
+      <div class="asset-card ac-4"><span class="asset-badge">4</span><img id="hero-img-4" alt=""></div>
+      <div class="asset-card ac-5"><span class="asset-badge">5</span><img id="hero-img-5" alt=""></div>
+    </div>
+    <p class="hero-caption">Kenali Angka Lewat Gambar Asli 🧸</p>
+
+    <button id="btn-start" class="btn btn-primary btn-large">
+      <span class="btn-icon">▶</span> MULAI
+    </button>
+
+    <div class="opening-actions">
+      <button id="btn-music" class="btn btn-pill" aria-pressed="true">
+        <span class="icon-music">🔊</span> Musik
+      </button>
+      <button id="btn-fullscreen" class="btn btn-pill">
+        🖥 Fullscreen
+      </button>
+    </div>
+
+    <p id="loading-note" class="loading-note">Menyiapkan gambar & suara…</p>
+  </div>
+</main>
+
+<!-- ============ GAME SCREEN ============ -->
+<section id="game-screen" class="screen" aria-label="Layar permainan">
+  <header class="game-top">
+    <button id="btn-mute-game" class="icon-btn" aria-pressed="true" title="Musik">🔊</button>
+    <div class="hud-center">
+      <div class="question-counter">Soal <span id="question-index">1</span> / 5</div>
+      <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+        <div class="progress-fill" id="progress-fill"></div>
+        <div class="progress-mascot" id="progress-mascot">🐝</div>
+      </div>
+    </div>
+    <div class="score-pill">⭐ <span id="score-value">0</span></div>
+  </header>
+
+  <div class="question-card">
+    <p class="question-prompt" id="question-prompt">Cari gambar yang berjumlah</p>
+    <div class="target-number" id="target-number">1</div>
+  </div>
+
+  <div class="cards-grid" id="cards-grid"></div>
+
+  <p class="feedback-text" id="feedback-text" aria-live="polite">&nbsp;</p>
+
+  <button id="btn-next" class="btn btn-primary btn-large btn-next" hidden>
+    Selanjutnya ➜
+  </button>
+</section>
+
+<!-- ============ RESULT SCREEN ============ -->
+<section id="result-screen" class="screen" aria-label="Layar hasil akhir">
+  <canvas id="fx-canvas"></canvas>
+  <div class="result-card">
+    <p class="result-emoji">🎉</p>
+    <h2 class="result-title" id="result-title">SELAMAT</h2>
+    <p class="result-message" id="result-subtitle"></p>
+    <div class="result-score">
+      Skor Akhir: <span id="final-score">0</span> / 100
+    </div>
+    <div class="stars" id="stars-row" aria-hidden="true"></div>
+    <div class="result-actions">
+      <button id="btn-replay" class="btn btn-primary btn-large">🔄 Main Lagi</button>
+      <button id="btn-menu" class="btn btn-secondary btn-large">🏠 Menu</button>
+    </div>
+  </div>
+</section>
+
+<!-- Audio elements -->
+<audio id="audio-bgm" loop preload="auto"></audio>
+<audio id="audio-correct" preload="auto"></audio>
+<audio id="audio-wrong" preload="auto"></audio>
+
+<script>
+/* ==========================================================================
+   BERHITUNG CERIA — DATA
+   Semua konten edukasi (soal, aset gambar, aset audio) disimpan terpisah
+   dari logika permainan (script.js) agar mudah diubah di kemudian hari.
+   ========================================================================== */
+
+// Aset gambar jumlah benda (kuantitas 1–5)
+// Setiap kartu jawaban di dalam permainan merujuk ke salah satu aset ini.
+const IMAGE_ASSETS = {
+  1: "https://raw.githubusercontent.com/mhrofficialid/ASET-MATEMATIKA-1-5-PART-1/b26690e5862fb42016dc90c22dc09f1d226087d0/1.png",
+  2: "https://raw.githubusercontent.com/mhrofficialid/ASET-MATEMATIKA-1-5-PART-1/b26690e5862fb42016dc90c22dc09f1d226087d0/2.png",
+  3: "https://raw.githubusercontent.com/mhrofficialid/ASET-MATEMATIKA-1-5-PART-1/b26690e5862fb42016dc90c22dc09f1d226087d0/3.png",
+  4: "https://raw.githubusercontent.com/mhrofficialid/ASET-MATEMATIKA-1-5-PART-1/b26690e5862fb42016dc90c22dc09f1d226087d0/4.png",
+  5: "https://raw.githubusercontent.com/mhrofficialid/ASET-MATEMATIKA-1-5-PART-1/b26690e5862fb42016dc90c22dc09f1d226087d0/5.png"
+};
+
+// Aset audio pujian, diputar acak setiap kali anak menjawab benar
+const PRAISE_AUDIO_ASSETS = [
+  "https://raw.githubusercontent.com/mhrofficialid/1.-Tunjuk-4-Alat-Indera/4c394900992d734145ff4995ab216b5cef6055ea/Kamu%20hebat.mp3",
+  "https://raw.githubusercontent.com/mhrofficialid/1.-Tunjuk-4-Alat-Indera/4c394900992d734145ff4995ab216b5cef6055ea/good%20job.mp3",
+  "https://raw.githubusercontent.com/mhrofficialid/1.-Tunjuk-4-Alat-Indera/4c394900992d734145ff4995ab216b5cef6055ea/hebat.mp3",
+  "https://raw.githubusercontent.com/mhrofficialid/1.-Tunjuk-4-Alat-Indera/4c394900992d734145ff4995ab216b5cef6055ea/kamu%20keren.mp3",
+  "https://raw.githubusercontent.com/mhrofficialid/1.-Tunjuk-4-Alat-Indera/4c394900992d734145ff4995ab216b5cef6055ea/keren.mp3",
+  "https://raw.githubusercontent.com/mhrofficialid/1.-Tunjuk-4-Alat-Indera/4c394900992d734145ff4995ab216b5cef6055ea/yeeyy.mp3",
+  "https://raw.githubusercontent.com/mhrofficialid/1.-Tunjuk-4-Alat-Indera/4c394900992d734145ff4995ab216b5cef6055ea/perfect.mp3"
+];
+
+// Daftar soal — urutan tetap 1 → 2 → 3 → 4 → 5.
+// "target" adalah jumlah benda yang benar untuk soal tersebut.
+// "options" berisi seluruh kuantitas 1–5 yang tersedia sebagai calon jawaban;
+// setiap soal hanya akan menampilkan 4 kartu (1 jawaban benar + 3 pengecoh
+// acak) dalam grid 2×2, dan posisinya diacak setiap kali soal muncul.
+const QUESTIONS = [
+  { id: 1, target: 1, prompt: "Cari gambar yang berjumlah", options: [1, 2, 3, 4, 5] },
+  { id: 2, target: 2, prompt: "Cari gambar yang berjumlah", options: [1, 2, 3, 4, 5] },
+  { id: 3, target: 3, prompt: "Cari gambar yang berjumlah", options: [1, 2, 3, 4, 5] },
+  { id: 4, target: 4, prompt: "Cari gambar yang berjumlah", options: [1, 2, 3, 4, 5] },
+  { id: 5, target: 5, prompt: "Cari gambar yang berjumlah", options: [1, 2, 3, 4, 5] }
+];
+
+// Pesan penyemangat di layar akhir, dipilih berdasarkan skor akhir
+const RESULT_MESSAGES = {
+  100: { title: "Luar Biasa!", subtitle: "Semua Jawaban Benar!" },
+  80:  { title: "Hebat Sekali!", subtitle: "Kamu Sudah Pintar Berhitung!" },
+  60:  { title: "Kerja Bagus!", subtitle: "Terus Berlatih Ya!" },
+  40:  { title: "Bagus!", subtitle: "Sedikit Lagi Kamu Jago Berhitung!" },
+  20:  { title: "Ayo Semangat!", subtitle: "Coba Lagi, Kamu Pasti Bisa!" },
+  0:   { title: "Ayo Coba Lagi!", subtitle: "Jangan Menyerah Ya!" }
+};
+
+// Skor maksimal & poin per jawaban benar
+const SCORE_PER_CORRECT = 20;
+const MAX_SCORE = 100;
+
+</script>
+<script>
+/* ==========================================================================
+   BERHITUNG CERIA — GAME LOGIC
+   ========================================================================== */
+
+(function () {
+  "use strict";
+
+  /* ---------------------------------------------------------------------
+     STATE
+     --------------------------------------------------------------------- */
+  const state = {
+    currentQuestion: 0, // index into QUESTIONS
+    score: 0,
+    answered: false,
+    musicOn: true,
+    shuffledOptions: [], // shuffled option list for current question
+    assetsReady: false
+  };
+
+  /* ---------------------------------------------------------------------
+     ELEMENT REFERENCES
+     --------------------------------------------------------------------- */
+  const el = {
+    openingScreen: document.getElementById("opening-screen"),
+    gameScreen: document.getElementById("game-screen"),
+    resultScreen: document.getElementById("result-screen"),
+
+    btnStart: document.getElementById("btn-start"),
+    btnMusic: document.getElementById("btn-music"),
+    btnFullscreen: document.getElementById("btn-fullscreen"),
+    loadingNote: document.getElementById("loading-note"),
+
+    btnMuteGame: document.getElementById("btn-mute-game"),
+    questionIndex: document.getElementById("question-index"),
+    progressFill: document.getElementById("progress-fill"),
+    progressMascot: document.getElementById("progress-mascot"),
+    scoreValue: document.getElementById("score-value"),
+    questionPrompt: document.getElementById("question-prompt"),
+    targetNumber: document.getElementById("target-number"),
+    cardsGrid: document.getElementById("cards-grid"),
+    feedbackText: document.getElementById("feedback-text"),
+    btnNext: document.getElementById("btn-next"),
+
+    resultTitle: document.getElementById("result-title"),
+    resultSubtitle: document.getElementById("result-subtitle"),
+    finalScore: document.getElementById("final-score"),
+    starsRow: document.getElementById("stars-row"),
+    btnReplay: document.getElementById("btn-replay"),
+    btnMenu: document.getElementById("btn-menu"),
+
+    particles: document.getElementById("particles"),
+
+    audioBgm: document.getElementById("audio-bgm"),
+    audioCorrect: document.getElementById("audio-correct"),
+    audioWrong: document.getElementById("audio-wrong"),
+
+    fxCanvas: document.getElementById("fx-canvas")
+  };
+
+  /* ---------------------------------------------------------------------
+     UTILITIES
+     --------------------------------------------------------------------- */
+
+  // Fisher-Yates shuffle (does not mutate original array)
+  function shuffle(array) {
+    const arr = array.slice();
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function randomItem(array) {
+    return array[Math.floor(Math.random() * array.length)];
+  }
+
+  function showScreen(screenEl) {
+    [el.openingScreen, el.gameScreen, el.resultScreen].forEach((s) => s.classList.remove("active"));
+    screenEl.classList.add("active");
+  }
+
+  // Generates a friendly inline SVG placeholder if a real image asset fails
+  function placeholderDataUrl(quantity) {
+    const dots = Array.from({ length: quantity })
+      .map((_, i) => {
+        const angle = (i / quantity) * Math.PI * 2;
+        const cx = 100 + Math.cos(angle) * 55;
+        const cy = 100 + Math.sin(angle) * 55;
+        return `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="18" fill="#FF9AC1"/>`;
+      })
+      .join("");
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>
+      <rect width='200' height='200' rx='28' fill='#FFF3E0'/>
+      ${dots}
+      <text x='100' y='190' font-size='18' text-anchor='middle' fill='#6C6289' font-family='sans-serif'>${quantity}</text>
+    </svg>`;
+    return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+  }
+
+  /* ---------------------------------------------------------------------
+     PRELOADING
+     --------------------------------------------------------------------- */
+
+  // Cache of resolved (working) image sources, keyed by quantity
+  const resolvedImageSrc = {};
+
+  function preloadImages() {
+    const quantities = Object.keys(IMAGE_ASSETS);
+    const promises = quantities.map((q) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          resolvedImageSrc[q] = IMAGE_ASSETS[q];
+          resolve();
+        };
+        img.onerror = () => {
+          resolvedImageSrc[q] = placeholderDataUrl(q);
+          resolve();
+        };
+        img.src = IMAGE_ASSETS[q];
+      });
+    });
+    return Promise.all(promises);
+  }
+
+  function preloadAudio() {
+    // Preload praise audio files (best-effort; failures are tolerated silently)
+    const promises = PRAISE_AUDIO_ASSETS.map((src) => {
+      return new Promise((resolve) => {
+        const a = new Audio();
+        a.oncanplaythrough = resolve;
+        a.onerror = resolve; // tolerate missing/blocked audio, game must still work
+        a.src = src;
+        // Safety timeout so a slow/broken asset never blocks the game
+        setTimeout(resolve, 4000);
+      });
+    });
+    return Promise.all(promises);
+  }
+
+  // Fills the opening screen's showcase cards with the real counting image
+  // assets (quantities 1–5), so the cover uses the actual provided artwork
+  // instead of generic CSS icons.
+  function populateHeroShowcase() {
+    for (let q = 1; q <= 5; q++) {
+      const img = document.getElementById("hero-img-" + q);
+      if (!img) continue;
+      img.src = resolvedImageSrc[q] || placeholderDataUrl(q);
+      img.alt = "Contoh gambar berjumlah " + q;
+    }
+  }
+
+  /* ---------------------------------------------------------------------
+     AMBIENT BACKGROUND PARTICLES
+     --------------------------------------------------------------------- */
+  function spawnAmbientParticles() {
+    const count = 18;
+    for (let i = 0; i < count; i++) {
+      const p = document.createElement("div");
+      p.className = "particle";
+      const left = Math.random() * 100;
+      const duration = 10 + Math.random() * 14;
+      const delay = Math.random() * 14;
+      const size = 4 + Math.random() * 6;
+      p.style.left = left + "%";
+      p.style.width = size + "px";
+      p.style.height = size + "px";
+      p.style.animationDuration = duration + "s";
+      p.style.animationDelay = "-" + delay + "s";
+      el.particles.appendChild(p);
+    }
+  }
+
+  /* ---------------------------------------------------------------------
+     MUSIC / AUDIO CONTROLS
+     --------------------------------------------------------------------- */
+  function setMusicButtonsUI() {
+    [el.btnMusic, el.btnMuteGame].forEach((btn) => {
+      if (!btn) return;
+      btn.setAttribute("aria-pressed", state.musicOn ? "true" : "false");
+    });
+    const icon = state.musicOn ? "🔊" : "🔈";
+    el.btnMuteGame.textContent = icon;
+    el.btnMusic.innerHTML = `<span class="icon-music">${icon}</span> Musik`;
+  }
+
+  function toggleMusic() {
+    // state.musicOn is read continuously by the synthetic background music
+    // loop (see setupSyntheticBackgroundMusic) and by the sound-effect
+    // helpers below, so flipping this flag is all that's needed to mute
+    // or resume every audio source in the game at once.
+    state.musicOn = !state.musicOn;
+    setMusicButtonsUI();
+  }
+
+  function playPraiseAudio() {
+    if (!state.musicOn) return; // respect mute state for all sound effects
+    const src = randomItem(PRAISE_AUDIO_ASSETS);
+    el.audioCorrect.src = src;
+    el.audioCorrect.currentTime = 0;
+    el.audioCorrect.play().catch(() => {});
+  }
+
+  function playWrongSound() {
+    if (!state.musicOn) return;
+    // Soft, friendly "try again" tone synthesized on the fly (no external file needed)
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(330, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.35);
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.4);
+    } catch (e) {
+      /* Audio API unavailable — fail silently, game continues normally */
+    }
+  }
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
+  }
+
+  /* ---------------------------------------------------------------------
+     SPARKLE / CONFETTI MICRO-EFFECTS (during gameplay)
+     --------------------------------------------------------------------- */
+  function burstSparkles(originEl) {
+    const rect = originEl.getBoundingClientRect();
+    const originX = rect.left + rect.width / 2;
+    const originY = rect.top + rect.height / 2;
+    const symbols = ["✨", "⭐", "🎉"];
+    const count = 10;
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement("div");
+      s.className = "sparkle";
+      s.textContent = randomItem(symbols);
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 60 + Math.random() * 60;
+      const mx = Math.cos(angle) * dist;
+      const my = Math.sin(angle) * dist;
+      s.style.setProperty("--sparkle-move", `translate(${mx}px, ${my}px)`);
+      s.style.left = originX + "px";
+      s.style.top = originY + "px";
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 850);
+    }
+  }
+
+  /* ---------------------------------------------------------------------
+     GAME RENDERING
+     --------------------------------------------------------------------- */
+  function updateHud() {
+    el.questionIndex.textContent = state.currentQuestion + 1;
+    el.scoreValue.textContent = state.score;
+    const progressRatio = state.currentQuestion / QUESTIONS.length;
+    el.progressFill.style.width = (progressRatio * 100) + "%";
+    el.progressMascot.style.left = (progressRatio * 100) + "%";
+    el.progressFill.parentElement.setAttribute("aria-valuenow", state.currentQuestion);
+  }
+
+  function renderQuestion() {
+    state.answered = false;
+    el.feedbackText.textContent = "\u00A0";
+    el.feedbackText.className = "feedback-text";
+    el.btnNext.classList.remove("show");
+
+    const q = QUESTIONS[state.currentQuestion];
+    el.questionPrompt.textContent = q.prompt;
+    el.targetNumber.textContent = q.target;
+
+    // Pick 4 cards total: the correct target plus 3 random distractors
+    // from the remaining quantities, then shuffle their positions.
+    const distractors = shuffle(q.options.filter((v) => v !== q.target)).slice(0, 3);
+    state.shuffledOptions = shuffle([q.target, ...distractors]);
+
+    el.cardsGrid.innerHTML = "";
+    state.shuffledOptions.forEach((optionValue) => {
+      const card = document.createElement("button");
+      card.className = "answer-card";
+      card.setAttribute("data-value", optionValue);
+      card.setAttribute("aria-label", "Pilihan gambar berjumlah " + optionValue);
+
+      const img = document.createElement("img");
+      img.src = resolvedImageSrc[optionValue] || placeholderDataUrl(optionValue);
+      img.alt = "Gambar berjumlah " + optionValue;
+      img.draggable = false;
+
+      card.appendChild(img);
+      card.addEventListener("click", () => handleAnswer(optionValue, card));
+      el.cardsGrid.appendChild(card);
+    });
+
+    updateHud();
+  }
+
+  function handleAnswer(selectedValue, cardEl) {
+    if (state.answered) return;
+    state.answered = true;
+
+    const q = QUESTIONS[state.currentQuestion];
+    const isCorrect = selectedValue === q.target;
+
+    // Disable all cards, dim the non-selected ones
+    const allCards = el.cardsGrid.querySelectorAll(".answer-card");
+    allCards.forEach((c) => {
+      c.classList.add("disabled");
+      if (c !== cardEl) c.classList.add("dimmed");
+    });
+
+    if (isCorrect) {
+      cardEl.classList.add("correct");
+      el.feedbackText.textContent = "🎉 Benar Sekali!";
+      el.feedbackText.classList.add("correct");
+      state.score = Math.min(MAX_SCORE, state.score + SCORE_PER_CORRECT);
+      el.scoreValue.textContent = state.score;
+      burstSparkles(cardEl);
+      playPraiseAudio();
+    } else {
+      cardEl.classList.add("wrong");
+      el.feedbackText.textContent = "😊 Coba lagi ya.";
+      el.feedbackText.classList.add("wrong");
+      playWrongSound();
+      // Reveal the correct card so the child learns the right answer
+      const correctCard = Array.from(allCards).find(
+        (c) => parseInt(c.getAttribute("data-value"), 10) === q.target
+      );
+      if (correctCard) correctCard.classList.remove("dimmed");
+    }
+
+    el.btnNext.classList.add("show");
+  }
+
+  function goToNextQuestion() {
+    state.currentQuestion++;
+    if (state.currentQuestion >= QUESTIONS.length) {
+      updateHud();
+      showResult();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  /* ---------------------------------------------------------------------
+     RESULT SCREEN
+     --------------------------------------------------------------------- */
+  function getResultMessage(score) {
+    const thresholds = Object.keys(RESULT_MESSAGES).map(Number).sort((a, b) => b - a);
+    for (const t of thresholds) {
+      if (score >= t) return RESULT_MESSAGES[t];
+    }
+    return RESULT_MESSAGES[0];
+  }
+
+  function starsForScore(score) {
+    const filled = Math.round((score / MAX_SCORE) * 5);
+    return "⭐".repeat(filled) + "☆".repeat(5 - filled);
+  }
+
+  function showResult() {
+    showScreen(el.resultScreen);
+    const msg = getResultMessage(state.score);
+    el.resultTitle.textContent = "🎉 " + msg.title.toUpperCase() + " 🎉";
+    el.resultSubtitle.textContent = msg.subtitle;
+    el.finalScore.textContent = state.score;
+    el.starsRow.textContent = starsForScore(state.score);
+    startCelebration();
+  }
+
+  /* ---------------------------------------------------------------------
+     CELEBRATION CANVAS (confetti + sparkles + stars + balloons + fireworks)
+     --------------------------------------------------------------------- */
+  let celebrationRAF = null;
+
+  function startCelebration() {
+    const canvas = el.fxCanvas;
+    const ctx = canvas.getContext("2d");
+    const dpr = window.devicePixelRatio || 1;
+
+    function resize() {
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    const W = () => window.innerWidth;
+    const H = () => window.innerHeight;
+
+    const colors = ["#FF9AA2", "#FFD98A", "#B4EFC9", "#A6DDF0", "#C6B4F0", "#FFB05C"];
+
+    // Confetti pieces falling from the top
+    const confetti = Array.from({ length: 90 }).map(() => ({
+      x: Math.random() * W(),
+      y: -Math.random() * H(),
+      w: 6 + Math.random() * 6,
+      h: 10 + Math.random() * 8,
+      color: randomItem(colors),
+      speedY: 1.5 + Math.random() * 2.5,
+      speedX: (Math.random() - 0.5) * 1.5,
+      rotation: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 8
+    }));
+
+    // Gentle floating stars
+    const stars = Array.from({ length: 14 }).map(() => ({
+      x: Math.random() * W(),
+      y: H() + Math.random() * H(),
+      size: 10 + Math.random() * 14,
+      speed: 0.4 + Math.random() * 0.6,
+      drift: (Math.random() - 0.5) * 0.6,
+      phase: Math.random() * Math.PI * 2
+    }));
+
+    // Floating balloons rising slowly
+    const balloonColors = ["#FF9AC1", "#A6DDF0", "#FFD98A", "#B4EFC9", "#C6B4F0"];
+    const balloons = Array.from({ length: 7 }).map((_, i) => ({
+      x: (i + 0.5) * (W() / 7) + (Math.random() - 0.5) * 40,
+      y: H() + Math.random() * H() * 0.6,
+      size: 26 + Math.random() * 14,
+      speed: 0.5 + Math.random() * 0.5,
+      sway: Math.random() * Math.PI * 2,
+      color: randomItem(balloonColors)
+    }));
+
+    // Fountain-style fireworks shooting upward from the bottom
+    let fireworkParticles = [];
+    function launchFirework() {
+      const originX = W() * (0.2 + Math.random() * 0.6);
+      const color = randomItem(colors);
+      const count = 26;
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 0.9) + Math.random() * Math.PI * 0.2 * ((i % 2) - 0.5) + (Math.random() - 0.5) * 1.6;
+        const speed = 4 + Math.random() * 5;
+        fireworkParticles.push({
+          x: originX,
+          y: H(),
+          vx: Math.cos(angle) * speed * 0.5,
+          vy: -Math.abs(Math.sin(angle)) * speed - 6,
+          life: 1,
+          color
+        });
+      }
+    }
+
+    let fireworkTimer = 0;
+    const fireworkInterval = 55; // frames between launches
+
+    function drawConfettiPiece(c) {
+      ctx.save();
+      ctx.translate(c.x, c.y);
+      ctx.rotate((c.rotation * Math.PI) / 180);
+      ctx.fillStyle = c.color;
+      ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
+      ctx.restore();
+    }
+
+    function drawStar(s, t) {
+      const twinkle = 0.6 + 0.4 * Math.sin(t / 300 + s.phase);
+      ctx.save();
+      ctx.globalAlpha = twinkle;
+      ctx.font = s.size + "px sans-serif";
+      ctx.fillText("⭐", s.x, s.y);
+      ctx.restore();
+    }
+
+    function drawBalloon(b) {
+      ctx.save();
+      ctx.translate(b.x + Math.sin(b.sway) * 10, b.y);
+      ctx.fillStyle = b.color;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, b.size * 0.6, b.size * 0.75, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "rgba(255,255,255,0.4)";
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, b.size * 0.75);
+      ctx.lineTo(0, b.size * 0.75 + 26);
+      ctx.strokeStyle = "rgba(80,70,90,0.5)";
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawFireworkParticle(p) {
+      ctx.save();
+      ctx.globalAlpha = Math.max(p.life, 0);
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    let frame = 0;
+    const totalDurationFrames = 60 * 9; // ~9 seconds of celebration
+
+    function tick() {
+      frame++;
+      ctx.clearRect(0, 0, W(), H());
+
+      // Confetti
+      confetti.forEach((c) => {
+        c.y += c.speedY;
+        c.x += c.speedX;
+        c.rotation += c.rotSpeed;
+        if (c.y > H() + 20) {
+          c.y = -20;
+          c.x = Math.random() * W();
+        }
+        drawConfettiPiece(c);
+      });
+
+      // Stars
+      stars.forEach((s) => {
+        s.y -= s.speed;
+        s.x += s.drift;
+        if (s.y < -20) s.y = H() + 20;
+        drawStar(s, frame * 16);
+      });
+
+      // Balloons
+      balloons.forEach((b) => {
+        b.y -= b.speed;
+        b.sway += 0.02;
+        if (b.y < -60) b.y = H() + 60;
+        drawBalloon(b);
+      });
+
+      // Fireworks fountain
+      fireworkTimer++;
+      if (fireworkTimer >= fireworkInterval && frame < totalDurationFrames - 60) {
+        fireworkTimer = 0;
+        launchFirework();
+      }
+      fireworkParticles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.18; // gravity
+        p.life -= 0.014;
+        drawFireworkParticle(p);
+      });
+      fireworkParticles = fireworkParticles.filter((p) => p.life > 0 && p.y < H() + 20);
+
+      if (frame < totalDurationFrames) {
+        celebrationRAF = requestAnimationFrame(tick);
+      } else {
+        // Settle into a light ambient loop: keep gentle stars/balloons only
+        ctx.clearRect(0, 0, W(), H());
+        celebrationRAF = requestAnimationFrame(ambientLoop);
+      }
+    }
+
+    function ambientLoop() {
+      ctx.clearRect(0, 0, W(), H());
+      stars.forEach((s) => {
+        s.y -= s.speed * 0.5;
+        if (s.y < -20) s.y = H() + 20;
+        drawStar(s, performance.now());
+      });
+      balloons.forEach((b) => {
+        b.y -= b.speed * 0.4;
+        b.sway += 0.015;
+        if (b.y < -60) b.y = H() + 60;
+        drawBalloon(b);
+      });
+      celebrationRAF = requestAnimationFrame(ambientLoop);
+    }
+
+    stopCelebration(); // clear any previous loop
+    celebrationRAF = requestAnimationFrame(tick);
+
+    // Store cleanup handle
+    startCelebration._cleanup = () => {
+      window.removeEventListener("resize", resize);
+    };
+  }
+
+  function stopCelebration() {
+    if (celebrationRAF) {
+      cancelAnimationFrame(celebrationRAF);
+      celebrationRAF = null;
+    }
+    const canvas = el.fxCanvas;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (startCelebration._cleanup) startCelebration._cleanup();
+  }
+
+  /* ---------------------------------------------------------------------
+     GAME LIFECYCLE
+     --------------------------------------------------------------------- */
+  function resetGameState() {
+    state.currentQuestion = 0;
+    state.score = 0;
+    state.answered = false;
+    el.scoreValue.textContent = "0";
+  }
+
+  function startGame() {
+    resetGameState();
+    showScreen(el.gameScreen);
+    renderQuestion();
+  }
+
+  function returnToMenu() {
+    stopCelebration();
+    showScreen(el.openingScreen);
+  }
+
+  /* ---------------------------------------------------------------------
+     EVENT BINDINGS
+     --------------------------------------------------------------------- */
+  el.btnStart.addEventListener("click", () => {
+    if (!state.assetsReady) return; // guard: wait for preloading
+    startGame();
+  });
+
+  el.btnMusic.addEventListener("click", toggleMusic);
+  el.btnMuteGame.addEventListener("click", toggleMusic);
+  el.btnFullscreen.addEventListener("click", toggleFullscreen);
+  el.btnNext.addEventListener("click", goToNextQuestion);
+  el.btnReplay.addEventListener("click", () => {
+    stopCelebration();
+    startGame();
+  });
+  el.btnMenu.addEventListener("click", returnToMenu);
+
+  /* ---------------------------------------------------------------------
+     INIT
+     --------------------------------------------------------------------- */
+  function init() {
+    spawnAmbientParticles();
+    setMusicButtonsUI();
+    el.btnStart.disabled = true;
+
+    // Simple looping background music synthesized as a short cheerful chime
+    // sequence is avoided in favor of leaving audioBgm empty-safe if no file
+    // is supplied; developers can set el.audioBgm.src to a hosted track.
+    // Here we generate a soft ambient loop using the Web Audio API instead,
+    // so the game truly has cheerful background music out of the box.
+    setupSyntheticBackgroundMusic();
+
+    Promise.all([preloadImages(), preloadAudio()]).then(() => {
+      state.assetsReady = true;
+      el.btnStart.disabled = false;
+      el.loadingNote.classList.add("hidden");
+      populateHeroShowcase();
+    });
+  }
+
+  /* ---------------------------------------------------------------------
+     SYNTHETIC CHEERFUL BACKGROUND MUSIC (Web Audio API)
+     Lightweight looping melody so the game has music without requiring
+     an external audio file. Runs at low volume (20%) and respects mute.
+     --------------------------------------------------------------------- */
+  function setupSyntheticBackgroundMusic() {
+    let audioCtx = null;
+    let musicTimer = null;
+    const notes = [523.25, 587.33, 659.25, 523.25, 659.25, 784.0, 659.25, 587.33]; // C5 D5 E5 C5 E5 G5 E5 D5
+    let noteIdx = 0;
+
+    function playNote(freq) {
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = "triangle";
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.2, audioCtx.currentTime + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.5);
+    }
+
+    function step() {
+      if (state.musicOn && audioCtx) {
+        playNote(notes[noteIdx % notes.length]);
+        noteIdx++;
+      }
+      musicTimer = setTimeout(step, 420);
+    }
+
+    function startOnFirstInteraction() {
+      if (audioCtx) return;
+      try {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        step();
+      } catch (e) {
+        /* Web Audio unavailable — game continues silently, this is non-blocking */
+      }
+      document.removeEventListener("click", startOnFirstInteraction);
+    }
+    document.addEventListener("click", startOnFirstInteraction);
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+})();
+
+</script>
+</body>
+</html>
