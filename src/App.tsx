@@ -66,7 +66,7 @@ export default function App() {
     },
     {
       id: "susun_kata",
-      name: "Susun Kata Anggota Tubuh",
+      name: "Susun Kata 4 Alat Indera",
       ageRange: "3 Tahun",
       premium: true,
       description: "Asah kemampuan mengeja kosa kata anatomi tubuh dasar (mata, mulut, hidung, telinga) dengan menyusun huruf-huruf abjad interaktif yang ceria.",
