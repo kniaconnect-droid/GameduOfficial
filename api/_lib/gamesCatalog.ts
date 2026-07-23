@@ -24,7 +24,7 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
   },
   {
     id: "susun_kata",
-    name: "Susun Kata Anggota Tubuh",
+    name: "Susun Kata 4 Alat Indera",
     ageRange: "4-5 Tahun",
     premium: true,
   },
