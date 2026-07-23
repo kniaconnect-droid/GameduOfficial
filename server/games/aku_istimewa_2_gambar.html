@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>MHR Kids - Yuk Tunjuk di Antara 2 Gambar!</title>
+<style>
+/* ==================================================
+   RESET & BASE
+================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Comic Sans MS', 'Baloo 2', 'Trebuchet MS', sans-serif;
+  background: linear-gradient(180deg, #cdeeff 0%, #f2fcff 45%, #fffaf0 100%);
+  touch-action: manipulation;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+/* ==================================================
+   BACKGROUND SCENE (RINGAN & TIDAK RAMAI)
+================================================== */
+.bg-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cloud {
+  position: absolute;
+  font-size: 2.6rem;
+  opacity: 0.7;
+  animation: floatCloud 46s linear infinite;
+}
+.cloud1 { top: 6%;  left: -20%; animation-duration: 42s; }
+.cloud2 { top: 14%; left: -50%; animation-duration: 60s; font-size: 2rem; }
+
+@keyframes floatCloud {
+  from { transform: translateX(0); }
+  to   { transform: translateX(140vw); }
+}
+
+.rainbow {
+  position: absolute;
+  top: -2%;
+  right: -4%;
+  font-size: 4rem;
+  opacity: 0.7;
+}
+
+.balloon {
+  position: absolute;
+  bottom: -10%;
+  left: 8%;
+  font-size: 2.2rem;
+  opacity: 0.7;
+  animation: floatUp 13s linear infinite;
+}
+
+@keyframes floatUp {
+  0%   { transform: translateY(0) rotate(0deg); }
+  50%  { transform: translateY(-60vh) rotate(6deg); }
+  100% { transform: translateY(-120vh) rotate(-6deg); }
+}
+
+.star {
+  position: absolute;
+  font-size: 1.4rem;
+  opacity: 0.6;
+  animation: twinkle 2.6s ease-in-out infinite;
+}
+.s1 { top: 12%; left: 10%; animation-delay: 0s; }
+.s2 { top: 24%; left: 88%; animation-delay: 0.8s; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.8); }
+  50%      { opacity: 0.9;  transform: scale(1.1); }
+}
+
+/* ==================================================
+   MUSIC BUTTON
+================================================== */
+.music-btn {
+  position: fixed;
+  top: env(safe-area-inset-top, 10px);
+  right: 10px;
+  z-index: 50;
+  min-height: 56px;
+  background: #fff;
+  border-radius: 999px;
+  padding: 0 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #5a3e85;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.12);
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.music-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,0.12); }
+.music-btn.off { opacity: 0.55; }
+
+/* ==================================================
+   SCREENS
+================================================== */
+.screen {
+  position: relative;
+  z-index: 1;
+  height: 100dvh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px 20px;
+  overflow: hidden;
+  gap: 18px;
+}
+
+.hidden { display: none !important; }
+
+/* ==================================================
+   START SCREEN
+================================================== */
+.start-screen {
+  text-align: center;
+  gap: 22px;
+}
+
+.start-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.start-icon {
+  width: clamp(64px, 16vw, 96px);
+  height: clamp(64px, 16vw, 96px);
+  object-fit: contain;
+  background: #fff;
+  border-radius: 20px;
+  padding: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.start-icon-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(2rem, 8vw, 2.6rem);
+}
+
+.start-subtitle {
+  font-size: clamp(1rem, 4vw, 1.3rem);
+  color: #5a5a5a;
+  font-weight: 600;
+  max-width: 90vw;
+}
+
+.start-btn {
+  min-height: 64px;
+  font-size: clamp(1.1rem, 4.8vw, 1.6rem);
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(180deg, #ff9a56, #ff6f6f);
+  padding: 0 44px;
+  border-radius: 999px;
+  box-shadow: 0 6px 0 #d9502f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: bounceBtn 1s ease-in-out infinite;
+}
+
+.start-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #d9502f;
+}
+
+/* ==================================================
+   GAME SCREEN
+================================================== */
+.title {
+  font-size: clamp(1.2rem, 5vw, 1.9rem);
+  color: #5a3e85;
+  text-align: center;
+  text-shadow: 2px 2px 0 #fff, 0 0 8px rgba(255,255,255,0.6);
+}
+
+.progress {
+  font-size: clamp(0.9rem, 3.4vw, 1.15rem);
+  font-weight: 700;
+  color: #ff7ab6;
+  background: #fff;
+  padding: 8px 22px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  border-radius: 999px;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.08);
+}
+
+.instruction-box {
+  width: min(92vw, 480px);
+  background: #fff8e7;
+  border: 4px dashed #ffb84d;
+  border-radius: 28px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.instruction-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.instruction-text {
+  font-size: clamp(1.15rem, 4.8vw, 1.7rem);
+  font-weight: 800;
+  color: #ff5f6d;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.sound-btn {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  min-height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #7fd8ff, #4aa8ff);
+  color: #fff;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 0 #2d7fce;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.sound-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #2d7fce;
+}
+
+/* ==================================================
+   KARTU JAWABAN (2 GAMBAR, POLOS, FOKUS PADA GAMBAR)
+================================================== */
+.card-grid {
+  width: min(94vw, 560px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.card-btn {
+  position: relative;
+  background: #ffffff;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  cursor: pointer;
+}
+
+.card-btn:active {
+  transform: translateY(3px) scale(0.98);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.card-img {
+  width: clamp(150px, 32vw, 240px);
+  height: clamp(150px, 32vw, 240px);
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.card-emoji-fallback {
+  font-size: clamp(90px, 26vw, 160px);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.reveal-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  min-width: 56px;
+  min-height: 56px;
+  padding: 0 10px;
+  border-radius: 18px;
+  background: #ffffff;
+  border: 3px solid #d8d8d8;
+  color: #5a5a5a;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.08);
+  z-index: 2;
+}
+
+.reveal-btn:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+.card-label {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  background: #fffbe8;
+  border: 2px solid #ffd98a;
+  border-radius: 14px;
+  padding: 6px 14px;
+  font-size: clamp(0.9rem, 3.6vw, 1.1rem);
+  font-weight: 800;
+  color: #4a4a4a;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 3;
+}
+
+.card-label.show {
+  animation: labelFade 2s ease forwards;
+}
+
+@keyframes labelFade {
+  0%   { opacity: 0; transform: translateY(4px); }
+  12%  { opacity: 1; transform: translateY(0); }
+  82%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.feedback-icon {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: clamp(1.8rem, 7vw, 2.4rem);
+  pointer-events: none;
+}
+
+/* Feedback states */
+.card-btn.correct {
+  border: 5px solid #38c172;
+  box-shadow: 0 0 0 6px rgba(56,193,114,0.22), 0 4px 10px rgba(0,0,0,0.08);
+  animation: glowGreen 0.9s ease-in-out infinite;
+}
+
+@keyframes glowGreen {
+  0%, 100% { box-shadow: 0 0 0 6px rgba(56,193,114,0.22), 0 4px 10px rgba(0,0,0,0.08); }
+  50%      { box-shadow: 0 0 0 14px rgba(56,193,114,0.1), 0 4px 10px rgba(0,0,0,0.08); }
+}
+
+.card-btn.wrong {
+  border: 5px solid #ff5b5b;
+  animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-8px); }
+  40%      { transform: translateX(8px); }
+  60%      { transform: translateX(-6px); }
+  80%      { transform: translateX(6px); }
+}
+
+.card-btn.disabled {
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.card-btn.correct.disabled,
+.card-btn.wrong.disabled {
+  opacity: 1;
+}
+
+/* Star burst effect saat jawaban benar */
+.burst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+.burst span {
+  position: absolute;
+  animation: burstFly 0.8s ease-out forwards;
+}
+@keyframes burstFly {
+  0%   { transform: translate(0,0) scale(0.4); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(1.3); opacity: 0; }
+}
+
+/* NEXT button */
+.next-btn {
+  min-height: 56px;
+  font-size: clamp(1.05rem, 4.4vw, 1.4rem);
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(180deg, #ff9a56, #ff6f6f);
+  padding: 0 40px;
+  border-radius: 999px;
+  box-shadow: 0 6px 0 #d9502f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: bounceBtn 1s ease-in-out infinite;
+}
+
+@keyframes bounceBtn {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+
+.next-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #d9502f;
+}
+
+/* ==================================================
+   RESULT SCREEN
+================================================== */
+.result-screen {
+  position: relative;
+}
+
+.result-title {
+  font-size: clamp(1.4rem, 6vw, 2.2rem);
+  color: #5a3e85;
+  text-align: center;
+  text-shadow: 2px 2px 0 #fff;
+}
+
+.perfect-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0%   { transform: scale(0.7); opacity: 0; }
+  70%  { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.trophy {
+  font-size: clamp(1.5rem, 6vw, 2.4rem);
+  font-weight: 900;
+  color: #ffb100;
+  text-shadow: 2px 2px 0 #fff;
+}
+
+.hebat-text {
+  font-size: clamp(1.2rem, 5vw, 1.8rem);
+  font-weight: 900;
+  color: #ff5f6d;
+}
+
+.stars {
+  font-size: clamp(1.4rem, 6vw, 2rem);
+  animation: twinkle 1.2s ease-in-out infinite;
+}
+
+.party-row {
+  font-size: clamp(1.6rem, 7vw, 2.4rem);
+}
+
+.score-box {
+  background: #fff;
+  border-radius: 24px;
+  padding: 20px 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.score-line {
+  font-size: clamp(1.1rem, 4.6vw, 1.5rem);
+  font-weight: 800;
+}
+.score-line.correct { color: #38c172; }
+.score-line.wrong   { color: #ff5b5b; }
+
+.retry-btn {
+  min-height: 56px;
+  font-size: clamp(1.05rem, 4.4vw, 1.4rem);
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(180deg, #7fd8ff, #4aa8ff);
+  padding: 0 36px;
+  border-radius: 999px;
+  box-shadow: 0 6px 0 #2d7fce;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.retry-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #2d7fce;
+}
+
+/* Confetti */
+.confetti-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.confetti-piece {
+  position: absolute;
+  top: -10%;
+  font-size: 1.4rem;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0.9; }
+}
+
+/* Firework burst */
+.firework-piece {
+  position: absolute;
+  font-size: 2rem;
+  opacity: 0;
+  animation: fireworkPop 1.1s ease-out forwards;
+}
+@keyframes fireworkPop {
+  0%   { opacity: 0; transform: scale(0.2); }
+  30%  { opacity: 1; transform: scale(1.3); }
+  70%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.4); }
+}
+
+/* ==================================================
+   RESPONSIVE TWEAKS
+================================================== */
+@media (max-height: 560px) {
+  .instruction-box { padding: 10px 14px; }
+  .card-img { width: clamp(120px, 28vw, 180px); height: clamp(120px, 28vw, 180px); }
+}
+
+@media (min-width: 700px) {
+  .card-grid { width: 520px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============ BACKGROUND DEKORASI (RINGAN) ============ -->
+<div class="bg-scene" aria-hidden="true">
+  <div class="cloud cloud1">☁️</div>
+  <div class="cloud cloud2">☁️</div>
+  <div class="rainbow">🌈</div>
+  <div class="balloon b1">🎈</div>
+  <div class="star s1">⭐</div>
+  <div class="star s2">⭐</div>
+</div>
+
+<!-- ============ TOMBOL MUSIK ============ -->
+<button id="musicToggleBtn" class="music-btn" type="button" aria-label="Musik ON/OFF">
+  🔊 Musik
+</button>
+
+<!-- ============ HALAMAN AWAL (UNTUK MEMBUKA AUDIO) ============ -->
+<section id="startScreen" class="screen start-screen">
+  <div class="start-icons" id="startIcons">
+    <img class="start-icon" id="startIconMata" alt="Mata">
+    <img class="start-icon" id="startIconHidung" alt="Hidung">
+    <img class="start-icon" id="startIconMulut" alt="Mulut">
+    <img class="start-icon" id="startIconTelinga" alt="Telinga">
+  </div>
+  <h1 class="title">Ayo Kenali Alat Inderamu</h1>
+  <p class="start-subtitle">Yuk main sambil belajar mengenal alat indera!</p>
+  <button type="button" id="startBtn" class="start-btn">🔊 MULAI BERMAIN</button>
+</section>
+
+<!-- ============ HALAMAN PERMAINAN ============ -->
+<main id="gameScreen" class="screen game-screen hidden">
+  <h1 class="title">Ayo Kenali Alat Inderamu</h1>
+
+  <div class="progress" id="progressText">Soal 1 / 4</div>
+
+  <div class="instruction-box">
+    <div class="instruction-content">
+      <div class="instruction-text" id="instructionText">TUNJUK HIDUNG</div>
+    </div>
+    <button type="button" id="soundBtn" class="sound-btn" aria-label="Putar suara soal">🔊</button>
+  </div>
+
+  <div class="card-grid" id="cardGrid">
+    <div class="card-btn" id="cardLeft" data-key="">
+      <img src="" alt="" class="card-img" id="imgLeft">
+      <button type="button" class="reveal-btn" aria-label="Tampilkan nama gambar">ABC</button>
+      <span class="card-label" id="labelLeft"></span>
+      <span class="feedback-icon" aria-hidden="true"></span>
+    </div>
+    <div class="card-btn" id="cardRight" data-key="">
+      <img src="" alt="" class="card-img" id="imgRight">
+      <button type="button" class="reveal-btn" aria-label="Tampilkan nama gambar">ABC</button>
+      <span class="card-label" id="labelRight"></span>
+      <span class="feedback-icon" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <button type="button" id="nextBtn" class="next-btn hidden">➡️ NEXT</button>
+</main>
+
+<!-- ============ HALAMAN HASIL ============ -->
+<section id="resultScreen" class="screen result-screen hidden">
+  <div class="confetti-layer" id="confettiLayer"></div>
+  <h2 class="result-title">🎉 PERMAINAN SELESAI</h2>
+
+  <div id="perfectBadge" class="perfect-badge hidden">
+    <div class="trophy">🏆 PERFECT</div>
+    <div class="hebat-text">KAMU HEBAT!</div>
+    <div class="stars">⭐⭐⭐⭐⭐</div>
+    <div class="party-row">🎈 🎉 👏</div>
+  </div>
+
+  <div class="score-box">
+    <div class="score-line correct">Benar : <span id="scoreCorrect">0</span></div>
+    <div class="score-line wrong">Salah : <span id="scoreWrong">0</span></div>
+  </div>
+
+  <button type="button" id="retryBtn" class="retry-btn">🔄 COBA LAGI</button>
+</section>
+
+<!-- ============ AUDIO ELEMENTS ============
+     Setiap audio mencoba file LOKAL lebih dulu (folder sounds/).
+     Jika file lokal tidak ditemukan, browser otomatis mencoba
+     sumber online sebagai cadangan (fallback). -->
+<audio id="bgm" loop preload="auto">
+  <source src="sounds/bgm.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="audioTunjukMata" preload="auto">
+  <source src="sounds/tunjuk-mata.mp3" type="audio/mpeg">
+  <source src="https://raw.githubusercontent.com/mhrofficialid/1.-Tunjuk-4-Alat-Indera/main/Tunjuk%20mata.mp3" type="audio/mpeg">
+</audio>
+<audio id="audioTunjukHidung" preload="auto">
+  <source src="sounds/tunjuk-hidung.mp3" type="audio/mpeg">
+  <source src="https://raw.githubusercontent.com/mhrofficialid/1.-Tunjuk-4-Alat-Indera/main/Tunjuk%20hidung.mp3" type="audio/mpeg">
+</audio>
+<audio id="audioTunjukMulut" preload="auto">
+  <source src="sounds/tunjuk-mulut.mp3" type="audio/mpeg">
+  <source src="https://raw.githubusercontent.com/mhrofficialid/1.-Tunjuk-4-Alat-Indera/main/Tunjuk%20mulut.mp3" type="audio/mpeg">
+</audio>
+<audio id="audioTunjukTelinga" preload="auto">
+  <source src="sounds/tunjuk-telinga.mp3" type="audio/mpeg">
+  <source src="https://raw.githubusercontent.com/mhrofficialid/1.-Tunjuk-4-Alat-Indera/main/Tunjuk%20telinga.mp3" type="audio/mpeg">
+</audio>
+<audio id="audioKamuHebat" preload="auto">
+  <source src="sounds/kamu-hebat.mp3" type="audio/mpeg">
+  <source src="https://raw.githubusercontent.com/mhrofficialid/1.-Tunjuk-4-Alat-Indera/main/Kamu%20hebat.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* ==================================================
+   AKU ISTIMEWA - Data Aset & Soal
+   (Data dipisah dari logika permainan)
+================================================== */
+
+/* Data 4 alat indera.
+   "image"        -> path lokal (diprioritaskan, dipakai jika file sudah
+                      ditaruh di folder assets/, lihat README).
+   "imageFallback"-> URL online, dipakai otomatis jika file lokal tidak ada.
+   "emoji"        -> cadangan terakhir jika kedua gambar gagal dimuat. */
+const SENSE_ITEMS = {
+  mata: {
+    key: "mata",
+    label: "Mata",
+    image: "assets/mata.png",
+    imageFallback: "https://www.image2url.com/r2/default/images/1783084041232-17975053-4a64-422a-a0be-4e1019392b8e.png",
+    emoji: "👀",
+    audioId: "audioTunjukMata"
+  },
+  hidung: {
+    key: "hidung",
+    label: "Hidung",
+    image: "assets/hidung.png",
+    imageFallback: "https://www.image2url.com/r2/default/images/1783084496928-1522eac2-70d7-4e56-b0a2-76d442fe6085.png",
+    emoji: "👃",
+    audioId: "audioTunjukHidung"
+  },
+  mulut: {
+    key: "mulut",
+    label: "Mulut",
+    image: "assets/mulut.png",
+    imageFallback: "https://www.image2url.com/r2/default/images/1783084547439-557ce244-b495-4e08-90bf-3427d89cdc70.png",
+    emoji: "👄",
+    audioId: "audioTunjukMulut"
+  },
+  telinga: {
+    key: "telinga",
+    label: "Telinga",
+    image: "assets/telinga.png",
+    imageFallback: "https://www.image2url.com/r2/default/images/1783084571384-38da8e15-499c-43ef-a401-e8ac6682b311.png",
+    emoji: "👂",
+    audioId: "audioTunjukTelinga"
+  }
+};
+
+/* Urutan dasar 4 soal: setiap soal akan diacak urutannya,
+   dan setiap soal akan dipasangkan dengan 1 gambar pengecoh acak. */
+const QUESTION_KEYS = ["mata", "hidung", "mulut", "telinga"];
+
+</script>
+<script>
+/* ==================================================
+   AKU ISTIMEWA - Mengenal Alat Indera
+   Logika Permainan (Vanilla JS)
+   Data soal & aset ada di data.js
+================================================== */
+
+/* ---------- STATE ---------- */
+const state = {
+  order: [],        // urutan 4 soal (array of question key), teracak
+  currentIndex: 0,
+  currentPair: null, // { correctKey, options: [itemA, itemB] } untuk soal berjalan
+  correctCount: 0,
+  wrongCount: 0,
+  isLocked: false,   // mencegah double click saat memilih jawaban
+  musicOn: true
+};
+
+/* ---------- ELEMENT REFERENCES ---------- */
+const el = {
+  startScreen: document.getElementById("startScreen"),
+  startBtn: document.getElementById("startBtn"),
+  startIconMata: document.getElementById("startIconMata"),
+  startIconHidung: document.getElementById("startIconHidung"),
+  startIconMulut: document.getElementById("startIconMulut"),
+  startIconTelinga: document.getElementById("startIconTelinga"),
+  gameScreen: document.getElementById("gameScreen"),
+  resultScreen: document.getElementById("resultScreen"),
+  progressText: document.getElementById("progressText"),
+  soundBtn: document.getElementById("soundBtn"),
+  instructionText: document.getElementById("instructionText"),
+  cardLeft: document.getElementById("cardLeft"),
+  cardRight: document.getElementById("cardRight"),
+  imgLeft: document.getElementById("imgLeft"),
+  imgRight: document.getElementById("imgRight"),
+  labelLeft: document.getElementById("labelLeft"),
+  labelRight: document.getElementById("labelRight"),
+  nextBtn: document.getElementById("nextBtn"),
+  musicToggleBtn: document.getElementById("musicToggleBtn"),
+  bgm: document.getElementById("bgm"),
+  scoreCorrect: document.getElementById("scoreCorrect"),
+  scoreWrong: document.getElementById("scoreWrong"),
+  perfectBadge: document.getElementById("perfectBadge"),
+  retryBtn: document.getElementById("retryBtn"),
+  confettiLayer: document.getElementById("confettiLayer")
+};
+
+const cardEls = [el.cardLeft, el.cardRight];
+
+/* Timer untuk auto-hide label ABC, disimpan per kartu agar tidak tumpang tindih */
+const labelTimers = new WeakMap();
+
+/* ==================================================
+   AUDIO HELPERS
+================================================== */
+
+/* Suara cadangan pakai Text-to-Speech bawaan browser.
+   Dipakai otomatis kalau file audio (lokal maupun online) gagal dimuat,
+   supaya instruksi tetap terdengar walau belum ada file mp3 sama sekali. */
+function speak(text) {
+  try {
+    if (!("speechSynthesis" in window) || !text) return;
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "id-ID";
+    utter.rate = 0.9;
+    utter.pitch = 1.1;
+    window.speechSynthesis.speak(utter);
+  } catch (err) {
+    /* abaikan jika text-to-speech tidak didukung */
+  }
+}
+
+function playAudioById(id, fallbackText) {
+  const audio = document.getElementById(id);
+  if (!audio) {
+    speak(fallbackText);
+    return;
+  }
+  let fallbackUsed = false;
+  const useFallback = () => {
+    if (fallbackUsed) return;
+    fallbackUsed = true;
+    speak(fallbackText);
+  };
+  try {
+    audio.currentTime = 0;
+    audio.onerror = useFallback;
+    const playPromise = audio.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(useFallback);
+    }
+  } catch (err) {
+    useFallback();
+  }
+}
+
+/* Bunyi feedback benar/salah/tepuk tangan dibuat dengan Web Audio API
+   (nada sederhana, BUKAN suara AI / BUKAN text-to-speech) karena file
+   tersebut tidak tersedia di repository sumber audio. */
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AC();
+  }
+  return audioCtx;
+}
+
+function playTone(freqSequence) {
+  try {
+    const ctx = getAudioCtx();
+    let t = ctx.currentTime;
+    freqSequence.forEach(([freq, dur]) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.0001, t);
+      gain.gain.exponentialRampToValueAtTime(0.25, t + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(t);
+      osc.stop(t + dur + 0.02);
+      t += dur;
+    });
+  } catch (err) {
+    /* abaikan jika AudioContext tidak tersedia */
+  }
+}
+
+function playSoundBenar() {
+  playTone([[880, 0.12], [1175, 0.18]]);
+}
+
+function playSoundSalah() {
+  // efek "te-tot"
+  playTone([[600, 0.15], [350, 0.25]]);
+}
+
+function playTepukTangan() {
+  playTone([[500, 0.05], [500, 0.05], [500, 0.05], [500, 0.05], [500, 0.05]]);
+}
+
+/* ==================================================
+   MUSIK LATAR
+================================================== */
+
+function unlockAudioContext() {
+  try {
+    getAudioCtx();
+    if (audioCtx && audioCtx.state === "suspended") {
+      audioCtx.resume();
+    }
+  } catch (err) {
+    /* abaikan jika AudioContext tidak tersedia */
+  }
+}
+
+function toggleMusic() {
+  state.musicOn = !state.musicOn;
+  if (state.musicOn) {
+    el.bgm.play().catch(() => {});
+    el.musicToggleBtn.textContent = "🔊 Musik";
+    el.musicToggleBtn.classList.remove("off");
+  } else {
+    el.bgm.pause();
+    el.musicToggleBtn.textContent = "🔈 Musik";
+    el.musicToggleBtn.classList.add("off");
+  }
+}
+
+function stopMusic() {
+  el.bgm.pause();
+  el.bgm.currentTime = 0;
+}
+
+/* ==================================================
+   UTIL
+================================================== */
+
+function shuffleArray(arr) {
+  const copy = arr.slice();
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function pickRandomDistractor(correctKey) {
+  const others = QUESTION_KEYS.filter((k) => k !== correctKey);
+  const shuffled = shuffleArray(others);
+  return shuffled[0];
+}
+
+/* ==================================================
+   GAMBAR DENGAN FALLBACK (lokal -> URL online -> emoji)
+================================================== */
+
+function loadImageWithFallback(imgEl, item, onAllFail) {
+  imgEl.style.display = "";
+  imgEl.onerror = () => {
+    if (imgEl.src !== item.imageFallback) {
+      imgEl.onerror = () => onAllFail(imgEl, item.emoji);
+      imgEl.src = item.imageFallback;
+    } else {
+      onAllFail(imgEl, item.emoji);
+    }
+  };
+  imgEl.alt = item.label;
+  imgEl.src = item.image;
+}
+
+function setupStartIcons() {
+  const iconMap = [
+    [el.startIconMata, SENSE_ITEMS.mata],
+    [el.startIconHidung, SENSE_ITEMS.hidung],
+    [el.startIconMulut, SENSE_ITEMS.mulut],
+    [el.startIconTelinga, SENSE_ITEMS.telinga]
+  ];
+  iconMap.forEach(([imgEl, item]) => {
+    loadImageWithFallback(imgEl, item, (img, emoji) => {
+      img.style.display = "none";
+      const span = document.createElement("span");
+      span.className = "start-icon start-icon-emoji";
+      span.textContent = emoji;
+      img.insertAdjacentElement("afterend", span);
+    });
+  });
+}
+
+/* ==================================================
+   ALUR PERMAINAN
+================================================== */
+
+function startGame() {
+  state.order = shuffleArray(QUESTION_KEYS);
+  state.currentIndex = 0;
+  state.correctCount = 0;
+  state.wrongCount = 0;
+  state.isLocked = false;
+
+  el.resultScreen.classList.add("hidden");
+  el.gameScreen.classList.remove("hidden");
+  el.perfectBadge.classList.add("hidden");
+  el.confettiLayer.innerHTML = "";
+
+  if (state.musicOn) {
+    el.bgm.play().catch(() => {});
+  }
+
+  loadQuestion();
+}
+
+function loadQuestion() {
+  const correctKey = state.order[state.currentIndex];
+  const distractorKey = pickRandomDistractor(correctKey);
+
+  // acak posisi kiri/kanan setiap soal
+  const positioned = shuffleArray([correctKey, distractorKey]);
+
+  state.currentPair = { correctKey, options: positioned };
+
+  el.progressText.textContent = `Soal ${state.currentIndex + 1} / ${state.order.length}`;
+  el.instructionText.textContent = `TUNJUK ${SENSE_ITEMS[correctKey].label.toUpperCase()}`;
+
+  renderCard(el.cardLeft, el.imgLeft, el.labelLeft, positioned[0]);
+  renderCard(el.cardRight, el.imgRight, el.labelRight, positioned[1]);
+
+  resetCards();
+  el.nextBtn.classList.add("hidden");
+  state.isLocked = false;
+
+  playAudioById(SENSE_ITEMS[correctKey].audioId, `Tunjuk ${SENSE_ITEMS[correctKey].label}`);
+}
+
+function renderCard(cardEl, imgEl, labelEl, itemKey) {
+  const item = SENSE_ITEMS[itemKey];
+  cardEl.dataset.key = itemKey;
+  labelEl.textContent = item.label;
+
+  const emojiFallback = cardEl.querySelector(".card-emoji-fallback");
+  if (emojiFallback) emojiFallback.remove();
+
+  loadImageWithFallback(imgEl, item, (img, emoji) => {
+    showEmojiFallback(cardEl, img, emoji);
+  });
+}
+
+function showEmojiFallback(cardEl, imgEl, emoji) {
+  imgEl.style.display = "none";
+  const span = document.createElement("span");
+  span.className = "card-emoji-fallback";
+  span.textContent = emoji;
+  cardEl.insertBefore(span, imgEl.nextSibling);
+}
+
+function resetCards() {
+  cardEls.forEach((card) => {
+    card.classList.remove("correct", "wrong", "disabled");
+    const icon = card.querySelector(".feedback-icon");
+    icon.textContent = "";
+    const label = card.querySelector(".card-label");
+    label.classList.remove("show");
+    const existingTimer = labelTimers.get(label);
+    if (existingTimer) {
+      clearTimeout(existingTimer);
+      labelTimers.delete(label);
+    }
+  });
+}
+
+function disableAllCards() {
+  cardEls.forEach((card) => card.classList.add("disabled"));
+}
+
+function handleCardClick(card) {
+  if (state.isLocked) return;
+  state.isLocked = true;
+
+  const chosenKey = card.dataset.key;
+  const isCorrect = chosenKey === state.currentPair.correctKey;
+  const icon = card.querySelector(".feedback-icon");
+
+  disableAllCards();
+
+  if (isCorrect) {
+    card.classList.add("correct");
+    icon.textContent = "✅";
+    spawnStarBurst(card);
+    state.correctCount += 1;
+    playSoundBenar();
+    setTimeout(() => playAudioById("audioKamuHebat", "Kamu hebat!"), 350);
+  } else {
+    card.classList.add("wrong");
+    icon.textContent = "❌";
+    state.wrongCount += 1;
+    playSoundSalah();
+  }
+
+  el.nextBtn.classList.remove("hidden");
+}
+
+function spawnStarBurst(card) {
+  const burst = document.createElement("div");
+  burst.className = "burst";
+  const starsCount = 6;
+  for (let i = 0; i < starsCount; i++) {
+    const s = document.createElement("span");
+    s.textContent = "⭐";
+    const angle = (Math.PI * 2 * i) / starsCount;
+    const dist = 60;
+    s.style.setProperty("--dx", `${Math.cos(angle) * dist}px`);
+    s.style.setProperty("--dy", `${Math.sin(angle) * dist}px`);
+    burst.appendChild(s);
+  }
+  card.appendChild(burst);
+  setTimeout(() => burst.remove(), 850);
+}
+
+function goToNextQuestion() {
+  if (state.currentIndex < state.order.length - 1) {
+    state.currentIndex += 1;
+    loadQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  stopMusic();
+  el.gameScreen.classList.add("hidden");
+  el.resultScreen.classList.remove("hidden");
+
+  el.scoreCorrect.textContent = state.correctCount;
+  el.scoreWrong.textContent = state.wrongCount;
+
+  const isPerfect = state.correctCount === QUESTION_KEYS.length && state.wrongCount === 0;
+
+  if (isPerfect) {
+    el.perfectBadge.classList.remove("hidden");
+    spawnConfetti();
+    spawnFireworks();
+    playTepukTangan();
+    setTimeout(() => playAudioById("audioKamuHebat", "Kamu hebat!"), 300);
+  } else {
+    el.perfectBadge.classList.add("hidden");
+  }
+}
+
+function spawnConfetti() {
+  const emojis = ["🎉", "🎈", "⭐", "🌈", "✨"];
+  const total = 30;
+  for (let i = 0; i < total; i++) {
+    const piece = document.createElement("div");
+    piece.className = "confetti-piece";
+    piece.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.animationDuration = `${2 + Math.random() * 2}s`;
+    piece.style.animationDelay = `${Math.random() * 1.5}s`;
+    el.confettiLayer.appendChild(piece);
+  }
+}
+
+function spawnFireworks() {
+  const emojis = ["🎆", "🎇", "✨"];
+  const total = 10;
+  for (let i = 0; i < total; i++) {
+    const piece = document.createElement("div");
+    piece.className = "firework-piece";
+    piece.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    piece.style.left = `${10 + Math.random() * 80}%`;
+    piece.style.top = `${10 + Math.random() * 55}%`;
+    piece.style.animationDelay = `${Math.random() * 1.2}s`;
+    el.confettiLayer.appendChild(piece);
+  }
+}
+
+/* ==================================================
+   TOMBOL ABC (Tampilkan nama gambar sementara)
+================================================== */
+
+function showLabelTemporarily(card) {
+  const label = card.querySelector(".card-label");
+
+  const existingTimer = labelTimers.get(label);
+  if (existingTimer) clearTimeout(existingTimer);
+
+  // restart animasi fade
+  label.classList.remove("show");
+  // paksa reflow agar animasi bisa diulang
+  void label.offsetWidth;
+  label.classList.add("show");
+
+  const timer = setTimeout(() => {
+    label.classList.remove("show");
+    labelTimers.delete(label);
+  }, 2000);
+
+  labelTimers.set(label, timer);
+}
+
+/* ==================================================
+   EVENT LISTENERS
+================================================== */
+
+cardEls.forEach((card) => {
+  card.addEventListener("click", () => handleCardClick(card));
+
+  const revealBtn = card.querySelector(".reveal-btn");
+  revealBtn.addEventListener("click", (event) => {
+    event.stopPropagation();
+    showLabelTemporarily(card);
+  });
+});
+
+el.nextBtn.addEventListener("click", () => {
+  if (el.nextBtn.classList.contains("hidden")) return;
+  goToNextQuestion();
+});
+
+el.startBtn.addEventListener("click", () => {
+  unlockAudioContext();
+
+  el.startScreen.classList.add("hidden");
+  el.gameScreen.classList.remove("hidden");
+
+  if (state.musicOn) {
+    el.bgm.play().catch(() => {});
+  }
+
+  startGame();
+});
+
+el.retryBtn.addEventListener("click", startGame);
+
+el.musicToggleBtn.addEventListener("click", toggleMusic);
+
+el.soundBtn.addEventListener("click", () => {
+  if (!state.currentPair) return;
+  const item = SENSE_ITEMS[state.currentPair.correctKey];
+  playAudioById(item.audioId, `Tunjuk ${item.label}`);
+});
+
+/* ==================================================
+   INISIALISASI
+================================================== */
+
+el.bgm.volume = 0.2;
+setupStartIcons();
+
+</script>
+</body>
+</html>
