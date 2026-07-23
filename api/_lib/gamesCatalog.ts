@@ -34,6 +34,12 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     ageRange: "3 Tahun",
     premium: true,
   },
+  {
+    id: "susun_huruf_anggota_tubuh",
+    name: "Susun huruf 4 anggota tubuh",
+    ageRange: "3 Tahun",
+    premium: true,
+  },
   // TODO: tambahkan 48 game lainnya di sini, format sama seperti di atas.
 ];
 
