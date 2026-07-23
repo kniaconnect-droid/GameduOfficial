@@ -18,6 +18,7 @@ import { useAuth } from "./lib/useAuth";
 import berburuAngkaCover from "./assets/images/game_berburu_angka_cover_1783908422344.jpg";
 import susunKataCover from "./assets/images/game_susun_kata_cover_1783908434702.jpg";
 import berhitungCeriaCover from "./assets/images/game_berhitung_ceria_cover.jpg";
+import susunHurufTubuhCover from "./assets/images/game_susun_huruf_anggota_tubuh_cover.jpg";
 
 // Profil "tamu" dipakai selama user belum login, supaya Homepage, pilih usia,
 // dan game trial tetap bisa diakses tanpa perlu daftar/login dulu. Login cuma
@@ -79,6 +80,14 @@ export default function App() {
       premium: true,
       description: "Cocokkan angka 1–5 dengan jumlah benda pada gambar asli yang ceria. Melatih pengenalan angka awal dan konsentrasi anak lewat 5 soal interaktif.",
       coverImage: berhitungCeriaCover
+    },
+    {
+      id: "susun_huruf_anggota_tubuh",
+      name: "Susun huruf 4 anggota tubuh",
+      ageRange: "3 Tahun",
+      premium: true,
+      description: "Asah kemampuan mengeja kosa kata anggota tubuh (kaki, tangan, perut, rambut) dengan menyusun huruf-huruf abjad interaktif yang ceria.",
+      coverImage: susunHurufTubuhCover
     }
   ];
 
