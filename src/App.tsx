@@ -19,6 +19,8 @@ import berburuAngkaCover from "./assets/images/game_berburu_angka_cover_17839084
 import susunKataCover from "./assets/images/game_susun_kata_cover_1783908434702.jpg";
 import berhitungCeriaCover from "./assets/images/game_berhitung_ceria_cover.jpg";
 import susunHurufTubuhCover from "./assets/images/game_susun_huruf_anggota_tubuh_cover.jpg";
+import akuIstimewa2Cover from "./assets/images/game_aku_istimewa_2_gambar_cover.jpg";
+import akuIstimewa3Cover from "./assets/images/game_aku_istimewa_3_gambar_cover.jpg";
 
 // Profil "tamu" dipakai selama user belum login, supaya Homepage, pilih usia,
 // dan game trial tetap bisa diakses tanpa perlu daftar/login dulu. Login cuma
@@ -88,6 +90,22 @@ export default function App() {
       premium: true,
       description: "Asah kemampuan mengeja kosa kata anggota tubuh (kaki, tangan, perut, rambut) dengan menyusun huruf-huruf abjad interaktif yang ceria.",
       coverImage: susunHurufTubuhCover
+    },
+    {
+      id: "aku_istimewa_2_gambar",
+      name: "Tunjuk diantara 2 gambar",
+      ageRange: "3 Tahun",
+      premium: true,
+      description: "Latih anak menunjuk alat indera (mata, hidung, mulut, telinga) yang benar di antara 2 pilihan gambar sambil mendengar instruksi suara.",
+      coverImage: akuIstimewa2Cover
+    },
+    {
+      id: "aku_istimewa_3_gambar",
+      name: "Tunjuk diantara 3 gambar",
+      ageRange: "3 Tahun",
+      premium: true,
+      description: "Latih anak menunjuk alat indera (mata, hidung, mulut, telinga) yang benar di antara 3 pilihan gambar sambil mendengar instruksi suara.",
+      coverImage: akuIstimewa3Cover
     }
   ];
 
