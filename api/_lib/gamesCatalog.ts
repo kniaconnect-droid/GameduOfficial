@@ -40,6 +40,18 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     ageRange: "3 Tahun",
     premium: true,
   },
+  {
+    id: "aku_istimewa_2_gambar",
+    name: "Tunjuk diantara 2 gambar",
+    ageRange: "3 Tahun",
+    premium: true,
+  },
+  {
+    id: "aku_istimewa_3_gambar",
+    name: "Tunjuk diantara 3 gambar",
+    ageRange: "3 Tahun",
+    premium: true,
+  },
   // TODO: tambahkan 48 game lainnya di sini, format sama seperti di atas.
 ];
 
