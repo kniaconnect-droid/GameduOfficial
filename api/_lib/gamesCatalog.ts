@@ -64,6 +64,18 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     ageRange: "3 Tahun",
     premium: true,
   },
+  {
+    id: "susun_huruf_8_anggota_tubuh",
+    name: "Susun Huruf 8 Anggota Tubuh",
+    ageRange: "4 Tahun",
+    premium: false,
+  },
+  {
+    id: "mencocokkan_nama_alat_indera",
+    name: "Mencocokkan Nama Alat Indera",
+    ageRange: "4 Tahun",
+    premium: true,
+  },
   // TODO: tambahkan 48 game lainnya di sini, format sama seperti di atas.
 ];
 
