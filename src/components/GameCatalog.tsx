@@ -1,6 +1,6 @@
 import React from "react";
 import { Game } from "../types";
-import { Lock, Play, Sparkles } from "lucide-react";
+import { Lock, Play, Sparkles, Baby } from "lucide-react";
 
 interface GameCatalogProps {
   games: Game[];
@@ -58,8 +58,8 @@ export default function GameCatalog({ games, onPlayGame, isPremiumUser, onOpenPa
                     alt={game.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <span className="absolute top-4 left-4 text-[10px] font-black uppercase tracking-wider bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full text-slate-800 shadow-sm">
-                    👶 Usia {game.ageRange}
+                  <span className="absolute top-4 left-4 flex items-center gap-1 text-[10px] font-black uppercase tracking-wider bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full text-slate-800 shadow-sm">
+                    <Baby className="w-3 h-3" /> Usia {game.ageRange}
                   </span>
                 </div>
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { Game } from "../types";
+import { Apple, Eye, Rocket, ArrowRight } from "lucide-react";
 
 interface AgeCategoryProps {
   selectedAge: number | null;
@@ -16,7 +17,7 @@ export default function AgeCategory({ selectedAge, onSelectAge, games }: AgeCate
       gameCount: games.filter((g) => g.ageRange.includes("3")).length,
       bgClass: "bg-blue-50/40 border-blue-100 hover:border-blue-300 hover:bg-blue-50/80",
       accentBg: "bg-blue-600 text-white shadow-md shadow-blue-100",
-      icon: "🍎",
+      icon: Apple,
       tag: "Sensori & Angka"
     },
     {
@@ -26,7 +27,7 @@ export default function AgeCategory({ selectedAge, onSelectAge, games }: AgeCate
       gameCount: games.filter((g) => g.ageRange.includes("4")).length,
       bgClass: "bg-purple-50/40 border-purple-100 hover:border-purple-300 hover:bg-purple-50/80",
       accentBg: "bg-purple-600 text-white shadow-md shadow-purple-100",
-      icon: "👀",
+      icon: Eye,
       tag: "Kata & Logika"
     },
     {
@@ -36,7 +37,7 @@ export default function AgeCategory({ selectedAge, onSelectAge, games }: AgeCate
       gameCount: games.filter((g) => g.ageRange.includes("5")).length,
       bgClass: "bg-amber-50/40 border-amber-100 hover:border-amber-300 hover:bg-amber-50/80",
       accentBg: "bg-amber-600 text-white shadow-md shadow-amber-100",
-      icon: "🚀",
+      icon: Rocket,
       tag: "Persiapan Masuk SD"
     }
   ];
@@ -70,7 +71,9 @@ export default function AgeCategory({ selectedAge, onSelectAge, games }: AgeCate
               <div className="space-y-4">
                 {/* Badge & Icon */}
                 <div className="flex items-center justify-between">
-                  <div className="text-4xl">{cat.icon}</div>
+                  <div className="w-10 h-10 rounded-2xl bg-white flex items-center justify-center text-slate-700 shadow-sm">
+                    <cat.icon className="w-5 h-5" />
+                  </div>
                   <span className="text-[10px] font-black uppercase tracking-wider bg-white px-3.5 py-1.5 rounded-full text-slate-500 border border-slate-200/60 shadow-sm">
                     {cat.tag}
                   </span>
@@ -89,8 +92,8 @@ export default function AgeCategory({ selectedAge, onSelectAge, games }: AgeCate
                 <span className="text-xs font-black text-slate-500">
                   {cat.gameCount > 0 ? `${cat.gameCount} Permainan Edukasi` : "Segera Hadir"}
                 </span>
-                <span className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shadow-sm ${cat.accentBg} group-hover:scale-110 transition-all`}>
-                  ➔
+                <span className={`w-10 h-10 rounded-full flex items-center justify-center shadow-sm ${cat.accentBg} group-hover:scale-110 transition-all`}>
+                  <ArrowRight className="w-4 h-4" />
                 </span>
               </div>
             </div>

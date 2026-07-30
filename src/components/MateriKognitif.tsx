@@ -1,15 +1,27 @@
 import React, { useState } from "react";
 import { Lock, Sparkles, ChevronDown, Target, Eye, Home as HomeIcon, Gamepad2, FileText } from "lucide-react";
 import { MATERI_KOGNITIF_3_TAHUN } from "../lib/materiKognitif3Tahun";
+import { MATERI_KOGNITIF_4_TAHUN } from "../lib/materiKognitif4Tahun";
 
 interface MateriKognitifProps {
+  age: number;
   isPremiumUser: boolean;
   onOpenPayment: () => void;
 }
 
-export default function MateriKognitif({ isPremiumUser, onOpenPayment }: MateriKognitifProps) {
-  const [openId, setOpenId] = useState<string | null>(MATERI_KOGNITIF_3_TAHUN.kemampuan[0].id);
-  const data = MATERI_KOGNITIF_3_TAHUN;
+const MATERI_BY_AGE: Record<number, typeof MATERI_KOGNITIF_3_TAHUN> = {
+  3: MATERI_KOGNITIF_3_TAHUN,
+  4: MATERI_KOGNITIF_4_TAHUN
+};
+
+export default function MateriKognitif({ age, isPremiumUser, onOpenPayment }: MateriKognitifProps) {
+  const data = MATERI_BY_AGE[age] ?? MATERI_KOGNITIF_3_TAHUN;
+  const [openId, setOpenId] = useState<string | null>(data.kemampuan[0].id);
+
+  // Kalau pindah kategori usia, buka kartu pertama dari data yang baru lagi.
+  React.useEffect(() => {
+    setOpenId(data.kemampuan[0]?.id ?? null);
+  }, [age]);
 
   return (
     <section className="py-4">
@@ -42,7 +54,7 @@ export default function MateriKognitif({ isPremiumUser, onOpenPayment }: MateriK
                 </div>
                 <h3 className="text-lg font-bold text-slate-900">Materi Lengkap untuk Member Premium</h3>
                 <p className="text-slate-500 text-sm leading-relaxed">
-                  Buka {data.kemampuan.length} panduan lengkap perkembangan kognitif usia 3 tahun, lengkap dengan ide
+                  Buka {data.kemampuan.length} panduan lengkap perkembangan kognitif usia {age} tahun, lengkap dengan ide
                   stimulasi di rumah dan aktivitas GamEdu yang sesuai.
                 </p>
                 <button
@@ -107,8 +119,12 @@ function KemampuanCard({
             <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-indigo-600">
               <Gamepad2 className="w-4 h-4" /> Aktivitas di GamEdu
             </div>
-            <p className="text-xs text-slate-600 leading-relaxed">🎮 {item.aktivitasGame}</p>
-            <p className="text-xs text-slate-600 leading-relaxed">📄 {item.aktivitasWorksheet}</p>
+            <p className="text-xs text-slate-600 leading-relaxed flex items-start gap-1.5">
+              <Gamepad2 className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-indigo-400" /> {item.aktivitasGame}
+            </p>
+            <p className="text-xs text-slate-600 leading-relaxed flex items-start gap-1.5">
+              <FileText className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-indigo-400" /> {item.aktivitasWorksheet}
+            </p>
           </div>
         </div>
       )}

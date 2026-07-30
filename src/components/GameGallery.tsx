@@ -1,6 +1,6 @@
 import React from "react";
 import { Game } from "../types";
-import { Lock, Play, ArrowLeft, ArrowRight, BookOpen, LayoutGrid } from "lucide-react";
+import { Lock, Play, ArrowLeft, ArrowRight, BookOpen, LayoutGrid, ShieldCheck, Baby, Sparkles } from "lucide-react";
 import MateriKognitif from "./MateriKognitif";
 
 interface GameGalleryProps {
@@ -15,11 +15,13 @@ interface GameGalleryProps {
 }
 
 // Halaman ini SENGAJA cuma nampilin 2 game (1 trial gratis + 1 preview
-// terkunci) buat usia 3 tahun -- bukan semua game. Katalog lengkap semua game
+// terkunci) per kategori usia -- bukan semua game. Katalog lengkap semua game
 // premium ada di halaman terpisah "Katalog Game" (lihat GameCatalog.tsx),
 // yang seluruhnya cuma bisa diakses member Premium.
-const TRIAL_GAME_ID = "berburu_angka";
-const PREVIEW_GAME_ID = "berhitung_ceria";
+const SHOWCASE_GAMES_BY_AGE: Record<number, { trial: string; preview: string }> = {
+  3: { trial: "berburu_angka", preview: "berhitung_ceria" },
+  4: { trial: "susun_huruf_8_anggota_tubuh", preview: "mencocokkan_nama_alat_indera" }
+};
 
 export default function GameGallery({
   age,
@@ -31,9 +33,11 @@ export default function GameGallery({
   onGoToGameCatalog,
   onGoToWorksheets
 }: GameGalleryProps) {
-  const trialGame = games.find((g) => g.id === TRIAL_GAME_ID);
-  const previewGame = games.find((g) => g.id === PREVIEW_GAME_ID);
+  const showcaseIds = SHOWCASE_GAMES_BY_AGE[age];
+  const trialGame = showcaseIds ? games.find((g) => g.id === showcaseIds.trial) : undefined;
+  const previewGame = showcaseIds ? games.find((g) => g.id === showcaseIds.preview) : undefined;
   const showcaseGames = [trialGame, previewGame].filter(Boolean) as Game[];
+  const isTrialGame = (gameId: string) => showcaseIds?.trial === gameId;
 
   return (
     <section className="py-12 px-6 bg-gradient-to-b from-white to-blue-50/10 scroll-mt-20" id="gallery-container">
@@ -57,7 +61,7 @@ export default function GameGallery({
           </div>
 
           <div className="flex items-center gap-2 bg-blue-50/50 border border-blue-100/50 rounded-xl px-4 py-2 text-[11px] font-bold text-blue-800 self-start sm:self-center">
-            <span>🛡️</span> Data Game Aman & Terenkripsi Server
+            <ShieldCheck className="w-3.5 h-3.5" /> Data Game Aman & Terenkripsi Server
           </div>
         </div>
 
@@ -65,7 +69,7 @@ export default function GameGallery({
         {showcaseGames.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl">
             {showcaseGames.map((game) => {
-              const isTrial = game.id === TRIAL_GAME_ID;
+              const isTrial = isTrialGame(game.id);
               const isLocked = !isTrial && !isPremiumUser;
 
               return (
@@ -81,8 +85,8 @@ export default function GameGallery({
                         isLocked ? "blur-[1px]" : "group-hover:scale-105"
                       }`}
                     />
-                    <span className="absolute top-4 left-4 text-[10px] font-black uppercase tracking-wider bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full text-slate-800 shadow-sm">
-                      👶 Usia {game.ageRange}
+                    <span className="absolute top-4 left-4 flex items-center gap-1 text-[10px] font-black uppercase tracking-wider bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full text-slate-800 shadow-sm">
+                      <Baby className="w-3 h-3" /> Usia {game.ageRange}
                     </span>
                     <span
                       className={`absolute top-4 right-4 text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1 ${
@@ -130,7 +134,7 @@ export default function GameGallery({
           </div>
         ) : (
           <div className="bg-amber-50/50 border border-amber-100/60 rounded-3xl p-12 text-center max-w-xl mx-auto space-y-4">
-            <span className="text-4xl">🚀</span>
+            <Sparkles className="w-10 h-10 mx-auto text-amber-500" />
             <h3 className="text-lg font-bold text-slate-800">Kurikulum Sedang Dipersiapkan</h3>
             <p className="text-slate-500 text-sm leading-relaxed">
               Tim kurator kurikulum kami sedang menyiapkan game trial untuk kategori usia ini.
@@ -174,7 +178,9 @@ export default function GameGallery({
         </div>
 
         {/* Materi Kognitif (premium-gated) */}
-        <MateriKognitif isPremiumUser={isPremiumUser} onOpenPayment={onOpenPayment} />
+        {(age === 3 || age === 4) && (
+          <MateriKognitif age={age} isPremiumUser={isPremiumUser} onOpenPayment={onOpenPayment} />
+        )}
       </div>
     </section>
   );

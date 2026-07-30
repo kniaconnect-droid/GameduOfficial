@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Download, Lock, Sparkles, Loader2, CheckCircle2 } from "lucide-react";
+import { Download, Lock, Sparkles, Loader2, CheckCircle2, Clock } from "lucide-react";
 import { WORKSHEETS, WORKSHEET_CATEGORIES, WorksheetItem } from "../lib/worksheets";
 
 interface WorksheetCatalogProps {
+  age: number;
   isPremiumUser: boolean;
   getIdToken: (forceRefresh?: boolean) => Promise<string | null>;
   onOpenPayment: () => void;
@@ -11,6 +12,7 @@ interface WorksheetCatalogProps {
 }
 
 export default function WorksheetCatalog({
+  age,
   isPremiumUser,
   getIdToken,
   onOpenPayment,
@@ -21,6 +23,7 @@ export default function WorksheetCatalog({
   const [doneId, setDoneId] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+  const worksheetsForAge = WORKSHEETS.filter((w) => w.ageRange.includes(String(age)));
   const categories = Object.keys(WORKSHEET_CATEGORIES) as Array<keyof typeof WORKSHEET_CATEGORIES>;
 
   async function handleDownload(item: WorksheetItem) {
@@ -103,18 +106,26 @@ export default function WorksheetCatalog({
           <div className="bg-red-50 border border-red-100 text-red-700 text-sm rounded-2xl p-4">{errorMsg}</div>
         )}
 
-        {categories.map((cat) => {
-          const items = WORKSHEETS.filter((w) => w.category === cat);
-          if (items.length === 0) return null;
-          const meta = WORKSHEET_CATEGORIES[cat];
+        {worksheetsForAge.length === 0 ? (
+          <div className="bg-slate-50/70 border border-slate-200/60 rounded-3xl p-12 text-center max-w-xl mx-auto space-y-4">
+            <Clock className="w-10 h-10 mx-auto text-slate-400" />
+            <h3 className="text-lg font-bold text-slate-800">Coming Soon</h3>
+            <p className="text-slate-500 text-sm leading-relaxed">
+              Worksheet untuk kategori Usia {age} Tahun sedang disiapkan tim kurikulum kami. Nantikan update
+              selanjutnya, ya!
+            </p>
+          </div>
+        ) : (
+          categories.map((cat) => {
+            const items = worksheetsForAge.filter((w) => w.category === cat);
+            if (items.length === 0) return null;
+            const meta = WORKSHEET_CATEGORIES[cat];
 
-          return (
-            <div key={cat} className="space-y-5">
-              <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-                <span>{meta.emoji}</span> {meta.label}
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {items.map((item) => {
+            return (
+              <div key={cat} className="space-y-5">
+                <h3 className="text-lg font-bold text-slate-800">{meta.label}</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {items.map((item) => {
                   const isLocked = !isPremiumUser;
                   const isDownloading = downloadingId === item.id;
                   const isDone = doneId === item.id;
@@ -181,12 +192,13 @@ export default function WorksheetCatalog({
                         </button>
                       </div>
                     </div>
-                  );
-                })}
+                );
+              })}
               </div>
             </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
     </section>
   );
