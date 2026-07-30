@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Anak Menunjuk Apa? - Aku Istimewa</title>
+<style>
+/* =========================================================
+   ANAK MENUNJUK APA? - STYLE.CSS
+   Tema: Edukasi Anak PAUD - Level 2 (berdiri sendiri)
+========================================================= */
+
+:root {
+  --pink: #ffd1e8;
+  --pink-dark: #ff8fc7;
+  --blue: #cdeeff;
+  --blue-dark: #7fd4ff;
+  --yellow: #fff3b0;
+  --yellow-dark: #ffd93d;
+  --green: #c8f5d0;
+  --green-dark: #6fdc8c;
+  --purple: #e5d4ff;
+  --purple-dark: #b892ff;
+  --orange: #ffe0c2;
+  --orange-dark: #ffb15e;
+  --text-dark: #5a4a6a;
+  --white: #ffffff;
+  --shadow: rgba(90, 74, 106, 0.18);
+  --radius-lg: 32px;
+  --radius-md: 22px;
+  --radius-sm: 14px;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  font-family: 'Comic Sans MS', 'Trebuchet MS', 'Baloo 2', 'Segoe UI', sans-serif;
+  background: linear-gradient(180deg, #bfe9ff 0%, #d9f3ff 40%, #eafff1 100%);
+  min-height: 100vh;
+  color: var(--text-dark);
+  touch-action: manipulation;
+}
+
+#app {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* =========================================================
+   BACKGROUND SCENE
+========================================================= */
+.bg-scene {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.sun {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 90px;
+  height: 90px;
+  background: radial-gradient(circle at 35% 35%, #fff6c8, var(--yellow-dark));
+  border-radius: 50%;
+  box-shadow: 0 0 40px 10px rgba(255, 217, 61, 0.6);
+  animation: sun-pulse 4s ease-in-out infinite;
+}
+
+@keyframes sun-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.rainbow {
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 420px;
+  height: 210px;
+  border-radius: 50%;
+  border-top: 14px solid #ff9aa2;
+  box-shadow:
+    0 0 0 14px #ffd6a5 inset,
+    0 0 0 28px #fdffb6 inset,
+    0 0 0 42px #caffbf inset,
+    0 0 0 56px #9bf6ff inset,
+    0 0 0 70px #a0c4ff inset;
+  opacity: 0.85;
+}
+
+.cloud {
+  position: absolute;
+  background: #ffffff;
+  border-radius: 50px;
+  opacity: 0.9;
+}
+.cloud::before, .cloud::after {
+  content: "";
+  position: absolute;
+  background: #ffffff;
+  border-radius: 50%;
+}
+.cloud1 { width: 90px; height: 34px; top: 12%; left: -120px; animation: drift 26s linear infinite; }
+.cloud1::before { width: 50px; height: 50px; top: -22px; left: 10px; }
+.cloud1::after { width: 40px; height: 40px; top: -16px; left: 45px; }
+
+.cloud2 { width: 70px; height: 26px; top: 22%; left: -120px; animation: drift 34s linear infinite; animation-delay: -10s; }
+.cloud2::before { width: 38px; height: 38px; top: -16px; left: 8px; }
+.cloud2::after { width: 30px; height: 30px; top: -12px; left: 34px; }
+
+.cloud3 { width: 60px; height: 22px; top: 6%; left: -120px; animation: drift 40s linear infinite; animation-delay: -22s; }
+.cloud3::before { width: 30px; height: 30px; top: -14px; left: 6px; }
+.cloud3::after { width: 26px; height: 26px; top: -10px; left: 28px; }
+
+@keyframes drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(100vw + 200px)); }
+}
+
+.balloon {
+  position: absolute;
+  width: 34px;
+  height: 42px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  bottom: -80px;
+  opacity: 0.85;
+}
+.balloon::after {
+  content: "";
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  width: 2px;
+  height: 22px;
+  background: rgba(90,74,106,0.4);
+}
+.balloon1 { background: var(--pink-dark); left: 12%; animation: float-up 14s ease-in infinite; }
+.balloon2 { background: var(--blue-dark); left: 68%; animation: float-up 18s ease-in infinite; animation-delay: -5s; }
+.balloon3 { background: var(--yellow-dark); left: 40%; animation: float-up 16s ease-in infinite; animation-delay: -9s; }
+.balloon4 { background: var(--purple-dark); left: 85%; animation: float-up 20s ease-in infinite; animation-delay: -3s; }
+
+@keyframes float-up {
+  0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.85; }
+  50% { transform: translateY(-55vh) translateX(20px) rotate(5deg); }
+  100% { transform: translateY(-115vh) translateX(-15px) rotate(-5deg); opacity: 0; }
+}
+
+/* =========================================================
+   SCREENS
+========================================================= */
+.screen {
+  display: none;
+  width: 100%;
+  max-width: 480px;
+  flex-direction: column;
+  align-items: center;
+  animation: fade-in 0.5s ease;
+}
+.screen.active-screen {
+  display: flex;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 0 var(--shadow), 0 16px 30px var(--shadow);
+  padding: 28px 22px;
+  width: 100%;
+  text-align: center;
+  animation: pop-in 0.45s cubic-bezier(.34,1.56,.64,1);
+}
+
+@keyframes pop-in {
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.level-header {
+  text-align: center;
+  margin-bottom: 14px;
+}
+.level-badge {
+  display: inline-block;
+  background: var(--purple-dark);
+  color: var(--white);
+  font-weight: bold;
+  padding: 6px 18px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+}
+.level-header h2 {
+  margin: 4px 0 0;
+  font-size: 1.5rem;
+  color: var(--text-dark);
+}
+
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
+h1.title-bounce {
+  font-size: 1.9rem;
+  margin: 0 0 6px;
+  animation: title-bounce 1.6s ease-in-out infinite;
+}
+@keyframes title-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  margin: 0 0 16px;
+  color: #7a6a8a;
+}
+
+.instruction-text {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--text-dark);
+  margin: 6px 0 18px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s ease;
+}
+.instruction-text:active {
+  transform: scale(0.95);
+}
+.instruction-text::after {
+  content: " 🔊";
+  font-size: 0.9em;
+  opacity: 0.6;
+}
+
+.feedback-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--green-dark);
+  margin: 10px 0 0;
+  animation: star-pop 0.5s ease;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+.btn {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: bold;
+  border-radius: var(--radius-md);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  touch-action: manipulation;
+}
+.btn:active {
+  transform: translateY(4px) scale(0.98);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.15) !important;
+}
+.btn-primary {
+  background: linear-gradient(180deg, var(--pink-dark), #ff6fb0);
+  color: var(--white);
+  box-shadow: 0 6px 0 #d94f8c;
+}
+.btn-big {
+  width: 100%;
+  padding: 18px 20px;
+  font-size: 1.2rem;
+  margin-top: 14px;
+}
+.btn-big:hover {
+  animation: btn-bounce 0.5s ease;
+}
+@keyframes btn-bounce {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
+}
+
+.sound-toggle {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 10;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: var(--white);
+  box-shadow: 0 6px 0 var(--shadow);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.sound-toggle:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 var(--shadow);
+}
+
+/* =========================================================
+   HALAMAN MULAI (HOME)
+========================================================= */
+.home-card { padding-top: 34px; }
+.home-face {
+  position: relative;
+  width: 220px;
+  height: 140px;
+  margin: 10px auto 20px;
+}
+.home-part {
+  position: absolute;
+  animation: gentle-float 3s ease-in-out infinite;
+}
+.home-eye { width: 46px; top: 0; left: 30px; }
+.home-nose { width: 40px; top: 40px; left: 90px; animation-delay: -1s; }
+.home-mouth { width: 60px; top: 90px; left: 78px; animation-delay: -2s; }
+
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* =========================================================
+   BERMAIN - ANAK MENUNJUK
+========================================================= */
+.point-image-wrap {
+  background: var(--green);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.point-img {
+  width: 100%;
+  max-width: 220px;
+  border-radius: var(--radius-sm);
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.choice-btn {
+  background: var(--blue);
+  border: 3px solid var(--blue-dark);
+  border-radius: var(--radius-md);
+  padding: 16px 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--text-dark);
+  cursor: pointer;
+  box-shadow: 0 5px 0 var(--blue-dark);
+}
+.choice-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 var(--blue-dark);
+}
+.choice-btn.choice-correct {
+  background: var(--green);
+  border-color: var(--green-dark);
+  box-shadow: 0 5px 0 var(--green-dark);
+  animation: glow-pop 0.6s ease;
+}
+.choice-btn.choice-wrong {
+  background: #ffd6d6;
+  border-color: #ff8f8f;
+  box-shadow: 0 5px 0 #ff8f8f;
+  animation: shake 0.5s ease;
+}
+@keyframes glow-pop {
+  0% { filter: drop-shadow(0 0 0 var(--green-dark)); transform: scale(1); }
+  40% { filter: drop-shadow(0 0 18px var(--green-dark)); transform: scale(1.35); }
+  100% { filter: drop-shadow(0 0 6px var(--green-dark)); transform: scale(1.15); }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+}
+
+/* =========================================================
+   HALAMAN SKOR / SELESAI
+========================================================= */
+.finish-card { padding-top: 30px; }
+.score-display {
+  font-size: 2.6rem;
+  font-weight: bold;
+  color: var(--pink-dark);
+  margin: 6px 0;
+}
+.finish-stars {
+  font-size: 2rem;
+  margin: 10px 0;
+  animation: star-pop 0.8s ease;
+}
+@keyframes star-pop {
+  0% { transform: scale(0) rotate(0deg); }
+  60% { transform: scale(1.4) rotate(20deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+.praise-text {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--green-dark);
+  margin: 4px 0 0;
+}
+
+/* =========================================================
+   CONFETTI
+========================================================= */
+#confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  overflow: hidden;
+}
+.confetti-piece {
+  position: absolute;
+  top: -20px;
+  width: 10px;
+  height: 16px;
+  opacity: 0.9;
+  animation: confetti-fall linear forwards;
+}
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(540deg); opacity: 0.9; }
+}
+
+/* =========================================================
+   RESPONSIVE - MOBILE FIRST TWEAKS
+========================================================= */
+@media (max-width: 380px) {
+  .card { padding: 22px 16px; }
+  h1.title-bounce { font-size: 1.5rem; }
+}
+
+@media (min-width: 600px) {
+  .screen { max-width: 520px; }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+</style>
+</head>
+<body>
+
+  <!-- LATAR BELAKANG ANIMASI -->
+  <div class="bg-scene" aria-hidden="true">
+    <div class="sun"></div>
+    <div class="rainbow"></div>
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+    <div class="balloon balloon1"></div>
+    <div class="balloon balloon2"></div>
+    <div class="balloon balloon3"></div>
+    <div class="balloon balloon4"></div>
+  </div>
+
+  <!-- CONFETTI CONTAINER -->
+  <div id="confetti-container" aria-hidden="true"></div>
+
+  <main id="app">
+
+    <!-- ===================== HALAMAN MULAI ===================== -->
+    <section id="screen-start" class="screen active-screen">
+      <div class="card home-card">
+        <h1 class="title-bounce">👉 Anak Menunjuk Apa? 👉</h1>
+        <p class="subtitle">Ayo tebak, anak sedang menunjuk apa!</p>
+        <div class="home-face">
+          <img src="https://raw.githubusercontent.com/mhrofficialid/Gambar-alat-indera/08b7b7f677da39d8dfb72205a3958c71e064be2a/mata.png" alt="Mata" class="home-part home-eye" />
+          <img src="https://raw.githubusercontent.com/mhrofficialid/Gambar-alat-indera/08b7b7f677da39d8dfb72205a3958c71e064be2a/hidung.png" alt="Hidung" class="home-part home-nose" />
+          <img src="https://raw.githubusercontent.com/mhrofficialid/Gambar-alat-indera/08b7b7f677da39d8dfb72205a3958c71e064be2a/mulut.png" alt="Mulut" class="home-part home-mouth" />
+        </div>
+        <button class="btn btn-primary btn-big" id="btn-start">▶ Mulai</button>
+      </div>
+    </section>
+
+    <!-- ===================== BERMAIN: ANAK MENUNJUK APA? ===================== -->
+    <section id="screen-play" class="screen">
+      <div class="level-header">
+        <span class="level-badge" id="round-badge">Soal 1 / 4</span>
+        <h2>Anak Menunjuk Apa?</h2>
+      </div>
+
+      <div class="card" id="play-card">
+        <p class="instruction-text" id="play-instruction">Anak sedang menunjuk apa?</p>
+        <div class="point-image-wrap">
+          <img id="point-img" src="" alt="Anak menunjuk" class="point-img" />
+        </div>
+        <div class="choice-grid" id="play-choices"></div>
+        <p class="feedback-text hidden" id="feedback-text"></p>
+        <button class="btn btn-primary btn-big hidden" id="btn-round-next">Lanjut ➜</button>
+      </div>
+    </section>
+
+    <!-- ===================== HALAMAN SKOR / SELESAI ===================== -->
+    <section id="screen-score" class="screen">
+      <div class="card finish-card">
+        <h1 class="title-bounce">🎉 Selesai! 🎉</h1>
+        <p class="subtitle">Skor Kamu</p>
+        <p class="score-display" id="score-display">0 / 4</p>
+        <div class="finish-stars" id="score-stars">☆☆☆☆</div>
+        <p class="praise-text" id="praise-text">Kamu Hebat!</p>
+        <button class="btn btn-primary btn-big" id="btn-replay">🔁 Main Lagi</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- tombol suara global -->
+  <button id="btn-sound-toggle" class="sound-toggle" title="Aktif/Nonaktifkan Suara">🔊</button>
+
+  <script>
+/* =========================================================
+   ANAK MENUNJUK APA? - SCRIPT.JS
+   Versi berdiri sendiri dari Level 2 "Aku Istimewa".
+   Setiap tulisan yang tampil di layar diucapkan memakai
+   rekaman suara manusia asli yang PERSIS sama isinya
+   (bukan Text-to-Speech), supaya anak yang belum bisa
+   membaca tetap paham.
+========================================================= */
+
+/* =========================================================
+   1. DATA ALAT INDERA
+========================================================= */
+const IMG_BASE =
+  "https://raw.githubusercontent.com/mhrofficialid/Gambar-alat-indera/08b7b7f677da39d8dfb72205a3958c71e064be2a/";
+
+const PARTS = [
+  {
+    id: "mata",
+    name: "Mata",
+    iconImg: IMG_BASE + "mata.png",
+    pointImg: IMG_BASE + "Anak%20menunjuk%20mata.png",
+    audioKey: "mata"
+  },
+  {
+    id: "hidung",
+    name: "Hidung",
+    iconImg: IMG_BASE + "hidung.png",
+    pointImg: IMG_BASE + "Anak%20menunjuk%20hidung.png",
+    audioKey: "hidung"
+  },
+  {
+    id: "mulut",
+    name: "Mulut",
+    iconImg: IMG_BASE + "mulut.png",
+    pointImg: IMG_BASE + "Anak%20menunjuk%20mulut.png",
+    audioKey: "mulut"
+  },
+  {
+    id: "telinga",
+    name: "Telinga",
+    iconImg: IMG_BASE + "telinga.png",
+    pointImg: IMG_BASE + "Anak%20menunjuk%20telinga.png",
+    audioKey: "telinga"
+  }
+];
+
+function findPart(id) {
+  return PARTS.find((p) => p.id === id);
+}
+
+/* =========================================================
+   2. AUDIO - Suara Manusia Asli (rekaman MP3)
+   ---------------------------------------------------------
+   PENTING: setiap tulisan yang tampil di layar HARUS diucapkan
+   memakai file suara yang isinya persis sama dengan tulisan itu.
+   Contoh: tulisan "Kamu Keren!" -> suara "kamu keren.mp3".
+========================================================= */
+const AUDIO_BASE =
+  "https://raw.githubusercontent.com/mhrofficialid/1.-Tunjuk-4-Alat-Indera/4c394900992d734145ff4995ab216b5cef6055ea/";
+
+const AUDIO_FILES = {
+  // Pertanyaan level ini - cocok dengan tulisan "Anak sedang menunjuk apa?"
+  anak_menunjuk: AUDIO_BASE + "Anak%20Sedang%20Menunjuk%20Apa.mp3",
+
+  // Nama alat indera - cocok dengan tulisan pada tombol pilihan
+  mata: AUDIO_BASE + "Mata.mp3",
+  hidung: AUDIO_BASE + "hidung.mp3",
+  mulut: AUDIO_BASE + "mulut.mp3",
+  telinga: AUDIO_BASE + "telinga.mp3"
+};
+
+// Setiap pujian dipasangkan PERSIS dengan tulisan yang tampil,
+// supaya suara yang keluar selalu sama dengan apa yang tertulis di layar.
+const PRAISES = [
+  { text: "Kamu Hebat!", file: AUDIO_BASE + "Kamu%20hebat.mp3" },
+  { text: "Hebat!", file: AUDIO_BASE + "hebat.mp3" },
+  { text: "Good Job!", file: AUDIO_BASE + "good%20job.mp3" },
+  { text: "Kamu Keren!", file: AUDIO_BASE + "kamu%20keren.mp3" },
+  { text: "Keren!", file: AUDIO_BASE + "keren.mp3" },
+  { text: "Yeeyy!", file: AUDIO_BASE + "yeeyy.mp3" },
+  { text: "Perfect!", file: AUDIO_BASE + "perfect.mp3" }
+];
+
+let currentVoiceAudio = null;
+let voiceGeneration = 0;
+let soundOn = true;
+
+function stopVoice() {
+  voiceGeneration++;
+  if (currentVoiceAudio) {
+    try {
+      currentVoiceAudio.pause();
+      currentVoiceAudio.currentTime = 0;
+    } catch (e) {
+      /* abaikan */
+    }
+  }
+  currentVoiceAudio = null;
+}
+
+// Memutar satu atau beberapa rekaman berurutan.
+function playUrlsSequence(urls, callback) {
+  const list = (urls || []).filter(Boolean);
+  stopVoice();
+  if (!soundOn || !list.length) {
+    if (callback) callback();
+    return;
+  }
+  const myGeneration = voiceGeneration;
+  let i = 0;
+
+  function playNext() {
+    if (myGeneration !== voiceGeneration) return;
+    if (i >= list.length) {
+      if (callback) callback();
+      return;
+    }
+    const url = list[i++];
+    const audio = new Audio(url);
+    currentVoiceAudio = audio;
+    const advance = () => {
+      if (myGeneration !== voiceGeneration) return;
+      playNext();
+    };
+    audio.addEventListener("ended", advance);
+    audio.addEventListener("error", advance);
+    audio.play().catch(advance);
+  }
+  playNext();
+}
+
+function playKey(key, callback) {
+  playUrlsSequence([AUDIO_FILES[key]], callback);
+}
+
+// Memutar pujian ACAK, lalu menampilkan tulisan yang PERSIS sama
+// dengan rekaman yang sedang diputar.
+function playPraiseMatching(targetEl, callback) {
+  const p = PRAISES[Math.floor(Math.random() * PRAISES.length)];
+  if (targetEl) {
+    targetEl.textContent = p.text;
+    targetEl.classList.remove("hidden");
+  }
+  playUrlsSequence([p.file], callback);
+}
+
+/* =========================================================
+   3. EFEK SUARA RINGAN (oscillator, tidak perlu file eksternal)
+========================================================= */
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (AC) audioCtx = new AC();
+  }
+  return audioCtx;
+}
+
+function playTone(freqs, durationEach, type) {
+  if (!soundOn) return;
+  const ctx = getAudioCtx();
+  if (!ctx) return;
+  if (ctx.state === "suspended") ctx.resume();
+  let t = ctx.currentTime;
+  freqs.forEach((freq) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type || "sine";
+    osc.frequency.setValueAtTime(freq, t);
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.exponentialRampToValueAtTime(0.22, t + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + durationEach);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(t);
+    osc.stop(t + durationEach + 0.02);
+    t += durationEach * 0.85;
+  });
+}
+
+const SFX = {
+  click: () => playTone([520], 0.09, "triangle"),
+  correct: () => playTone([660, 880, 1050], 0.13, "sine"),
+  wrong: () => playTone([300, 220], 0.16, "sawtooth"),
+  clap: () => playTone([500, 400, 500, 400, 500], 0.07, "square"),
+  win: () => playTone([523, 659, 784, 1047, 1319], 0.16, "sine")
+};
+
+document.getElementById("btn-sound-toggle").addEventListener("click", () => {
+  soundOn = !soundOn;
+  document.getElementById("btn-sound-toggle").textContent = soundOn ? "🔊" : "🔇";
+  if (!soundOn) stopVoice();
+});
+
+/* =========================================================
+   4. CONFETTI
+========================================================= */
+function launchConfetti() {
+  const container = document.getElementById("confetti-container");
+  const colors = ["#ff8fc7", "#7fd4ff", "#ffd93d", "#6fdc8c", "#b892ff", "#ffb15e"];
+  for (let i = 0; i < 60; i++) {
+    const piece = document.createElement("div");
+    piece.className = "confetti-piece";
+    piece.style.left = Math.random() * 100 + "vw";
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDuration = 2.5 + Math.random() * 2 + "s";
+    piece.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+    container.appendChild(piece);
+    setTimeout(() => piece.remove(), 5000);
+  }
+}
+
+/* =========================================================
+   5. UTIL
+========================================================= */
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active-screen"));
+  document.getElementById(id).classList.add("active-screen");
+}
+
+/* =========================================================
+   6. STATE PERMAINAN
+========================================================= */
+const STATE = {
+  order: [],
+  index: 0,
+  score: 0,
+  answeredThisRound: false
+};
+
+const TOTAL_ROUNDS = PARTS.length;
+
+/* =========================================================
+   7. HALAMAN MULAI
+========================================================= */
+document.getElementById("btn-start").addEventListener("click", () => {
+  SFX.click();
+  getAudioCtx(); // aktifkan AudioContext lewat interaksi pengguna
+  startGame();
+});
+
+document.getElementById("btn-replay").addEventListener("click", () => {
+  SFX.click();
+  startGame();
+});
+
+/* =========================================================
+   8. PERMAINAN: ANAK MENUNJUK APA?
+========================================================= */
+function startGame() {
+  STATE.order = shuffle(PARTS.map((p) => p.id));
+  STATE.index = 0;
+  STATE.score = 0;
+  showScreen("screen-play");
+  // Langsung mulai ronde pertama begitu masuk permainan, supaya
+  // suara pertanyaan langsung terdengar tanpa jeda.
+  nextRound();
+}
+
+function nextRound() {
+  STATE.answeredThisRound = false;
+  document.getElementById("btn-round-next").classList.add("hidden");
+  const feedbackEl = document.getElementById("feedback-text");
+  feedbackEl.classList.add("hidden");
+  feedbackEl.textContent = "";
+
+  if (STATE.index >= STATE.order.length) {
+    finishGame();
+    return;
+  }
+
+  document.getElementById("round-badge").textContent =
+    "Soal " + (STATE.index + 1) + " / " + TOTAL_ROUNDS;
+
+  const targetId = STATE.order[STATE.index];
+  const part = findPart(targetId);
+  document.getElementById("point-img").src = part.pointImg;
+  document.getElementById("point-img").alt = "Anak menunjuk " + part.name;
+
+  const choicesWrap = document.getElementById("play-choices");
+  choicesWrap.innerHTML = "";
+  const options = shuffle(PARTS.map((p) => p.id));
+  options.forEach((optId) => {
+    const optPart = findPart(optId);
+    const btn = document.createElement("button");
+    btn.className = "choice-btn";
+    btn.textContent = optPart.name;
+    btn.addEventListener("click", () => handleAnswer(optId, targetId, btn, choicesWrap));
+    choicesWrap.appendChild(btn);
+  });
+
+  // Suara pertanyaan cocok persis dengan tulisan instruksi di atas.
+  playKey("anak_menunjuk");
+}
+
+// Sentuh tulisan pertanyaan untuk mendengar lagi
+document.getElementById("play-instruction").addEventListener("click", () => {
+  SFX.click();
+  playKey("anak_menunjuk");
+});
+
+function handleAnswer(chosenId, targetId, btnEl, wrap) {
+  const buttons = wrap.querySelectorAll(".choice-btn");
+  const chosenPart = findPart(chosenId);
+
+  if (chosenId === targetId) {
+    buttons.forEach((b) => (b.disabled = true));
+    SFX.correct();
+    btnEl.classList.add("choice-correct");
+
+    if (!STATE.answeredThisRound) {
+      STATE.score++;
+      STATE.answeredThisRound = true;
+    }
+
+    const feedbackEl = document.getElementById("feedback-text");
+    feedbackEl.textContent = chosenPart.name;
+    feedbackEl.classList.remove("hidden");
+
+    // Tulisan feedback menampilkan nama alat indera, dan suara yang
+    // diputar juga persis nama itu saja (tanpa suara "Benar" lagi).
+    playUrlsSequence([AUDIO_FILES[chosenPart.audioKey]], () => {
+      playPraiseMatching(null);
+    });
+
+    document.getElementById("btn-round-next").classList.remove("hidden");
+  } else {
+    SFX.wrong();
+    btnEl.classList.add("choice-wrong");
+    // Ucapkan nama yang disentuh (cocok persis dengan tulisan tombol),
+    // supaya anak tahu kata apa yang baru saja mereka pilih.
+    playKey(chosenPart.audioKey);
+    setTimeout(() => {
+      btnEl.classList.remove("choice-wrong");
+      buttons.forEach((b) => (b.disabled = false));
+    }, 900);
+  }
+}
+
+document.getElementById("btn-round-next").addEventListener("click", () => {
+  SFX.click();
+  STATE.index++;
+  nextRound();
+});
+
+/* =========================================================
+   9. HALAMAN SKOR / SELESAI
+========================================================= */
+function finishGame() {
+  showScreen("screen-score");
+  SFX.win();
+  setTimeout(() => SFX.clap(), 300);
+  launchConfetti();
+
+  document.getElementById("score-display").textContent =
+    STATE.score + " / " + TOTAL_ROUNDS;
+
+  const starsWrap = document.getElementById("score-stars");
+  let stars = "";
+  for (let i = 0; i < TOTAL_ROUNDS; i++) {
+    stars += i < STATE.score ? "⭐" : "☆";
+  }
+  starsWrap.textContent = stars;
+
+  // Tulisan pujian di halaman skor selalu cocok persis dengan suara
+  // yang diputar (mis. tulisan "Kamu Keren!" -> suara "kamu keren.mp3").
+  playPraiseMatching(document.getElementById("praise-text"));
+}
+
+</script>
+</body>
+</html>
