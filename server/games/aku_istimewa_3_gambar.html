@@ -634,16 +634,19 @@ button {
   <div class="card-grid" id="cardGrid">
     <div class="card-btn" id="cardLeft" data-key="">
       <img src="" alt="" class="card-img" id="imgLeft">
+      <button type="button" class="reveal-btn" aria-label="Tampilkan nama gambar">ABC</button>
       <span class="card-label" id="labelLeft"></span>
       <span class="feedback-icon" aria-hidden="true"></span>
     </div>
     <div class="card-btn" id="cardMid" data-key="">
       <img src="" alt="" class="card-img" id="imgMid">
+      <button type="button" class="reveal-btn" aria-label="Tampilkan nama gambar">ABC</button>
       <span class="card-label" id="labelMid"></span>
       <span class="feedback-icon" aria-hidden="true"></span>
     </div>
     <div class="card-btn" id="cardRight" data-key="">
       <img src="" alt="" class="card-img" id="imgRight">
+      <button type="button" class="reveal-btn" aria-label="Tampilkan nama gambar">ABC</button>
       <span class="card-label" id="labelRight"></span>
       <span class="feedback-icon" aria-hidden="true"></span>
     </div>
@@ -1207,6 +1210,11 @@ function showLabelTemporarily(card) {
 cardEls.forEach((card) => {
   card.addEventListener("click", () => handleCardClick(card));
 
+  const revealBtn = card.querySelector(".reveal-btn");
+  revealBtn.addEventListener("click", (event) => {
+    event.stopPropagation();
+    showLabelTemporarily(card);
+  });
 });
 
 el.nextBtn.addEventListener("click", () => {
