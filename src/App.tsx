@@ -25,6 +25,8 @@ import akuIstimewa2Cover from "./assets/images/game_aku_istimewa_2_gambar_cover.
 import akuIstimewa3Cover from "./assets/images/game_aku_istimewa_3_gambar_cover.jpg";
 import akuIstimewa4Cover from "./assets/images/game_aku_istimewa_4_gambar_cover.jpg";
 import anakMenunjukApaCover from "./assets/images/game_anak_menunjuk_apa_cover.jpg";
+import susunHuruf8TubuhCover from "./assets/images/game_susun_huruf_8_anggota_tubuh_cover.jpg";
+import mencocokkanAlatInderaCover from "./assets/images/game_mencocokkan_nama_alat_indera_cover.jpg";
 
 // Profil "tamu" dipakai selama user belum login, supaya Homepage, pilih usia,
 // dan game trial tetap bisa diakses tanpa perlu daftar/login dulu. Login cuma
@@ -126,6 +128,22 @@ export default function App() {
       premium: true,
       description: "Lihat gambar anak yang sedang menunjuk salah satu alat indera, lalu tebak dan pilih nama alat indera yang benar dari pilihan yang tersedia.",
       coverImage: anakMenunjukApaCover
+    },
+    {
+      id: "susun_huruf_8_anggota_tubuh",
+      name: "Susun Huruf 8 Anggota Tubuh",
+      ageRange: "4 Tahun",
+      premium: false,
+      description: "Susun huruf jadi kata sambil belajar 8 anggota tubuh (mata, kaki, perut, mulut, rambut, tangan, hidung, telinga) lewat petunjuk gambar dan clue yang ceria.",
+      coverImage: susunHuruf8TubuhCover
+    },
+    {
+      id: "mencocokkan_nama_alat_indera",
+      name: "Mencocokkan Nama Alat Indera",
+      ageRange: "4 Tahun",
+      premium: true,
+      description: "Seret label nama alat indera (mata, hidung, mulut, telinga) ke gambar yang sesuai untuk melatih pengenalan kosakata dan logika mencocokkan.",
+      coverImage: mencocokkanAlatInderaCover
     }
   ];
 
@@ -456,6 +474,7 @@ export default function App() {
         {currentPage === 5 && (
           <div className="animate-fade-in">
             <WorksheetCatalog
+              age={selectedAge !== null ? selectedAge : 3}
               isPremiumUser={user.isPremium}
               getIdToken={getIdToken}
               onOpenPayment={() => setShowPaymentModal(true)}
