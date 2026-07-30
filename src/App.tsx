@@ -23,6 +23,8 @@ import berhitungCeriaCover from "./assets/images/game_berhitung_ceria_cover.jpg"
 import susunHurufTubuhCover from "./assets/images/game_susun_huruf_anggota_tubuh_cover.jpg";
 import akuIstimewa2Cover from "./assets/images/game_aku_istimewa_2_gambar_cover.jpg";
 import akuIstimewa3Cover from "./assets/images/game_aku_istimewa_3_gambar_cover.jpg";
+import akuIstimewa4Cover from "./assets/images/game_aku_istimewa_4_gambar_cover.jpg";
+import anakMenunjukApaCover from "./assets/images/game_anak_menunjuk_apa_cover.jpg";
 
 // Profil "tamu" dipakai selama user belum login, supaya Homepage, pilih usia,
 // dan game trial tetap bisa diakses tanpa perlu daftar/login dulu. Login cuma
@@ -108,6 +110,22 @@ export default function App() {
       premium: true,
       description: "Latih anak menunjuk alat indera (mata, hidung, mulut, telinga) yang benar di antara 3 pilihan gambar sambil mendengar instruksi suara.",
       coverImage: akuIstimewa3Cover
+    },
+    {
+      id: "aku_istimewa_4_gambar",
+      name: "Tunjuk diantara 4 gambar",
+      ageRange: "3 Tahun",
+      premium: true,
+      description: "Latih anak menunjuk alat indera (mata, hidung, mulut, telinga) yang benar di antara 4 pilihan gambar sambil mendengar instruksi suara.",
+      coverImage: akuIstimewa4Cover
+    },
+    {
+      id: "anak_menunjuk_apa",
+      name: "Anak Menunjuk Apa?",
+      ageRange: "3 Tahun",
+      premium: true,
+      description: "Lihat gambar anak yang sedang menunjuk salah satu alat indera, lalu tebak dan pilih nama alat indera yang benar dari pilihan yang tersedia.",
+      coverImage: anakMenunjukApaCover
     }
   ];
 
