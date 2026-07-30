@@ -4,6 +4,8 @@ import Hero from "./components/Hero";
 import Benefits from "./components/Benefits";
 import AgeCategory from "./components/AgeCategory";
 import GameGallery from "./components/GameGallery";
+import GameCatalog from "./components/GameCatalog";
+import WorksheetCatalog from "./components/WorksheetCatalog";
 import WhyChooseUs from "./components/WhyChooseUs";
 import Footer from "./components/Footer";
 import SecureGamePlayer from "./components/SecureGamePlayer";
@@ -329,7 +331,7 @@ export default function App() {
           currentPage={currentPage}
           onChangePage={(page) => {
             setCurrentPage(page);
-            if (page === 3 && selectedAge === null) {
+            if ((page === 3 || page === 4) && selectedAge === null) {
               setSelectedAge(3);
             }
           }}
@@ -400,6 +402,47 @@ export default function App() {
                 setCurrentPage(2);
               }}
               isPremiumUser={user.isPremium}
+              onOpenPayment={() => setShowPaymentModal(true)}
+              onGoToGameCatalog={() => setCurrentPage(4)}
+              onGoToWorksheets={() => setCurrentPage(5)}
+            />
+          </div>
+        )}
+
+        {/* Page 4: Full Premium Game Catalog */}
+        {currentPage === 4 && (
+          <div className="animate-fade-in">
+            <GameCatalog
+              games={games}
+              isPremiumUser={user.isPremium}
+              onOpenPayment={() => setShowPaymentModal(true)}
+              onPlayGame={(gameId) => {
+                const game = games.find((g) => g.id === gameId);
+                const isLocked = !!game?.premium && !user.isPremium;
+
+                if (isLocked) {
+                  if (!authUser) {
+                    setShowAuthModal(true);
+                  }
+                  setShowPaymentModal(true);
+                  return;
+                }
+
+                setActiveGameId(gameId);
+              }}
+            />
+          </div>
+        )}
+
+        {/* Page 5: Downloadable Worksheet Catalog */}
+        {currentPage === 5 && (
+          <div className="animate-fade-in">
+            <WorksheetCatalog
+              isPremiumUser={user.isPremium}
+              getIdToken={getIdToken}
+              onOpenPayment={() => setShowPaymentModal(true)}
+              onNeedAuth={() => setShowAuthModal(true)}
+              isLoggedIn={!!authUser}
             />
           </div>
         )}
