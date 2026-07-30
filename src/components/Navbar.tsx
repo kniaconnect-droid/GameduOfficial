@@ -75,7 +75,27 @@ export default function Navbar({
                 : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
             }`}
           >
+            Coba Gratis
+          </button>
+          <button
+            onClick={() => onChangePage(4)}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              currentPage === 4
+                ? "bg-blue-600 text-white shadow-md shadow-blue-100"
+                : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+            }`}
+          >
             Katalog Game
+          </button>
+          <button
+            onClick={() => onChangePage(5)}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              currentPage === 5
+                ? "bg-blue-600 text-white shadow-md shadow-blue-100"
+                : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+            }`}
+          >
+            Worksheet
           </button>
         </div>
 

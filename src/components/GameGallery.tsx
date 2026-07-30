@@ -1,6 +1,7 @@
 import React from "react";
 import { Game } from "../types";
-import { Lock, Play, ArrowLeft, CheckCircle } from "lucide-react";
+import { Lock, Play, ArrowLeft, ArrowRight, BookOpen, LayoutGrid } from "lucide-react";
+import MateriKognitif from "./MateriKognitif";
 
 interface GameGalleryProps {
   age: number;
@@ -8,14 +9,35 @@ interface GameGalleryProps {
   onPlayGame: (gameId: string) => void;
   onBack: () => void;
   isPremiumUser: boolean;
+  onOpenPayment: () => void;
+  onGoToGameCatalog: () => void;
+  onGoToWorksheets: () => void;
 }
 
-export default function GameGallery({ age, games, onPlayGame, onBack, isPremiumUser }: GameGalleryProps) {
-  const filteredGames = games.filter((g) => g.ageRange.includes(String(age)));
+// Halaman ini SENGAJA cuma nampilin 2 game (1 trial gratis + 1 preview
+// terkunci) buat usia 3 tahun -- bukan semua game. Katalog lengkap semua game
+// premium ada di halaman terpisah "Katalog Game" (lihat GameCatalog.tsx),
+// yang seluruhnya cuma bisa diakses member Premium.
+const TRIAL_GAME_ID = "berburu_angka";
+const PREVIEW_GAME_ID = "berhitung_ceria";
+
+export default function GameGallery({
+  age,
+  games,
+  onPlayGame,
+  onBack,
+  isPremiumUser,
+  onOpenPayment,
+  onGoToGameCatalog,
+  onGoToWorksheets
+}: GameGalleryProps) {
+  const trialGame = games.find((g) => g.id === TRIAL_GAME_ID);
+  const previewGame = games.find((g) => g.id === PREVIEW_GAME_ID);
+  const showcaseGames = [trialGame, previewGame].filter(Boolean) as Game[];
 
   return (
     <section className="py-12 px-6 bg-gradient-to-b from-white to-blue-50/10 scroll-mt-20" id="gallery-container">
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl mx-auto space-y-12">
         {/* Gallery Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-200/60">
           <div className="space-y-1">
@@ -27,10 +49,10 @@ export default function GameGallery({ age, games, onPlayGame, onBack, isPremiumU
               Kembali ke Kategori
             </button>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              Galeri Permainan Edukasi: <span className="text-blue-600">Usia {age} Tahun</span>
+              Coba Gratis: <span className="text-blue-600">Usia {age} Tahun</span>
             </h2>
             <p className="text-slate-500 text-sm">
-              Menampilkan {filteredGames.length} game interaktif yang direkomendasikan untuk tumbuh kembang usia {age} tahun.
+              1 game bisa dimainkan gratis penuh, plus 1 preview game premium untuk usia {age} tahun.
             </p>
           </div>
 
@@ -39,61 +61,46 @@ export default function GameGallery({ age, games, onPlayGame, onBack, isPremiumU
           </div>
         </div>
 
-        {/* Gallery Cards Grid */}
-        {filteredGames.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredGames.map((game) => {
-              const isLocked = game.premium && !isPremiumUser;
+        {/* Trial + Preview Cards */}
+        {showcaseGames.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl">
+            {showcaseGames.map((game) => {
+              const isTrial = game.id === TRIAL_GAME_ID;
+              const isLocked = !isTrial && !isPremiumUser;
 
               return (
                 <div
                   key={game.id}
                   className="bg-white rounded-[32px] overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between group"
                 >
-                  {/* Card Cover */}
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-50">
                     <img
                       src={game.coverImage}
                       alt={game.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className={`w-full h-full object-cover transition-transform duration-500 ${
+                        isLocked ? "blur-[1px]" : "group-hover:scale-105"
+                      }`}
                     />
-                    
-                    {/* Floating Age Tag */}
                     <span className="absolute top-4 left-4 text-[10px] font-black uppercase tracking-wider bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full text-slate-800 shadow-sm">
                       👶 Usia {game.ageRange}
                     </span>
-
-                    {/* Premium / Free Lock status */}
-                    {game.premium && (
-                      <span className={`absolute top-4 right-4 text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1 ${
-                        isPremiumUser
-                          ? "bg-emerald-500/90 text-white"
-                          : "bg-orange-500/90 text-white"
-                      }`}>
-                        {isPremiumUser ? (
-                          <>
-                            <CheckCircle className="w-3 h-3" />
-                            Premium Aktif
-                          </>
-                        ) : (
-                          <>
-                            <Lock className="w-3 h-3" />
-                            Premium Gated
-                          </>
-                        )}
-                      </span>
-                    )}
+                    <span
+                      className={`absolute top-4 right-4 text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1 ${
+                        isTrial ? "bg-emerald-500/90 text-white" : "bg-orange-500/90 text-white"
+                      }`}
+                    >
+                      {isTrial ? "Trial Gratis" : (
+                        <>
+                          <Lock className="w-3 h-3" /> Preview Premium
+                        </>
+                      )}
+                    </span>
                   </div>
 
-                  {/* Content details */}
                   <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
                     <div className="space-y-2">
-                      <h3 className="text-xl font-bold text-slate-900 leading-tight">
-                        {game.name}
-                      </h3>
-                      <p className="text-slate-500 text-sm leading-relaxed line-clamp-2">
-                        {game.description}
-                      </p>
+                      <h3 className="text-xl font-bold text-slate-900 leading-tight">{game.name}</h3>
+                      <p className="text-slate-500 text-sm leading-relaxed line-clamp-2">{game.description}</p>
                     </div>
 
                     <button
@@ -126,16 +133,48 @@ export default function GameGallery({ age, games, onPlayGame, onBack, isPremiumU
             <span className="text-4xl">🚀</span>
             <h3 className="text-lg font-bold text-slate-800">Kurikulum Sedang Dipersiapkan</h3>
             <p className="text-slate-500 text-sm leading-relaxed">
-              Tim kurator kurikulum kami sedang melakukan uji-atensi klinis bersama pakar anak untuk merilis game-game baru kategori usia ini. Silakan coba game Usia 3 Tahun yang sudah aktif sepenuhnya!
+              Tim kurator kurikulum kami sedang menyiapkan game trial untuk kategori usia ini.
             </p>
-            <button
-              onClick={onBack}
-              className="px-6 py-2.5 bg-white border border-amber-200 text-amber-800 font-bold rounded-xl text-xs hover:bg-amber-50/50 transition-colors cursor-pointer"
-            >
-              Lihat Game Aktif Usia 3 Tahun
-            </button>
           </div>
         )}
+
+        {/* CTA to full catalogs */}
+        <div className="grid sm:grid-cols-2 gap-4">
+          <button
+            onClick={onGoToGameCatalog}
+            className="flex items-center justify-between gap-3 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl px-6 py-5 transition-all cursor-pointer group"
+          >
+            <div className="flex items-center gap-3 text-left">
+              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                <LayoutGrid className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="font-bold text-sm">Lihat Katalog Game Lengkap</p>
+                <p className="text-[11px] text-slate-400">Semua game premium, khusus member Premium</p>
+              </div>
+            </div>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+          </button>
+
+          <button
+            onClick={onGoToWorksheets}
+            className="flex items-center justify-between gap-3 bg-blue-50 hover:bg-blue-100 border border-blue-100 text-blue-900 rounded-2xl px-6 py-5 transition-all cursor-pointer group"
+          >
+            <div className="flex items-center gap-3 text-left">
+              <div className="w-10 h-10 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-600">
+                <BookOpen className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="font-bold text-sm">Katalog Worksheet Download</p>
+                <p className="text-[11px] text-blue-700/70">Lembar kerja siap cetak, khusus member Premium</p>
+              </div>
+            </div>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+          </button>
+        </div>
+
+        {/* Materi Kognitif (premium-gated) */}
+        <MateriKognitif isPremiumUser={isPremiumUser} onOpenPayment={onOpenPayment} />
       </div>
     </section>
   );
