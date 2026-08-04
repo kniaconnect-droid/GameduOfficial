@@ -5,3 +5,13 @@
   --font-sans: "Nunito", system-ui, sans-serif;
   --font-display: "Baloo 2", cursive;
 }
+
+/* Sembunyikan scrollbar untuk elemen yang di-scroll horizontal (mis. tab
+   navigasi di Navbar saat layar HP sempit), tapi tetap bisa discroll/swipe */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
