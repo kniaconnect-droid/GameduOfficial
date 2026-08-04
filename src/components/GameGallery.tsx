@@ -65,6 +65,11 @@ export default function GameGallery({
           </div>
         </div>
 
+        {/* Materi Kognitif (premium-gated) - ditampilkan paling atas, sebelum katalog game & worksheet */}
+        {(age === 3 || age === 4) && (
+          <MateriKognitif age={age} isPremiumUser={isPremiumUser} onOpenPayment={onOpenPayment} />
+        )}
+
         {/* Trial + Preview Cards */}
         {showcaseGames.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl">
@@ -176,11 +181,6 @@ export default function GameGallery({
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform flex-shrink-0" />
           </button>
         </div>
-
-        {/* Materi Kognitif (premium-gated) */}
-        {(age === 3 || age === 4) && (
-          <MateriKognitif age={age} isPremiumUser={isPremiumUser} onOpenPayment={onOpenPayment} />
-        )}
       </div>
     </section>
   );

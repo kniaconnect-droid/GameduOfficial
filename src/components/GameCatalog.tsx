@@ -81,10 +81,15 @@ export default function GameCatalog({ games, onPlayGame, isPremiumUser, onOpenPa
             ))}
           </div>
 
-          {/* Full-page paywall overlay for non-premium users */}
+          {/* Paywall overlay for non-premium users. Pakai `sticky` (bukan absolute
+              inset-0 + pt-16 statis) supaya kartu ini ikut "nempel" mengikuti
+              scroll selama area katalog di-scroll, alih-alih diam di titik
+              tetap lalu ditinggal saat list game panjang di-scroll ke bawah
+              (paling kerasa di kategori usia 3 tahun yang jumlah game-nya
+              paling banyak). */}
           {!isPremiumUser && (
-            <div className="absolute inset-0 flex items-start justify-center pt-16">
-              <div className="bg-white border border-slate-200 shadow-2xl rounded-3xl p-8 max-w-md w-full text-center space-y-4 mx-4">
+            <div className="absolute inset-0 flex justify-center pointer-events-none">
+              <div className="sticky top-24 self-start bg-white border border-slate-200 shadow-2xl rounded-3xl p-8 max-w-md w-full text-center space-y-4 mx-4 pointer-events-auto">
                 <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center mx-auto text-amber-500">
                   <Lock className="w-7 h-7" />
                 </div>
