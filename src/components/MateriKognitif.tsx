@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Lock, Sparkles, ChevronDown, Target, Eye, Home as HomeIcon, Gamepad2, FileText } from "lucide-react";
 import { MATERI_KOGNITIF_3_TAHUN } from "../lib/materiKognitif3Tahun";
 import { MATERI_KOGNITIF_4_TAHUN } from "../lib/materiKognitif4Tahun";
+import { MATERI_KOGNITIF_5_TAHUN } from "../lib/materiKognitif5Tahun";
 
 interface MateriKognitifProps {
   age: number;
@@ -11,7 +12,8 @@ interface MateriKognitifProps {
 
 const MATERI_BY_AGE: Record<number, typeof MATERI_KOGNITIF_3_TAHUN> = {
   3: MATERI_KOGNITIF_3_TAHUN,
-  4: MATERI_KOGNITIF_4_TAHUN
+  4: MATERI_KOGNITIF_4_TAHUN,
+  5: MATERI_KOGNITIF_5_TAHUN
 };
 
 export default function MateriKognitif({ age, isPremiumUser, onOpenPayment }: MateriKognitifProps) {
@@ -47,7 +49,7 @@ export default function MateriKognitif({ age, isPremiumUser, onOpenPayment }: Ma
             <div className="p-6 sm:p-8 blur-sm select-none pointer-events-none opacity-70">
               <KemampuanCard item={data.kemampuan[0]} isOpen onToggle={() => {}} />
             </div>
-            <div className="absolute inset-0 flex items-center justify-center bg-white/60 backdrop-blur-[2px] p-6">
+            <div className="absolute inset-0 flex items-center justify-center bg-white/85 p-6">
               <div className="bg-white border border-slate-200 shadow-xl rounded-3xl p-8 max-w-md w-full text-center space-y-4">
                 <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center mx-auto text-amber-500">
                   <Lock className="w-7 h-7" />

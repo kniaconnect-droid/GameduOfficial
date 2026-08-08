@@ -66,7 +66,7 @@ export default function GameGallery({
         </div>
 
         {/* Materi Kognitif (premium-gated) - ditampilkan paling atas, sebelum katalog game & worksheet */}
-        {(age === 3 || age === 4) && (
+        {(age === 3 || age === 4 || age === 5) && (
           <MateriKognitif age={age} isPremiumUser={isPremiumUser} onOpenPayment={onOpenPayment} />
         )}
 
@@ -86,6 +86,8 @@ export default function GameGallery({
                     <img
                       src={game.coverImage}
                       alt={game.name}
+                      loading="lazy"
+                      decoding="async"
                       className={`w-full h-full object-cover transition-transform duration-500 ${
                         isLocked ? "blur-[1px]" : "sm:group-hover:scale-105"
                       }`}

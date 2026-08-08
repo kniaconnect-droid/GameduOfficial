@@ -64,6 +64,8 @@ export default function GameCatalog({ games, onPlayGame, isPremiumUser, onOpenPa
                   <img
                     src={game.coverImage}
                     alt={game.name}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover sm:group-hover:scale-105 transition-transform duration-500"
                   />
                   <span className="absolute top-1.5 left-1.5 sm:top-4 sm:left-4 flex items-center gap-1 text-[8px] sm:text-[10px] font-black uppercase tracking-wider bg-white/95 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-slate-800 shadow-sm">

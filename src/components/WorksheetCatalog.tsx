@@ -139,6 +139,8 @@ export default function WorksheetCatalog({
                         <img
                           src={item.thumbnail}
                           alt={item.title}
+                          loading="lazy"
+                          decoding="async"
                           className={`w-full h-full object-cover transition-transform duration-500 ${
                             isLocked ? "blur-[2px] scale-105" : "sm:group-hover:scale-105"
                           }`}
