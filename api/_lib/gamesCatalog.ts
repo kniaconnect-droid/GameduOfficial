@@ -100,7 +100,25 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     ageRange: "5 Tahun",
     premium: true,
   },
-  // TODO: tambahkan 48 game lainnya di sini, format sama seperti di atas.
+  {
+    id: "sentuh_3warna_benda_2gambar",
+    name: "Sentuh 3 Warna - 2 Gambar",
+    ageRange: "3 Tahun",
+    premium: true,
+  },
+  {
+    id: "mengenal_3warna_merah_kuning_biru_2gambar",
+    name: "Mengenal 3 Warna (Merah, Kuning, Biru) - 2 Gambar",
+    ageRange: "4 Tahun",
+    premium: true,
+  },
+  {
+    id: "mengenal_4warna_merah_kuning_biru_hijau_3gambar",
+    name: "Mengenal 4 Warna (Merah, Kuning, Biru, Hijau) - 3 Gambar",
+    ageRange: "4 Tahun",
+    premium: true,
+  },
+  // TODO: tambahkan 45 game lainnya di sini, format sama seperti di atas.
 ];
 
 export function findGame(gameId: string): GameCatalogEntry | undefined {
