@@ -77,6 +77,18 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     premium: true,
   },
   {
+    id: "berburu_angka_1_10",
+    name: "Berburu Angka 1-10",
+    ageRange: "4 Tahun",
+    premium: true,
+  },
+  {
+    id: "berburu_angka_6_10",
+    name: "Berburu Angka 6-10",
+    ageRange: "4 Tahun",
+    premium: true,
+  },
+  {
     id: "fungsi_alat_indera",
     name: "Fungsi Alat Indera",
     ageRange: "5 Tahun",
