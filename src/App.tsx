@@ -28,6 +28,8 @@ import susunHuruf8TubuhCover from "./assets/images/game_susun_huruf_8_anggota_tu
 import mencocokkanAlatInderaCover from "./assets/images/game_mencocokkan_nama_alat_indera_cover.jpg";
 import fungsiAlatInderaCover from "./assets/images/game_fungsi_alat_indera_cover.jpg";
 import akuIstimewaAdvanceCover from "./assets/images/game_aku_istimewa_advance_cover.jpg";
+import berburuAngka1_10Cover from "./assets/images/game_berburu_angka_1_10_cover.jpg";
+import berburuAngka6_10Cover from "./assets/images/game_berburu_angka_6_10_cover.jpg";
 
 // Profil "tamu" dipakai selama user belum login, supaya Homepage, pilih usia,
 // dan game trial tetap bisa diakses tanpa perlu daftar/login dulu. Login cuma
@@ -154,6 +156,22 @@ export default function App() {
       premium: true,
       description: "Seret label nama alat indera (mata, hidung, mulut, telinga) ke gambar yang sesuai untuk melatih pengenalan kosakata dan logika mencocokkan.",
       coverImage: mencocokkanAlatInderaCover
+    },
+    {
+      id: "berburu_angka_1_10",
+      name: "Berburu Angka 1-10",
+      ageRange: "4 Tahun",
+      premium: true,
+      description: "Tangkap buah terbang sesuai angka target dari 1 sampai 10. Melatih pengenalan angka, urutan berhitung, dan konsentrasi motorik anak usia 4 tahun.",
+      coverImage: berburuAngka1_10Cover
+    },
+    {
+      id: "berburu_angka_6_10",
+      name: "Berburu Angka 6-10",
+      ageRange: "4 Tahun",
+      premium: true,
+      description: "Level lanjutan berburu buah dengan fokus angka 6 sampai 10, melatih anak mengenal bilangan yang lebih besar sambil mengasah ketangkasan dan konsentrasi.",
+      coverImage: berburuAngka6_10Cover
     },
     {
       id: "fungsi_alat_indera",
