@@ -1,21 +1,29 @@
 import React from "react";
 import { Game } from "../types";
-import { Lock, Play, Sparkles, Baby } from "lucide-react";
+import { Lock, Play, Sparkles, Baby, ArrowLeft } from "lucide-react";
 
 interface GameCatalogProps {
   games: Game[];
   onPlayGame: (gameId: string) => void;
   isPremiumUser: boolean;
   onOpenPayment: () => void;
+  onBack: () => void;
 }
 
-export default function GameCatalog({ games, onPlayGame, isPremiumUser, onOpenPayment }: GameCatalogProps) {
+export default function GameCatalog({ games, onPlayGame, isPremiumUser, onOpenPayment, onBack }: GameCatalogProps) {
   return (
     <section className="py-12 px-6 bg-gradient-to-b from-white to-blue-50/10 scroll-mt-20">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-200/60">
           <div className="space-y-1">
+            <button
+              onClick={onBack}
+              className="group inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-blue-600 transition-colors mb-2 cursor-pointer"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+              Kembali ke Materi
+            </button>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
               Katalog <span className="text-blue-600">Game Lengkap</span>
             </h2>
@@ -41,14 +49,14 @@ export default function GameCatalog({ games, onPlayGame, isPremiumUser, onOpenPa
 
         <div className="relative">
           <div
-            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${
+            className={`grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 ${
               !isPremiumUser ? "pointer-events-none select-none" : ""
             }`}
           >
             {games.map((game) => (
               <div
                 key={game.id}
-                className={`bg-white rounded-[32px] overflow-hidden border border-slate-200/60 shadow-sm transition-all duration-300 flex flex-col justify-between group ${
+                className={`bg-white rounded-2xl sm:rounded-[32px] overflow-hidden border border-slate-200/60 shadow-sm transition-all duration-300 flex flex-col justify-between group ${
                   !isPremiumUser ? "blur-[2px] opacity-80" : "hover:shadow-lg"
                 }`}
               >
@@ -58,23 +66,23 @@ export default function GameCatalog({ games, onPlayGame, isPremiumUser, onOpenPa
                     alt={game.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <span className="absolute top-4 left-4 flex items-center gap-1 text-[10px] font-black uppercase tracking-wider bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full text-slate-800 shadow-sm">
-                    <Baby className="w-3 h-3" /> Usia {game.ageRange}
+                  <span className="absolute top-1.5 left-1.5 sm:top-4 sm:left-4 flex items-center gap-1 text-[8px] sm:text-[10px] font-black uppercase tracking-wider bg-white/95 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-slate-800 shadow-sm">
+                    <Baby className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> {game.ageRange}
                   </span>
                 </div>
 
-                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-bold text-slate-900 leading-tight">{game.name}</h3>
-                    <p className="text-slate-500 text-sm leading-relaxed line-clamp-2">{game.description}</p>
+                <div className="p-2.5 sm:p-6 space-y-2 sm:space-y-4 flex-1 flex flex-col justify-between">
+                  <div className="space-y-1 sm:space-y-2">
+                    <h3 className="text-xs sm:text-xl font-bold text-slate-900 leading-tight line-clamp-2">{game.name}</h3>
+                    <p className="hidden sm:block text-slate-500 text-sm leading-relaxed line-clamp-2">{game.description}</p>
                   </div>
 
                   <button
                     onClick={() => onPlayGame(game.id)}
-                    className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm bg-orange-500 hover:bg-orange-600 text-white shadow-md shadow-orange-100 hover:scale-105 transition-all cursor-pointer"
+                    className="w-full flex items-center justify-center gap-1.5 sm:gap-2 py-2 sm:py-3 rounded-lg sm:rounded-xl font-bold text-[11px] sm:text-sm bg-orange-500 hover:bg-orange-600 text-white shadow-md shadow-orange-100 hover:scale-105 transition-all cursor-pointer"
                   >
-                    <Play className="w-4 h-4 fill-current" />
-                    Main Sekarang
+                    <Play className="w-3 h-3 sm:w-4 sm:h-4 fill-current" />
+                    Main
                   </button>
                 </div>
               </div>
