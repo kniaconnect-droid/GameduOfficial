@@ -133,14 +133,14 @@ export default function WorksheetCatalog({
                   return (
                     <div
                       key={item.id}
-                      className="bg-white rounded-[28px] overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group"
+                      className="bg-white rounded-[28px] overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group transform-gpu"
                     >
                       <div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-50">
                         <img
                           src={item.thumbnail}
                           alt={item.title}
                           className={`w-full h-full object-cover transition-transform duration-500 ${
-                            isLocked ? "blur-[2px] scale-105" : "group-hover:scale-105"
+                            isLocked ? "blur-[2px] scale-105" : "sm:group-hover:scale-105"
                           }`}
                         />
                         {isLocked && (

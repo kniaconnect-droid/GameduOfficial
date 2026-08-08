@@ -80,14 +80,14 @@ export default function GameGallery({
               return (
                 <div
                   key={game.id}
-                  className="bg-white rounded-[32px] overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between group"
+                  className="bg-white rounded-[32px] overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between group transform-gpu"
                 >
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-50">
                     <img
                       src={game.coverImage}
                       alt={game.name}
                       className={`w-full h-full object-cover transition-transform duration-500 ${
-                        isLocked ? "blur-[1px]" : "group-hover:scale-105"
+                        isLocked ? "blur-[1px]" : "sm:group-hover:scale-105"
                       }`}
                     />
                     <span className="absolute top-4 left-4 flex items-center gap-1 text-[10px] font-black uppercase tracking-wider bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full text-slate-800 shadow-sm">
