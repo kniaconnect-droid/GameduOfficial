@@ -145,6 +145,14 @@ export default function App() {
       coverImage: anakMenunjukApaCover
     },
     {
+      id: "sentuh_3warna_benda_2gambar",
+      name: "Sentuh 3 Warna - 2 Gambar",
+      ageRange: "3 Tahun",
+      premium: true,
+      description: "Dengarkan perintah warna, lalu sentuh gambar benda dengan warna yang sesuai di antara 2 pilihan. Melatih pengenalan 3 warna dasar (merah, kuning, biru) dan konsentrasi mendengarkan.",
+      coverImage: sentuh3WarnaCover
+    },
+    {
       id: "susun_huruf_8_anggota_tubuh",
       name: "Susun Huruf 8 Anggota Tubuh",
       ageRange: "4 Tahun",
@@ -177,30 +185,6 @@ export default function App() {
       coverImage: berburuAngka6_10Cover
     },
     {
-      id: "fungsi_alat_indera",
-      name: "Fungsi Alat Indera",
-      ageRange: "5 Tahun",
-      premium: true,
-      description: "Seret jawaban fungsi (melihat, mencium, makan, mendengar) ke gambar alat indera yang sesuai untuk melatih pemahaman fungsi tiap indera lewat tantangan level lanjutan.",
-      coverImage: fungsiAlatInderaCover
-    },
-    {
-      id: "aku_istimewa_advance",
-      name: "Aku Istimewa - Ayo Kenali Alat Indera di Wajahmu!",
-      ageRange: "5 Tahun",
-      premium: true,
-      description: "Latihan lengkap 4 level: sentuh anggota wajah, tebak yang ditunjuk, cocokkan nama alat indera, dan kenali fungsinya — persiapan matang sebelum masuk SD.",
-      coverImage: akuIstimewaAdvanceCover
-    },
-    {
-      id: "sentuh_3warna_benda_2gambar",
-      name: "Sentuh 3 Warna - 2 Gambar",
-      ageRange: "3 Tahun",
-      premium: true,
-      description: "Dengarkan perintah warna, lalu sentuh gambar benda dengan warna yang sesuai di antara 2 pilihan. Melatih pengenalan 3 warna dasar (merah, kuning, biru) dan konsentrasi mendengarkan.",
-      coverImage: sentuh3WarnaCover
-    },
-    {
       id: "mengenal_3warna_merah_kuning_biru_2gambar",
       name: "Mengenal 3 Warna (Merah, Kuning, Biru) - 2 Gambar",
       ageRange: "4 Tahun",
@@ -215,6 +199,22 @@ export default function App() {
       premium: true,
       description: "Level lanjutan mengenal warna dengan tambahan warna hijau dan 3 pilihan gambar. Mengasah pengenalan 4 warna dasar sekaligus konsentrasi dan daya dengar anak.",
       coverImage: mengenal4WarnaCover
+    },
+    {
+      id: "fungsi_alat_indera",
+      name: "Fungsi Alat Indera",
+      ageRange: "5 Tahun",
+      premium: true,
+      description: "Seret jawaban fungsi (melihat, mencium, makan, mendengar) ke gambar alat indera yang sesuai untuk melatih pemahaman fungsi tiap indera lewat tantangan level lanjutan.",
+      coverImage: fungsiAlatInderaCover
+    },
+    {
+      id: "aku_istimewa_advance",
+      name: "Aku Istimewa - Ayo Kenali Alat Indera di Wajahmu!",
+      ageRange: "5 Tahun",
+      premium: true,
+      description: "Latihan lengkap 4 level: sentuh anggota wajah, tebak yang ditunjuk, cocokkan nama alat indera, dan kenali fungsinya — persiapan matang sebelum masuk SD.",
+      coverImage: akuIstimewaAdvanceCover
     }
   ];
 
@@ -525,6 +525,7 @@ export default function App() {
           <div className="animate-fade-in">
             <GameCatalog
               games={games}
+              age={selectedAge !== null ? selectedAge : 3}
               isPremiumUser={user.isPremium}
               onOpenPayment={() => setShowPaymentModal(true)}
               onBack={() => setCurrentPage(3)}
