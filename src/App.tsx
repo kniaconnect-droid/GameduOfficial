@@ -6,7 +6,6 @@ import AgeCategory from "./components/AgeCategory";
 import GameGallery from "./components/GameGallery";
 import GameCatalog from "./components/GameCatalog";
 import WorksheetCatalog from "./components/WorksheetCatalog";
-import WhyChooseUs from "./components/WhyChooseUs";
 import Footer from "./components/Footer";
 import SecureGamePlayer from "./components/SecureGamePlayer";
 import PaymentModal from "./components/PaymentModal";
@@ -348,6 +347,15 @@ export default function App() {
 
   const activeGame = games.find((g) => g.id === activeGameId);
 
+  // Navigasi "Kembali" satu langkah, dipakai Navbar (menggantikan tab menu
+  // lama yang sekarang dihapus supaya alur lebih simpel & linear):
+  // Beranda -> Kategori Usia -> Coba Gratis -> (Katalog Game / Worksheet)
+  const handleBack = () => {
+    if (currentPage === 2) setCurrentPage(1);
+    else if (currentPage === 3) setCurrentPage(2);
+    else if (currentPage === 4 || currentPage === 5) setCurrentPage(3);
+  };
+
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900 antialiased selection:bg-blue-100 selection:text-blue-900 flex flex-col justify-between">
       <div>
@@ -365,12 +373,8 @@ export default function App() {
           user={user}
           isLoggedIn={!!authUser}
           currentPage={currentPage}
-          onChangePage={(page) => {
-            setCurrentPage(page);
-            if ((page === 3 || page === 4) && selectedAge === null) {
-              setSelectedAge(3);
-            }
-          }}
+          onGoHome={() => setCurrentPage(1)}
+          onBack={handleBack}
           onOpenPayment={() => setShowPaymentModal(true)}
           onOpenAuth={() => setShowAuthModal(true)}
           onLogout={logout}
@@ -390,7 +394,6 @@ export default function App() {
               }}
             />
             <Benefits />
-            <WhyChooseUs />
           </div>
         )}
 
@@ -452,6 +455,7 @@ export default function App() {
               games={games}
               isPremiumUser={user.isPremium}
               onOpenPayment={() => setShowPaymentModal(true)}
+              onBack={() => setCurrentPage(3)}
               onPlayGame={(gameId) => {
                 const game = games.find((g) => g.id === gameId);
                 const isLocked = !!game?.premium && !user.isPremium;
