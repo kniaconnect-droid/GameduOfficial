@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Ayo Tunjuk Warna</title>
+<meta name="description" content="Game edukasi untuk anak PAUD/TK belajar mengenal warna Merah, Kuning, dan Biru.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink: #262148;
+  --ink-soft: #6B647F;
+  --indigo: #4F46E5;
+  --indigo-dark: #3D35B8;
+  --indigo-light: #EEF0FF;
+  --teal: #0D9C93;
+  --teal-dark: #0A7A73;
+  --coral: #F0645E;
+  --amber: #F0A93B;
+  --card-bg: #FFFFFF;
+  --card-border: #E9E6F5;
+  --halo-merah: #FDE3E1;
+  --halo-kuning: #FDF0D6;
+  --halo-biru: #E1EFFD;
+  --shadow-soft: 0 2px 6px rgba(38,33,72,0.06), 0 10px 24px rgba(38,33,72,0.08);
+  --shadow-card: 0 1px 2px rgba(38,33,72,0.04), 0 8px 20px rgba(38,33,72,0.07);
+}
+
+*{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body{
+  margin:0; padding:0; width:100%; height:100%;
+  overflow-x:hidden;
+  font-family:'Nunito', sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(760px 480px at 15% -8%, #EDEAFF 0%, rgba(237,234,255,0) 60%),
+    radial-gradient(760px 480px at 105% 10%, #E4F6FF 0%, rgba(228,246,255,0) 60%),
+    #FAF9FF;
+  background-attachment: fixed;
+  -webkit-user-select:none; user-select:none;
+  touch-action: manipulation;
+}
+
+#app{
+  position:relative;
+  min-height:100vh;
+  min-height:100dvh;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom) 16px;
+  overflow:hidden;
+}
+
+.screen{
+  position:relative;
+  width:100%;
+  max-width:460px;
+  min-height:100vh;
+  min-height:100dvh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding: 24px 8px;
+  animation: fadeIn .4s ease both;
+}
+.screen.hidden{ display:none; }
+
+@keyframes fadeIn{
+  from{ opacity:0; transform:translateY(10px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+/* ===== INTRO ===== */
+.intro-glow{
+  position:absolute;
+  top:-60px;
+  left:50%;
+  transform:translateX(-50%);
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(79,70,229,0.14) 0%, rgba(79,70,229,0) 70%);
+  pointer-events:none;
+  z-index:-1;
+}
+
+.eyebrow-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family:'Nunito', sans-serif;
+  font-weight:800;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--indigo);
+  background: linear-gradient(155deg, #F1EFFF 0%, #E9F4FF 100%);
+  border: 1px solid #DCD9FA;
+  padding: 8px 18px;
+  border-radius: 999px;
+  margin-bottom: 26px;
+  box-shadow: 0 2px 8px rgba(79,70,229,0.08);
+}
+.eyebrow-pill::before{
+  content:'';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--coral), var(--indigo));
+  flex-shrink:0;
+}
+
+.intro-badge{
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  background: linear-gradient(155deg, #EEF0FF 0%, #E1EFFD 100%);
+  border: 1px solid var(--card-border);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 50px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 10px rgba(38,33,72,0.07), 0 16px 32px rgba(79,70,229,0.16);
+}
+
+.title-main{
+  font-family:'Baloo 2', sans-serif;
+  font-weight:800;
+  font-size: clamp(30px, 8.4vw, 40px);
+  background: linear-gradient(155deg, var(--ink) 20%, var(--indigo) 120%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.01em;
+}
+.subtitle{
+  font-size: clamp(15px, 4.2vw, 18px);
+  font-weight:700;
+  color: var(--ink-soft);
+  max-width: 300px;
+  margin: 0 auto 36px auto;
+  line-height:1.5;
+}
+
+/* Hero: komposisi gambar warna asli menggantikan ikon/emoji */
+.cover-hero{
+  position:relative;
+  width: 260px;
+  height: 160px;
+  margin: 0 auto 34px auto;
+}
+.hero-item{
+  position:absolute;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  animation: heroIn .55s ease forwards;
+}
+@keyframes heroIn{
+  from{ opacity:0; transform: translateY(18px) scale(0.85); }
+  to{ opacity:1; transform: translateY(0) scale(1); }
+}
+.hero-item img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 22px rgba(38,33,72,0.20)) drop-shadow(0 3px 6px rgba(38,33,72,0.12));
+  pointer-events:none;
+  display:block;
+}
+.hero-item-1{ width:104px; height:104px; left:0;   top:50px; z-index:1; animation-delay:.05s; }
+.hero-item-2{ width:128px; height:128px; left:66px; top:0;   z-index:3; animation-delay:.18s; }
+.hero-item-3{ width:104px; height:104px; left:156px; top:50px; z-index:2; animation-delay:.30s; }
+
+.hero-item.img-fallback{ position:absolute; }
+.hero-item.img-fallback::after{
+  content:'';
+  width:100%;
+  height:100%;
+  border-radius: 26px;
+  display:block;
+  box-shadow: 0 16px 22px rgba(38,33,72,0.20);
+}
+.hero-item[data-color="merah"].img-fallback::after{ background: var(--coral); }
+.hero-item[data-color="kuning"].img-fallback::after{ background: var(--amber); }
+.hero-item[data-color="biru"].img-fallback::after{ background: #4AA8E0; }
+
+/* Ikon play digambar murni via CSS (bukan karakter emoji) agar konsisten di semua perangkat */
+.btn-play-icon{
+  width:0; height:0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 13px solid #fff;
+  display:inline-block;
+  flex-shrink:0;
+}
+
+/* ===== TOP BAR GLOBAL (Home / Mute) ===== */
+.app-topbar{
+  position:fixed;
+  top:0; left:0; right:0;
+  display:flex;
+  justify-content:space-between;
+  padding: calc(env(safe-area-inset-top) + 14px) 16px 0 16px;
+  z-index: 40;
+  pointer-events:none;
+}
+.app-topbar.hidden{ display:none; }
+.icon-btn{
+  pointer-events:auto;
+  width:46px; height:46px;
+  border-radius:50%;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--indigo);
+  font-size:19px;
+  box-shadow: var(--shadow-card);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  touch-action: manipulation;
+  transition: transform .12s ease;
+}
+.icon-btn:active{ transform: scale(0.92); }
+.icon-btn.hidden{ visibility:hidden; }
+.icon-btn.is-muted{ color: var(--ink-soft); }
+
+.btn-big{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:11px;
+  font-family:'Baloo 2', sans-serif;
+  font-weight:700;
+  font-size: 21px;
+  letter-spacing: 0.02em;
+  color:#fff;
+  background: linear-gradient(155deg, #6763EE, var(--indigo));
+  border:none;
+  padding: 18px 48px;
+  border-radius: 999px;
+  box-shadow: 0 10px 24px rgba(79,70,229,0.32), 0 2px 6px rgba(79,70,229,0.24);
+  cursor:pointer;
+  min-height:60px;
+  touch-action: manipulation;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.btn-big:active{
+  transform: translateY(2px);
+  box-shadow: 0 4px 12px rgba(79,70,229,0.28);
+}
+
+/* ===== LOADING ===== */
+.loading-wrap{
+  display:flex; flex-direction:column; align-items:center; gap:22px;
+}
+.loading-ring{
+  width:52px; height:52px;
+  border-radius:50%;
+  border: 5px solid var(--indigo-light);
+  border-top-color: var(--indigo);
+  animation: spin 0.85s linear infinite;
+}
+@keyframes spin{ to{ transform: rotate(360deg); } }
+.loading-text{
+  font-family:'Nunito', sans-serif;
+  font-weight:700;
+  font-size:16px;
+  color: var(--ink-soft);
+}
+
+/* ===== GAME ===== */
+.game-topbar{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  margin: 8px 0 6px 0;
+}
+.progress-pill{
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  font-family:'Nunito', sans-serif;
+  font-weight:800;
+  font-size:14px;
+  letter-spacing: 0.03em;
+  color: var(--indigo);
+  padding:9px 20px;
+  border-radius:999px;
+  box-shadow: var(--shadow-card);
+}
+
+.instruction-box{
+  margin: 22px 0 28px 0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+}
+.instruction-text{
+  font-family:'Baloo 2', sans-serif;
+  font-weight:800;
+  font-size: clamp(26px, 7.6vw, 34px);
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.speaker-btn{
+  width:48px; height:48px;
+  border-radius:50%;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--indigo);
+  font-size:19px;
+  box-shadow: var(--shadow-card);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  transition: transform .12s ease;
+}
+.speaker-btn:active{ transform: scale(0.94); }
+.speaker-btn.playing{ animation: pulse 0.9s ease-in-out infinite; }
+@keyframes pulse{
+  0%,100%{ box-shadow: var(--shadow-card); }
+  50%{ box-shadow: 0 0 0 8px rgba(79,70,229,0.12), var(--shadow-card); }
+}
+
+.cards-row{
+  display:flex;
+  gap: 16px;
+  justify-content:center;
+  align-items:stretch;
+  width:100%;
+  max-width: 400px;
+  margin-top: 4px;
+}
+.color-card{
+  flex:1;
+  min-height: 210px;
+  background: var(--card-bg);
+  border-radius: 24px;
+  box-shadow: var(--shadow-card);
+  border: 2px solid var(--card-border);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  padding: 22px 10px;
+  cursor:pointer;
+  min-height:48px;
+  touch-action: manipulation;
+  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.color-card:active{ transform: scale(0.97); }
+
+.card-halo{
+  width: 130px;
+  height: 130px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.color-card img{
+  width: 112px;
+  height: 112px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 16px rgba(38,33,72,0.16)) drop-shadow(0 2px 5px rgba(38,33,72,0.10));
+  pointer-events:none;
+  display:block;
+}
+
+/* Fallback jika gambar gagal dimuat: tampilkan kotak warna solid besar dengan shadow */
+.card-halo.img-fallback{
+  position:relative;
+}
+.card-halo.img-fallback::after{
+  content:'';
+  width: 100px;
+  height: 100px;
+  border-radius:22px;
+  display:block;
+  box-shadow: 0 10px 18px rgba(38,33,72,0.18);
+}
+.color-card[data-color="merah"] .card-halo.img-fallback::after{ background: var(--coral); }
+.color-card[data-color="kuning"] .card-halo.img-fallback::after{ background: var(--amber); }
+.color-card[data-color="biru"] .card-halo.img-fallback::after{ background: #4AA8E0; }
+
+.color-card .card-label{
+  font-family:'Nunito', sans-serif;
+  font-weight:800;
+  font-size:17px;
+  color: var(--ink);
+  pointer-events:none;
+}
+.color-card.disabled{ cursor:default; opacity:0.5; }
+.color-card.locked{ pointer-events:none; }
+.color-card.correct{
+  border-color: var(--teal);
+  transform: scale(1.05);
+  animation: pop .35s ease;
+}
+.color-card.wrong{
+  border-color: var(--coral);
+  animation: shake .35s ease;
+}
+@keyframes pop{
+  0%{ transform: scale(1); }
+  50%{ transform: scale(1.1); }
+  100%{ transform: scale(1.05); }
+}
+@keyframes shake{
+  0%,100%{ transform: translateX(0); }
+  25%{ transform: translateX(-6px); }
+  75%{ transform: translateX(6px); }
+}
+
+.feedback-area{
+  margin-top: 28px;
+  min-height: 40px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:18px;
+}
+.feedback-text{
+  font-family:'Baloo 2', sans-serif;
+  font-weight:800;
+  font-size: 24px;
+  animation: fadeIn .3s ease both;
+}
+.feedback-text.good{ color: var(--teal-dark); }
+.feedback-text.meh{ color: var(--indigo); }
+
+.btn-next{
+  font-family:'Nunito', sans-serif;
+  font-weight:800;
+  font-size: 17px;
+  letter-spacing: 0.01em;
+  color:#fff;
+  background: linear-gradient(155deg, #12B0A6, var(--teal));
+  border:none;
+  padding: 13px 34px;
+  border-radius: 999px;
+  box-shadow: 0 8px 18px rgba(13,156,147,0.3);
+  cursor:pointer;
+  min-height:50px;
+  animation: fadeIn .3s ease both;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.btn-next:active{
+  transform: translateY(2px);
+  box-shadow: 0 3px 10px rgba(13,156,147,0.28);
+}
+
+/* ===== RESULT ===== */
+.result-title{
+  font-family:'Baloo 2', sans-serif;
+  font-weight:800;
+  font-size: clamp(26px, 7vw, 32px);
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.result-score{
+  font-family:'Baloo 2', sans-serif;
+  font-weight:800;
+  font-size: 42px;
+  color: var(--indigo);
+  margin: 8px 0 14px 0;
+}
+.stars{
+  font-size: 40px;
+  letter-spacing: 6px;
+  margin-bottom: 18px;
+}
+.praise-final{
+  font-family:'Nunito', sans-serif;
+  font-weight:800;
+  font-size: 19px;
+  color: var(--ink-soft);
+  max-width: 280px;
+  margin-bottom: 32px;
+  line-height:1.5;
+}
+
+/* Confetti canvas */
+#confetti-canvas{
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  pointer-events:none;
+  z-index: 50;
+}
+
+@media (max-height: 620px){
+  .intro-badge{ width:74px; height:74px; font-size:34px; margin-bottom:12px; }
+  .eyebrow-pill{ margin-bottom:12px; }
+  .cover-hero{ width:200px; height:124px; margin-bottom:20px; }
+  .hero-item-1{ width:80px; height:80px; left:0; top:38px; }
+  .hero-item-2{ width:98px; height:98px; left:51px; top:0; }
+  .hero-item-3{ width:80px; height:80px; left:120px; top:38px; }
+  .color-card{ min-height:168px; padding: 16px 8px; }
+  .card-halo{ width:96px; height:96px; }
+  .color-card img{ width:82px; height:82px; }
+}
+
+</style>
+</head>
+<body>
+
+<div id="app">
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- TOP BAR GLOBAL (Home + Mute) -->
+  <div class="app-topbar" id="app-topbar">
+    <button id="btn-home" class="icon-btn" aria-label="Kembali ke beranda">🏠</button>
+    <button id="btn-mute" class="icon-btn" aria-label="Matikan suara">🔊</button>
+  </div>
+
+  <!-- LOADING SCREEN -->
+  <section id="screen-loading" class="screen">
+    <div class="loading-wrap">
+      <div class="loading-ring"></div>
+      <div class="loading-text">Menyiapkan permainan...</div>
+    </div>
+  </section>
+
+  <!-- INTRO SCREEN -->
+  <section id="screen-intro" class="screen hidden">
+    <div class="intro-glow"></div>
+    <div class="eyebrow-pill">GAME EDUKASI WARNA</div>
+    <div class="cover-hero" id="cover-hero">
+      <div class="hero-item hero-item-1" data-color="merah"></div>
+      <div class="hero-item hero-item-2" data-color="kuning"></div>
+      <div class="hero-item hero-item-3" data-color="biru"></div>
+    </div>
+    <h1 class="title-main">Ayo Tunjuk Warna</h1>
+    <p class="subtitle">Dengarkan suara lalu sentuh warna yang benar.</p>
+    <button id="btn-start" class="btn-big">
+      <span class="btn-play-icon"></span>
+      MULAI
+    </button>
+  </section>
+
+  <!-- GAME SCREEN -->
+  <section id="screen-game" class="screen hidden">
+    <div class="game-topbar">
+      <div class="progress-pill" id="progress-pill">Soal 1 / 4</div>
+    </div>
+    <div class="instruction-box">
+      <div class="instruction-text" id="instruction-text">Tunjuk Merah</div>
+      <button class="speaker-btn" id="btn-replay" aria-label="Putar ulang suara">🔊</button>
+    </div>
+    <div class="cards-row" id="cards-row">
+      <!-- kartu diinjeksi oleh JS -->
+    </div>
+    <div class="feedback-area" id="feedback-area"></div>
+  </section>
+
+  <!-- RESULT SCREEN -->
+  <section id="screen-result" class="screen hidden">
+    <div class="intro-badge" id="result-emoji">🎉</div>
+    <h1 class="result-title">Permainan Selesai</h1>
+    <div class="result-score" id="result-score">4 / 4</div>
+    <div class="stars" id="result-stars">⭐⭐⭐</div>
+    <div class="praise-final" id="result-praise">Kamu Hebat!</div>
+    <button id="btn-restart" class="btn-big">MAIN LAGI</button>
+  </section>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* =========================================================
+     KONFIGURASI ASET
+     ========================================================= */
+  const BACKGROUND_MUSIC = ""; // isi URL musik latar di sini jika ada
+
+  // Base jsDelivr dipakai karena lebih stabil untuk hotlink lintas domain
+  // dibanding raw.githubusercontent.com (kadang gagal dimuat dari domain lain).
+  const IMG_BASE = "https://cdn.jsdelivr.net/gh/mhrofficialid/aset-Gambar-warna@0cc8e3bf4308e4cc050c870cd58e438411320032";
+  const AUDIO_WARNA_BASE = "https://cdn.jsdelivr.net/gh/mhrofficialid/aset-suara-warna@024f19d5f8557f7fcd790a1da5dd0cf0d6677f67";
+  const AUDIO_PUJIAN_BASE = "https://cdn.jsdelivr.net/gh/mhrofficialid/1.-Tunjuk-4-Alat-Indera@4c394900992d734145ff4995ab216b5cef6055ea";
+
+  const COLORS = {
+    merah: {
+      label: "Merah",
+      img: IMG_BASE + "/IMG_20260708_094920.png",
+      audio: AUDIO_WARNA_BASE + "/tunjuk%20merah.mp3",
+      instructionText: "Tunjuk Merah"
+    },
+    kuning: {
+      label: "Kuning",
+      img: IMG_BASE + "/IMG_20260708_094952.png",
+      audio: AUDIO_WARNA_BASE + "/tunjuk%20kuning.mp3",
+      instructionText: "Tunjuk Kuning"
+    },
+    biru: {
+      label: "Biru",
+      img: IMG_BASE + "/IMG_20260708_095008.png",
+      audio: AUDIO_WARNA_BASE + "/tunjuk%20biru.mp3",
+      instructionText: "Tunjuk Biru"
+    }
+  };
+
+  const PRAISE_ITEMS = [
+    { text: "Hebat!", audio: AUDIO_PUJIAN_BASE + "/hebat.mp3" },
+    { text: "Keren!", audio: AUDIO_PUJIAN_BASE + "/keren.mp3" },
+    { text: "Good Job!", audio: AUDIO_PUJIAN_BASE + "/good%20job.mp3" },
+    { text: "Yeeyy!", audio: AUDIO_PUJIAN_BASE + "/yeeyy.mp3" }
+  ];
+
+  const PERFECT_AUDIO = AUDIO_PUJIAN_BASE + "/Kamu%20hebat.mp3";
+
+  const TOTAL_QUESTIONS = 4;
+  const COLOR_KEYS = Object.keys(COLORS);
+
+  /* =========================================================
+     STATE
+     ========================================================= */
+  let state = {
+    score: 0,
+    currentIndex: 0,
+    questions: [],
+    answered: false,
+    muted: false
+  };
+
+  const loadedAssets = {
+    images: {},
+    instructionAudio: {},
+    praiseAudio: [],
+    perfectAudio: null,
+    bgMusic: null
+  };
+
+  let audioCtx = null;
+
+  /* =========================================================
+     ELEMEN DOM
+     ========================================================= */
+  const screenLoading = document.getElementById('screen-loading');
+  const screenIntro = document.getElementById('screen-intro');
+  const screenGame = document.getElementById('screen-game');
+  const screenResult = document.getElementById('screen-result');
+
+  const btnStart = document.getElementById('btn-start');
+  const btnRestart = document.getElementById('btn-restart');
+  const btnReplay = document.getElementById('btn-replay');
+  const btnHome = document.getElementById('btn-home');
+  const btnMute = document.getElementById('btn-mute');
+  const appTopbar = document.getElementById('app-topbar');
+
+  const progressPill = document.getElementById('progress-pill');
+  const instructionText = document.getElementById('instruction-text');
+  const cardsRow = document.getElementById('cards-row');
+  const feedbackArea = document.getElementById('feedback-area');
+
+  const resultScore = document.getElementById('result-score');
+  const resultStars = document.getElementById('result-stars');
+  const resultPraise = document.getElementById('result-praise');
+  const resultEmoji = document.getElementById('result-emoji');
+
+  const confettiCanvas = document.getElementById('confetti-canvas');
+
+  /* =========================================================
+     UTIL
+     ========================================================= */
+  function shuffleArray(arr){
+    const a = arr.slice();
+    for(let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  /* =========================================================
+     URUTAN TARGET SOAL
+     Memastikan semua warna pasti ditanyakan minimal sekali dalam
+     satu putaran (bukan murni acak yang bisa kebetulan sama terus).
+     Untuk 3 warna & 4 soal: 3 warna pertama diacak (dijamin unik),
+     soal ke-4 diisi warna tambahan yang acak, dihindari sama persis
+     dengan soal sebelumnya (soal 3) supaya tidak dua kali berturut-turut.
+     ========================================================= */
+  function generateTargetSequence(){
+    const sequence = shuffleArray(COLOR_KEYS); // 3 warna unik, urutan acak
+
+    for(let i = sequence.length; i < TOTAL_QUESTIONS; i++){
+      let candidate;
+      let attempts = 0;
+      do{
+        candidate = COLOR_KEYS[Math.floor(Math.random() * COLOR_KEYS.length)];
+        attempts++;
+      } while(candidate === sequence[i - 1] && attempts < 10);
+      sequence.push(candidate);
+    }
+
+    return sequence;
+  }
+
+  function showScreen(el){
+    [screenLoading, screenIntro, screenGame, screenResult].forEach(s => s.classList.add('hidden'));
+    el.classList.remove('hidden');
+    appTopbar.classList.toggle('hidden', el === screenLoading);
+    btnHome.classList.toggle('hidden', el === screenIntro);
+  }
+
+  /* =========================================================
+     ISI GAMBAR WARNA PADA HERO COVER (INTRO)
+     ========================================================= */
+  function populateCoverHero(){
+    const heroEls = document.querySelectorAll('#cover-hero .hero-item');
+    heroEls.forEach(el => {
+      const key = el.getAttribute('data-color');
+      const color = COLORS[key];
+      if(!color) return;
+      const img = document.createElement('img');
+      img.src = color.img;
+      img.alt = color.label;
+      img.addEventListener('error', () => {
+        img.style.display = 'none';
+        el.classList.add('img-fallback');
+      }, { once: true });
+      el.appendChild(img);
+    });
+  }
+
+  /* =========================================================
+     PRELOAD ASET
+     ========================================================= */
+  function loadAllAssets(){
+    const promises = [];
+
+    // Gambar warna
+    COLOR_KEYS.forEach(key => {
+      const img = new Image();
+      loadedAssets.images[key] = img;
+      promises.push(new Promise(resolve => {
+        let done = false;
+        const finish = () => { if(!done){ done = true; resolve(); } };
+        img.onload = finish;
+        img.onerror = finish;
+        img.src = COLORS[key].img;
+      }));
+    });
+
+    // Audio instruksi
+    COLOR_KEYS.forEach(key => {
+      const audio = new Audio();
+      audio.preload = 'auto';
+      audio.src = COLORS[key].audio;
+      loadedAssets.instructionAudio[key] = audio;
+      promises.push(new Promise(res => {
+        let done = false;
+        const finish = () => { if(!done){ done = true; res(); } };
+        audio.addEventListener('canplaythrough', finish, { once:true });
+        audio.addEventListener('loadeddata', finish, { once:true });
+        audio.addEventListener('error', finish, { once:true });
+        try{ audio.load(); }catch(e){}
+      }));
+    });
+
+    // Audio pujian (urutan harus sama dengan PRAISE_ITEMS agar teks & suara sinkron)
+    PRAISE_ITEMS.forEach(item => {
+      const audio = new Audio();
+      audio.preload = 'auto';
+      audio.src = item.audio;
+      loadedAssets.praiseAudio.push(audio);
+      promises.push(new Promise(res => {
+        let done = false;
+        const finish = () => { if(!done){ done = true; res(); } };
+        audio.addEventListener('canplaythrough', finish, { once:true });
+        audio.addEventListener('loadeddata', finish, { once:true });
+        audio.addEventListener('error', finish, { once:true });
+        try{ audio.load(); }catch(e){}
+      }));
+    });
+
+    // Audio sempurna
+    const perfectAudioEl = new Audio();
+    perfectAudioEl.preload = 'auto';
+    perfectAudioEl.src = PERFECT_AUDIO;
+    loadedAssets.perfectAudio = perfectAudioEl;
+    promises.push(new Promise(res => {
+      let done = false;
+      const finish = () => { if(!done){ done = true; res(); } };
+      perfectAudioEl.addEventListener('canplaythrough', finish, { once:true });
+      perfectAudioEl.addEventListener('loadeddata', finish, { once:true });
+      perfectAudioEl.addEventListener('error', finish, { once:true });
+      try{ perfectAudioEl.load(); }catch(e){}
+    }));
+
+    // Musik latar (opsional)
+    if(BACKGROUND_MUSIC && BACKGROUND_MUSIC.length > 0){
+      const bg = new Audio();
+      bg.preload = 'auto';
+      bg.loop = true;
+      bg.volume = 0.35;
+      bg.src = BACKGROUND_MUSIC;
+      loadedAssets.bgMusic = bg;
+      promises.push(new Promise(res => {
+        let done = false;
+        const finish = () => { if(!done){ done = true; res(); } };
+        bg.addEventListener('canplaythrough', finish, { once:true });
+        bg.addEventListener('loadeddata', finish, { once:true });
+        bg.addEventListener('error', finish, { once:true });
+        try{ bg.load(); }catch(e){}
+      }));
+    }
+
+    // Timeout pengaman agar loading tidak macet jika jaringan lambat
+    const safetyTimeout = new Promise(res => setTimeout(res, 8000));
+
+    return Promise.race([ Promise.all(promises), safetyTimeout ]);
+  }
+
+  /* =========================================================
+     WEB AUDIO API - SOUND EFFECT
+     ========================================================= */
+  function ensureAudioContext(){
+    if(!audioCtx){
+      const AC = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new AC();
+    }
+    if(audioCtx.state === 'suspended'){
+      audioCtx.resume();
+    }
+  }
+
+  function playTone(freq, startTime, duration, type, gainPeak){
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, startTime);
+    gain.gain.setValueAtTime(0.0001, startTime);
+    gain.gain.exponentialRampToValueAtTime(gainPeak, startTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(startTime);
+    osc.stop(startTime + duration + 0.02);
+  }
+
+  function playCorrectSound(){
+    if(!audioCtx || state.muted) return;
+    const now = audioCtx.currentTime;
+    playTone(660, now, 0.14, 'sine', 0.25);
+    playTone(880, now + 0.12, 0.18, 'sine', 0.25);
+    playTone(1046.5, now + 0.26, 0.22, 'sine', 0.22);
+  }
+
+  function playWrongSound(){
+    if(!audioCtx || state.muted) return;
+    const now = audioCtx.currentTime;
+    playTone(180, now, 0.28, 'sawtooth', 0.18);
+  }
+
+  /* =========================================================
+     MUTE / UNMUTE
+     ========================================================= */
+  function applyMutedToAllAudio(m){
+    Object.values(loadedAssets.instructionAudio).forEach(a => { a.muted = m; });
+    loadedAssets.praiseAudio.forEach(a => { a.muted = m; });
+    if(loadedAssets.perfectAudio) loadedAssets.perfectAudio.muted = m;
+    if(loadedAssets.bgMusic) loadedAssets.bgMusic.muted = m;
+  }
+
+  function setMuted(m){
+    state.muted = m;
+    applyMutedToAllAudio(m);
+    btnMute.textContent = m ? '🔇' : '🔊';
+    btnMute.classList.toggle('is-muted', m);
+    btnMute.setAttribute('aria-label', m ? 'Aktifkan suara' : 'Matikan suara');
+  }
+
+  /* =========================================================
+     KEMBALI KE BERANDA
+     ========================================================= */
+  function goHome(){
+    stopAllInstructionAudio();
+    if(loadedAssets.bgMusic){ loadedAssets.bgMusic.pause(); }
+    state.answered = false;
+    showScreen(screenIntro);
+  }
+
+  /* =========================================================
+     GENERATE SOAL
+     ========================================================= */
+  function generateQuestions(){
+    const targets = generateTargetSequence();
+    return targets.map(target => {
+      const others = COLOR_KEYS.filter(c => c !== target);
+      const companion = others[Math.floor(Math.random() * others.length)];
+      const positions = shuffleArray([target, companion]); // posisi kiri-kanan acak
+      return {
+        left: positions[0],
+        right: positions[1],
+        target: target
+      };
+    });
+  }
+
+  /* =========================================================
+     ALUR PERMAINAN
+     ========================================================= */
+  function startGame(){
+    ensureAudioContext();
+
+    if(loadedAssets.bgMusic){
+      loadedAssets.bgMusic.play().catch(()=>{});
+    }
+
+    state.score = 0;
+    state.currentIndex = 0;
+    state.questions = generateQuestions();
+
+    showScreen(screenGame);
+    renderQuestion();
+  }
+
+  function stopAllInstructionAudio(){
+    Object.values(loadedAssets.instructionAudio).forEach(a => {
+      a.pause();
+      a.currentTime = 0;
+    });
+  }
+
+  function renderQuestion(){
+    state.answered = false;
+    feedbackArea.innerHTML = '';
+
+    const qIndex = state.currentIndex;
+    const question = state.questions[qIndex];
+
+    progressPill.textContent = `Soal ${qIndex + 1} / ${TOTAL_QUESTIONS}`;
+    instructionText.textContent = COLORS[question.target].instructionText;
+
+    cardsRow.innerHTML = '';
+    [question.left, question.right].forEach(colorKey => {
+      const card = document.createElement('div');
+      card.className = 'color-card locked';
+      card.setAttribute('data-color', colorKey);
+      card.innerHTML = `
+        <div class="card-halo">
+          <img src="${COLORS[colorKey].img}" alt="${COLORS[colorKey].label}">
+        </div>
+        <div class="card-label">${COLORS[colorKey].label}</div>
+      `;
+      // Jika gambar gagal dimuat (mis. jaringan bermasalah), tampilkan
+      // bulatan warna solid sebagai pengganti supaya kartu tetap terlihat jelas.
+      const imgEl = card.querySelector('img');
+      imgEl.addEventListener('error', () => {
+        imgEl.style.display = 'none';
+        card.querySelector('.card-halo').classList.add('img-fallback');
+      }, { once: true });
+      card.addEventListener('click', onCardTap);
+      cardsRow.appendChild(card);
+    });
+
+    playInstructionAudio(question.target);
+  }
+
+  function playInstructionAudio(colorKey){
+    stopAllInstructionAudio();
+    const audio = loadedAssets.instructionAudio[colorKey];
+    btnReplay.classList.add('playing');
+    lockCards(true);
+
+    let unlocked = false;
+    const unlock = () => {
+      if(unlocked) return;
+      unlocked = true;
+      btnReplay.classList.remove('playing');
+      lockCards(false);
+    };
+
+    if(!audio){
+      unlock();
+      return;
+    }
+
+    audio.currentTime = 0;
+    audio.onended = unlock;
+    audio.onerror = unlock;
+
+    const playPromise = audio.play();
+    if(playPromise && playPromise.catch){
+      playPromise.catch(unlock);
+    }
+
+    // Pengaman jika audio gagal memicu 'ended' (mis. durasi tidak terbaca)
+    setTimeout(unlock, 4500);
+  }
+
+  function lockCards(locked){
+    const cards = cardsRow.querySelectorAll('.color-card');
+    cards.forEach(c => {
+      if(locked){
+        c.classList.add('locked');
+      } else if(!state.answered){
+        c.classList.remove('locked');
+      }
+    });
+  }
+
+  btnReplay.addEventListener('click', () => {
+    if(state.answered) return;
+    const question = state.questions[state.currentIndex];
+    playInstructionAudio(question.target);
+  });
+
+  function onCardTap(e){
+    if(state.answered) return;
+    state.answered = true;
+
+    const tappedCard = e.currentTarget;
+    const tappedColor = tappedCard.getAttribute('data-color');
+    const question = state.questions[state.currentIndex];
+    const isCorrect = tappedColor === question.target;
+
+    stopAllInstructionAudio();
+
+    const allCards = cardsRow.querySelectorAll('.color-card');
+    allCards.forEach(c => c.classList.add('disabled', 'locked'));
+
+    if(isCorrect){
+      tappedCard.classList.add('correct');
+      tappedCard.classList.remove('disabled');
+      state.score += 1;
+      playCorrectSound();
+
+      const praiseList = loadedAssets.praiseAudio;
+      const randIndex = Math.floor(Math.random() * PRAISE_ITEMS.length);
+      const chosenPraise = PRAISE_ITEMS[randIndex];
+      const chosenAudio = praiseList[randIndex];
+
+      setTimeout(() => {
+        if(chosenAudio){
+          chosenAudio.currentTime = 0;
+          chosenAudio.play().catch(()=>{});
+        }
+      }, 250);
+      showFeedback(true, chosenPraise.text);
+    } else {
+      tappedCard.classList.add('wrong');
+      playWrongSound();
+      showFeedback(false);
+    }
+  }
+
+  function showFeedback(isCorrect, praiseText){
+    feedbackArea.innerHTML = '';
+
+    const text = document.createElement('div');
+    text.className = 'feedback-text ' + (isCorrect ? 'good' : 'meh');
+    text.textContent = isCorrect ? (praiseText || 'Hebat!') : 'Yuk lanjut ya.';
+    feedbackArea.appendChild(text);
+
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'btn-next';
+    nextBtn.textContent = 'NEXT →';
+    nextBtn.addEventListener('click', onNextTap);
+    feedbackArea.appendChild(nextBtn);
+  }
+
+  function onNextTap(){
+    state.currentIndex += 1;
+    if(state.currentIndex >= TOTAL_QUESTIONS){
+      finishGame();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  function finishGame(){
+    stopAllInstructionAudio();
+    if(loadedAssets.bgMusic){
+      loadedAssets.bgMusic.pause();
+    }
+
+    const score = state.score;
+    resultScore.textContent = `${score} / ${TOTAL_QUESTIONS}`;
+
+    let stars = 1;
+    if(score === 4) stars = 3;
+    else if(score === 3) stars = 2;
+    else stars = 1;
+    resultStars.textContent = '⭐'.repeat(stars);
+
+    let praiseText = '';
+    let emoji = '🙂';
+    if(score === 4){
+      praiseText = 'Kamu Hebat!';
+      emoji = '🎉';
+      resultPraise.textContent = praiseText;
+      resultEmoji.textContent = emoji;
+      showScreen(screenResult);
+      loadedAssets.perfectAudio.currentTime = 0;
+      loadedAssets.perfectAudio.play().catch(()=>{});
+      launchConfetti();
+      return;
+    } else if(score === 3){
+      praiseText = 'Bagus sekali!';
+      emoji = '😄';
+    } else if(score === 2){
+      praiseText = 'Hebat! Yuk bermain lagi.';
+      emoji = '🙂';
+    } else {
+      praiseText = 'Tidak apa-apa. Ayo coba lagi ya.';
+      emoji = '🤗';
+    }
+
+    resultPraise.textContent = praiseText;
+    resultEmoji.textContent = emoji;
+    showScreen(screenResult);
+  }
+
+  function resetGame(){
+    state.score = 0;
+    state.currentIndex = 0;
+    state.answered = false;
+    state.questions = [];
+    if(loadedAssets.bgMusic){
+      loadedAssets.bgMusic.currentTime = 0;
+    }
+    startGame();
+  }
+
+  /* =========================================================
+     KONFETI
+     ========================================================= */
+  function launchConfetti(){
+    const ctx = confettiCanvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    confettiCanvas.width = window.innerWidth * dpr;
+    confettiCanvas.height = window.innerHeight * dpr;
+    confettiCanvas.style.width = window.innerWidth + 'px';
+    confettiCanvas.style.height = window.innerHeight + 'px';
+    ctx.scale(dpr, dpr);
+
+    const colors = ['#F0645E', '#F0A93B', '#4AA8E0', '#4F46E5', '#0D9C93'];
+    const particles = [];
+    const count = 90;
+
+    for(let i = 0; i < count; i++){
+      particles.push({
+        x: Math.random() * window.innerWidth,
+        y: -20 - Math.random() * window.innerHeight * 0.5,
+        w: 6 + Math.random() * 6,
+        h: 10 + Math.random() * 8,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        speedY: 2 + Math.random() * 3,
+        speedX: -1.5 + Math.random() * 3,
+        rotation: Math.random() * 360,
+        rotationSpeed: -8 + Math.random() * 16
+      });
+    }
+
+    let frame = 0;
+    const maxFrames = 260;
+
+    function animate(){
+      frame++;
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      particles.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.rotation += p.rotationSpeed;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+      });
+
+      if(frame < maxFrames){
+        requestAnimationFrame(animate);
+      } else {
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+
+  /* =========================================================
+     EVENT LISTENERS UTAMA
+     ========================================================= */
+  btnStart.addEventListener('click', () => {
+    startGame();
+  }, { once: false });
+
+  btnRestart.addEventListener('click', () => {
+    resetGame();
+  });
+
+  btnHome.addEventListener('click', () => {
+    goHome();
+  });
+
+  btnMute.addEventListener('click', () => {
+    setMuted(!state.muted);
+  });
+
+  /* =========================================================
+     INISIALISASI
+     ========================================================= */
+  showScreen(screenLoading);
+  populateCoverHero();
+  loadAllAssets().then(() => {
+    showScreen(screenIntro);
+  });
+
+})();
+
+</script>
+</body>
+</html>
