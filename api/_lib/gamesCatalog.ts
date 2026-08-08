@@ -76,6 +76,18 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     ageRange: "4 Tahun",
     premium: true,
   },
+  {
+    id: "fungsi_alat_indera",
+    name: "Fungsi Alat Indera",
+    ageRange: "5 Tahun",
+    premium: true,
+  },
+  {
+    id: "aku_istimewa_advance",
+    name: "Aku Istimewa - Ayo Kenali Alat Indera di Wajahmu!",
+    ageRange: "5 Tahun",
+    premium: true,
+  },
   // TODO: tambahkan 48 game lainnya di sini, format sama seperti di atas.
 ];
 
