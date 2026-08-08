@@ -160,7 +160,7 @@ export default function App() {
       name: "Fungsi Alat Indera",
       ageRange: "5 Tahun",
       premium: true,
-      description: "Seret label nama alat indera (mata, hidung, mulut, telinga) ke gambar yang sesuai lewat tantangan level lanjutan untuk mengasah kosakata dan logika mencocokkan.",
+      description: "Seret jawaban fungsi (melihat, mencium, makan, mendengar) ke gambar alat indera yang sesuai untuk melatih pemahaman fungsi tiap indera lewat tantangan level lanjutan.",
       coverImage: fungsiAlatInderaCover
     },
     {
