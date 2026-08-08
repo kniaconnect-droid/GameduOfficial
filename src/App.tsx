@@ -62,6 +62,15 @@ export default function App() {
   const [showPremiumBanner, setShowPremiumBanner] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1); // Page 1: Home, Page 2: Choose Age, Page 3: Game Gallery
 
+  // Reset posisi scroll ke paling atas tiap kali pindah halaman. Tanpa ini,
+  // posisi scroll-Y lama kebawa ke halaman baru -- jadi kalau user lagi
+  // scroll ke bawah di satu halaman lalu klik tombol pindah halaman (mis.
+  // "Lihat Katalog Game Lengkap"), halaman baru yang lebih pendek bisa
+  // langsung kebuka nyangkut di area footer, bukan dari atas.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
   // List of all games available on the server (all moved to Age 3 as requested)
   const games: Game[] = [
     {
