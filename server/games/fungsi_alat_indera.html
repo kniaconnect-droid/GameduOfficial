@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Mencocokkan Nama Alat Indera - Aku Istimewa</title>
+<title>Apa Fungsinya? - Aku Istimewa</title>
 <style>
 /* =========================================================
-   ANAK MENUNJUK APA? - STYLE.CSS
-   Tema: Edukasi Anak PAUD - Level 2 (berdiri sendiri)
+   FUNGSI ALAT INDERA - STYLE.CSS
+   Tema: Edukasi Anak PAUD - Level 4 (berdiri sendiri)
 ========================================================= */
 
 :root {
@@ -221,6 +221,27 @@ html, body {
   font-size: 1.5rem;
   color: var(--text-dark);
 }
+.score-badge {
+  background: var(--green-dark);
+  margin-left: 8px;
+}
+
+.praise-inline {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--green-dark);
+  margin: 14px 0 0;
+  animation: star-pop 0.5s ease;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.1) !important;
+}
+.btn:disabled:active {
+  transform: none;
+}
 
 /* =========================================================
    TYPOGRAPHY
@@ -246,8 +267,8 @@ h1.title-bounce {
   font-weight: bold;
   color: var(--text-dark);
   margin: 6px 0 18px;
-  cursor: pointer;
   user-select: none;
+  cursor: pointer;
   transition: transform 0.15s ease;
 }
 .instruction-text:active {
@@ -366,8 +387,9 @@ h1.title-bounce {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
+  padding: 8px;
   box-shadow: 0 4px 0 rgba(90, 74, 106, 0.12);
+  overflow: hidden;
 }
 .intro-icon-tile img {
   width: 100%;
@@ -379,13 +401,14 @@ h1.title-bounce {
 .tile-pink { background: var(--pink); }
 .tile-green { background: var(--green); }
 .intro-icon-item span {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: bold;
   color: #7a6a8a;
+  text-align: center;
 }
 
 /* =========================================================
-   BERMAIN - COCOKKAN NAMANYA (DRAG & DROP)
+   BERMAIN - COCOKKAN FUNGSINYA (DRAG & DROP)
 ========================================================= */
 .match-targets {
   display: grid;
@@ -399,18 +422,30 @@ h1.title-bounce {
   border: 3px dashed var(--purple-dark);
   border-radius: var(--radius-md);
   padding: 12px 6px;
-  min-height: 100px;
+  min-height: 110px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 6px;
   transition: background 0.2s ease;
+  cursor: pointer;
 }
 .match-target img {
   width: 56px;
   height: 56px;
   object-fit: contain;
+}
+.match-target::after {
+  content: "🔊";
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 0.9rem;
+  opacity: 0.55;
+}
+.match-target.matched::after {
+  content: "";
 }
 .match-target.drop-hover {
   background: var(--yellow);
@@ -419,6 +454,7 @@ h1.title-bounce {
   background: var(--green);
   border-style: solid;
   border-color: var(--green-dark);
+  cursor: default;
 }
 .match-target.matched-flash {
   background: var(--green);
@@ -490,6 +526,28 @@ h1.title-bounce {
 }
 
 /* =========================================================
+   LEVEL 4 - APA FUNGSINYA (DRAG & DROP, SATU TARGET AKTIF)
+========================================================= */
+.level4-target-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.func-target {
+  width: 160px;
+  height: 160px;
+  min-height: 0;
+  cursor: default;
+}
+.func-target::after {
+  content: "";
+}
+.func-target img {
+  width: 96px;
+  height: 96px;
+}
+
+/* =========================================================
    HALAMAN SKOR / SELESAI
 ========================================================= */
 .finish-card { padding-top: 30px; }
@@ -547,7 +605,7 @@ h1.title-bounce {
   h1.title-bounce { font-size: 1.5rem; }
   .title-clean { font-size: 1.4rem; }
   .intro-icons { gap: 8px; }
-  .intro-icon-item span { font-size: 0.72rem; }
+  .intro-icon-item span { font-size: 0.68rem; }
 }
 
 @media (min-width: 600px) {
@@ -588,34 +646,34 @@ h1.title-bounce {
     <!-- ===================== HALAMAN MULAI ===================== -->
     <section id="screen-start" class="screen active-screen">
       <div class="card home-card">
-        <span class="eyebrow">Aku Istimewa &middot; Level 3</span>
-        <h1 class="title-clean">Mencocokkan Nama Alat Indera</h1>
-        <p class="subtitle">Seret label ke gambar alat indera yang sesuai</p>
+        <span class="eyebrow">Aku Istimewa &middot; Level 4</span>
+        <h1 class="title-clean">Apa Fungsinya?</h1>
+        <p class="subtitle">Seret jawaban fungsi yang sesuai dengan gambar</p>
 
         <div class="intro-icons">
           <div class="intro-icon-item">
             <div class="intro-icon-tile tile-blue">
               <img src="https://raw.githubusercontent.com/mhrofficialid/Gambar-alat-indera/08b7b7f677da39d8dfb72205a3958c71e064be2a/mata.png" alt="Mata" />
             </div>
-            <span>Mata</span>
+            <span>Melihat</span>
           </div>
           <div class="intro-icon-item">
             <div class="intro-icon-tile tile-yellow">
               <img src="https://raw.githubusercontent.com/mhrofficialid/Gambar-alat-indera/08b7b7f677da39d8dfb72205a3958c71e064be2a/hidung.png" alt="Hidung" />
             </div>
-            <span>Hidung</span>
+            <span>Mencium</span>
           </div>
           <div class="intro-icon-item">
             <div class="intro-icon-tile tile-pink">
               <img src="https://raw.githubusercontent.com/mhrofficialid/Gambar-alat-indera/08b7b7f677da39d8dfb72205a3958c71e064be2a/mulut.png" alt="Mulut" />
             </div>
-            <span>Mulut</span>
+            <span>Makan</span>
           </div>
           <div class="intro-icon-item">
             <div class="intro-icon-tile tile-green">
               <img src="https://raw.githubusercontent.com/mhrofficialid/Gambar-alat-indera/08b7b7f677da39d8dfb72205a3958c71e064be2a/telinga.png" alt="Telinga" />
             </div>
-            <span>Telinga</span>
+            <span>Mendengar</span>
           </div>
         </div>
 
@@ -623,17 +681,24 @@ h1.title-bounce {
       </div>
     </section>
 
-    <!-- ===================== BERMAIN: COCOKKAN NAMANYA ===================== -->
+    <!-- ===================== BERMAIN: APA FUNGSINYA (DRAG & DROP, 1 TARGET AKTIF) ===================== -->
     <section id="screen-play" class="screen">
       <div class="level-header">
-        <span class="level-badge" id="round-badge">Cocokkan 0 / 4</span>
-        <h2>Mencocokkan Nama Alat Indera</h2>
+        <span class="level-badge" id="round-badge">Soal 1 / 4</span>
+        <span class="level-badge score-badge" id="score-badge">⭐ 0</span>
+        <h2>Apa Fungsinya?</h2>
       </div>
 
       <div class="card" id="play-card">
-        <p class="instruction-text" id="play-instruction">Seret label ke gambar yang sesuai</p>
-        <div class="match-targets" id="play-targets"></div>
-        <div class="match-labels" id="play-labels"></div>
+        <p class="instruction-text" id="level4-question">Apa fungsi Mata?</p>
+        <div class="level4-target-wrap">
+          <div class="match-target func-target" id="level4-target">
+            <img id="level4-target-img" src="" alt="" />
+          </div>
+        </div>
+        <div class="match-labels" id="level4-labels"></div>
+        <p class="praise-inline hidden" id="play-praise-text"></p>
+        <button class="btn btn-primary btn-big" id="btn-next" disabled>Lanjut ▶</button>
       </div>
     </section>
 
@@ -656,27 +721,68 @@ h1.title-bounce {
 
   <script>
 /* =========================================================
-   MENCOCOKKAN NAMA ALAT INDERA - SCRIPT.JS
-   Versi berdiri sendiri dari Level 3 "Aku Istimewa".
-   Setiap tulisan yang tampil di layar diucapkan memakai
-   rekaman suara manusia asli yang PERSIS sama isinya
-   (bukan Text-to-Speech), supaya anak yang belum bisa
-   membaca tetap paham. Tidak ada suara "Benar" - begitu
-   cocok, langsung terdengar nama alat inderanya saja.
+   APA FUNGSINYA? - SCRIPT.JS
+   Versi berdiri sendiri dari Level 4 "Aku Istimewa".
+   Satu gambar alat indera aktif per ronde. Anak mendengar
+   pertanyaan "Apa fungsi ___?", lalu menyeret SATU label
+   jawaban yang benar (Melihat/Mendengar/Mencium/Makan) ke
+   gambar tersebut. Setelah benar, ronde otomatis berpindah
+   ke gambar berikutnya. Semua tulisan yang tampil diucapkan
+   memakai rekaman suara manusia asli (bukan Text-to-Speech).
 ========================================================= */
 
 /* =========================================================
-   1. DATA ALAT INDERA
+   1. DATA ALAT INDERA & FUNGSINYA
 ========================================================= */
 const IMG_BASE =
   "https://raw.githubusercontent.com/mhrofficialid/Gambar-alat-indera/08b7b7f677da39d8dfb72205a3958c71e064be2a/";
 
 const PARTS = [
-  { id: "mata", name: "Mata", iconImg: IMG_BASE + "mata.png", audioKey: "mata" },
-  { id: "hidung", name: "Hidung", iconImg: IMG_BASE + "hidung.png", audioKey: "hidung" },
-  { id: "mulut", name: "Mulut", iconImg: IMG_BASE + "mulut.png", audioKey: "mulut" },
-  { id: "telinga", name: "Telinga", iconImg: IMG_BASE + "telinga.png", audioKey: "telinga" }
+  {
+    id: "mata",
+    name: "Mata",
+    faceImg: IMG_BASE + "mata.png",
+    audioKey: "mata",
+    fungsi: "Melihat",
+    fungsiKey: "melihat",
+    fungsiTanyaKey: "fungsi_tanya_mata"
+  },
+  {
+    id: "hidung",
+    name: "Hidung",
+    faceImg: IMG_BASE + "hidung.png",
+    audioKey: "hidung",
+    fungsi: "Mencium",
+    fungsiKey: "mencium",
+    fungsiTanyaKey: "fungsi_tanya_hidung"
+  },
+  {
+    id: "mulut",
+    name: "Mulut",
+    faceImg: IMG_BASE + "mulut.png",
+    audioKey: "mulut",
+    fungsi: "Makan",
+    fungsiKey: "makan",
+    fungsiTanyaKey: "fungsi_tanya_mulut"
+  },
+  {
+    id: "telinga",
+    name: "Telinga",
+    faceImg: IMG_BASE + "telinga.png",
+    audioKey: "telinga",
+    fungsi: "Mendengar",
+    fungsiKey: "mendengar",
+    fungsiTanyaKey: "fungsi_tanya_telinga"
+  }
 ];
+
+const ALL_FUNGSI = ["Melihat", "Mendengar", "Mencium", "Makan"];
+const FUNGSI_KEY_MAP = {
+  Melihat: "melihat",
+  Mendengar: "mendengar",
+  Mencium: "mencium",
+  Makan: "makan"
+};
 
 function findPart(id) {
   return PARTS.find((p) => p.id === id);
@@ -684,25 +790,29 @@ function findPart(id) {
 
 /* =========================================================
    2. AUDIO - Suara Manusia Asli (rekaman MP3)
-   ---------------------------------------------------------
-   PENTING: setiap tulisan yang tampil di layar HARUS diucapkan
-   memakai file suara yang isinya persis sama dengan tulisan itu.
-   Contoh: tulisan "Kamu Keren!" -> suara "kamu keren.mp3".
 ========================================================= */
 const AUDIO_BASE =
   "https://raw.githubusercontent.com/mhrofficialid/1.-Tunjuk-4-Alat-Indera/4c394900992d734145ff4995ab216b5cef6055ea/";
-const AUDIO_BASE3 =
-  "https://raw.githubusercontent.com/mhrofficialid/1.-Tunjuk-4-Alat-Indera/abd0ccbb441513671593e10848376b9cb3142e3a/";
+const AUDIO_BASE2 =
+  "https://raw.githubusercontent.com/mhrofficialid/1.-Tunjuk-4-Alat-Indera/d7a194e209978bc9f7b48a86626e02efed19dc9b/";
 
 const AUDIO_FILES = {
-  // Nama alat indera - cocok dengan tulisan pada label yang diseret
   mata: AUDIO_BASE + "Mata.mp3",
   hidung: AUDIO_BASE + "hidung.mp3",
   mulut: AUDIO_BASE + "mulut.mp3",
   telinga: AUDIO_BASE + "telinga.mp3",
 
-  // Perintah - cocok dengan tulisan "Seret label ke gambar yang sesuai"
-  seret_label: AUDIO_BASE3 + "Seret%20label%20ke%20gambar.mp3"
+  melihat: AUDIO_BASE + "melihat.mp3",
+  mendengar: AUDIO_BASE + "mendengar.mp3",
+  mencium: AUDIO_BASE + "mencium.mp3",
+  makan: AUDIO_BASE + "makan.mp3",
+
+  fungsi_tanya_mata: AUDIO_BASE2 + "Apa%20fungsi%20mata_.mp3",
+  fungsi_tanya_hidung: AUDIO_BASE2 + "Apa%20fungsi%20hidung_.mp3",
+  fungsi_tanya_mulut: AUDIO_BASE2 + "Apa%20fungsi%20mulut_.mp3",
+  fungsi_tanya_telinga: AUDIO_BASE2 + "Apa%20fungsi%20telinga_.mp3",
+
+  benar: AUDIO_BASE2 + "Benar.mp3"
 };
 
 // Setiap pujian dipasangkan PERSIS dengan tulisan yang tampil,
@@ -734,7 +844,6 @@ function stopVoice() {
   currentVoiceAudio = null;
 }
 
-// Memutar satu atau beberapa rekaman berurutan.
 function playUrlsSequence(urls, callback) {
   const list = (urls || []).filter(Boolean);
   stopVoice();
@@ -769,8 +878,6 @@ function playKey(key, callback) {
   playUrlsSequence([AUDIO_FILES[key]], callback);
 }
 
-// Memutar pujian ACAK, lalu menampilkan tulisan yang PERSIS sama
-// dengan rekaman yang sedang diputar.
 function playPraiseMatching(targetEl, callback) {
   const p = PRAISES[Math.floor(Math.random() * PRAISES.length)];
   if (targetEl) {
@@ -878,8 +985,11 @@ function showWrongMark(target) {
    6. STATE PERMAINAN
 ========================================================= */
 const STATE = {
-  matched: 0,
+  order: [],
+  index: 0,
   score: 0,
+  busy: false,
+  answered: false, // true jika soal ronde ini sudah dijawab benar
   wrongTried: {} // partId -> true jika pernah salah sebelum cocok
 };
 
@@ -900,7 +1010,7 @@ document.getElementById("btn-replay").addEventListener("click", () => {
 });
 
 /* =========================================================
-   8. PERMAINAN: DRAG & DROP GENERIK
+   8. DRAG & DROP GENERIK
 ========================================================= */
 function makeDraggable(el, handlers) {
   let offsetX = 0;
@@ -910,7 +1020,7 @@ function makeDraggable(el, handlers) {
   const targetSelector = handlers.targetSelector || ".match-target";
 
   el.addEventListener("pointerdown", (e) => {
-    if (el.classList.contains("placed")) return;
+    if (el.classList.contains("placed") || STATE.busy) return;
     dragging = true;
     el.setPointerCapture(e.pointerId);
     el.classList.add("dragging");
@@ -943,7 +1053,7 @@ function makeDraggable(el, handlers) {
     document.querySelectorAll(targetSelector).forEach((t) => t.classList.remove("drop-hover"));
     const under = document.elementFromPoint(e.clientX, e.clientY);
     const target = under ? under.closest(targetSelector) : null;
-    if (target && !target.classList.contains("matched")) {
+    if (target) {
       target.classList.add("drop-hover");
     }
   });
@@ -968,90 +1078,77 @@ function makeDraggable(el, handlers) {
 }
 
 /* =========================================================
-   9. MENCOCOKKAN NAMA ALAT INDERA
+   9. APA FUNGSINYA - SATU TARGET AKTIF PER RONDE
 ========================================================= */
 function startGame() {
-  STATE.matched = 0;
+  STATE.order = shuffle(PARTS.map((p) => p.id));
+  STATE.index = 0;
   STATE.score = 0;
+  STATE.busy = false;
+  STATE.answered = false;
   STATE.wrongTried = {};
+  updateScoreBadge();
   showScreen("screen-play");
+  renderLabels();
+  // PENTING: gambar & soal ronde pertama langsung ditampilkan di sini,
+  // TIDAK menunggu narasi selesai, supaya papan selalu siap disentuh
+  // walau suara pertanyaannya belum selesai diucapkan.
   renderRound();
-  // Suara perintah langsung terdengar begitu masuk papan permainan,
-  // cocok persis dengan tulisan instruksi di atas.
-  playKey("seret_label");
+  const firstPart = findPart(STATE.order[STATE.index]);
+  playKey(firstPart.fungsiTanyaKey);
 }
 
 function updateBadge() {
   document.getElementById("round-badge").textContent =
-    "Cocokkan " + STATE.matched + " / " + TOTAL_ROUNDS;
+    "Soal " + (STATE.index + 1) + " / " + TOTAL_ROUNDS;
 }
 
-function renderRound() {
-  updateBadge();
-  const targetsWrap = document.getElementById("play-targets");
-  const labelsWrap = document.getElementById("play-labels");
-  targetsWrap.innerHTML = "";
+function updateScoreBadge() {
+  document.getElementById("score-badge").textContent = "⭐ " + STATE.score;
+}
+
+function renderLabels() {
+  const labelsWrap = document.getElementById("level4-labels");
   labelsWrap.innerHTML = "";
-
-  const targetOrder = shuffle(PARTS.map((p) => p.id));
-  targetOrder.forEach((id) => {
-    const part = findPart(id);
-    const target = document.createElement("div");
-    target.className = "match-target";
-    target.dataset.partId = id;
-    const img = document.createElement("img");
-    img.src = part.iconImg;
-    img.alt = part.name;
-    const label = document.createElement("span");
-    label.className = "match-target-label";
-    target.appendChild(img);
-    target.appendChild(label);
-    targetsWrap.appendChild(target);
-  });
-
-  const labelOrder = shuffle(PARTS.map((p) => p.id));
-  labelOrder.forEach((id) => {
-    const part = findPart(id);
+  const order = shuffle(ALL_FUNGSI);
+  order.forEach((fungsi) => {
     const label = document.createElement("div");
     label.className = "drag-label";
-    label.dataset.partId = id;
-    label.textContent = part.name;
+    label.dataset.fungsi = fungsi;
+    label.textContent = fungsi;
     makeDraggable(label, {
-      targetSelector: ".match-target",
+      targetSelector: ".func-target",
       onPickup: (el) => {
-        const p = findPart(el.dataset.partId);
-        // Begitu label ("Mata", "Hidung", dst) disentuh, langsung
+        // Begitu label fungsi ("Melihat", dsb) disentuh, langsung
         // ucapkan kata itu, sama persis dengan tulisannya.
         SFX.click();
-        playKey(p.audioKey);
+        playKey(FUNGSI_KEY_MAP[el.dataset.fungsi]);
       },
       onDrop: (el, target) => {
-        if (target.classList.contains("matched")) return;
-        if (target.dataset.partId === el.dataset.partId) {
+        if (STATE.busy) return;
+        const currentPart = findPart(target.dataset.partId);
+        if (currentPart && currentPart.fungsi === el.dataset.fungsi) {
+          STATE.busy = true;
+          STATE.answered = true;
           SFX.correct();
-          const matchedPart = findPart(target.dataset.partId);
 
-          if (!STATE.wrongTried[target.dataset.partId]) {
+          if (!STATE.wrongTried[currentPart.id]) {
             STATE.score++;
           }
+          updateScoreBadge();
 
-          // Langsung ucapkan nama alat inderanya saja (tanpa suara
-          // "Benar"), baru pujian acak.
-          playUrlsSequence([AUDIO_FILES[matchedPart.audioKey]], () => playPraiseMatching(null));
+          // Hanya ucapkan kata pujian acak, tulisan & suara selalu cocok.
+          playPraiseMatching(document.getElementById("play-praise-text"));
 
-          target.classList.add("matched");
-          const targetLabel = target.querySelector(".match-target-label");
-          targetLabel.textContent = el.textContent;
-          el.classList.add("placed");
-          STATE.matched++;
-          updateBadge();
-          if (STATE.matched >= TOTAL_ROUNDS) {
-            setTimeout(finishGame, 800);
-          }
+          target.classList.add("matched-flash");
+          setTimeout(() => {
+            target.classList.remove("matched-flash");
+          }, 900);
+
+          // Tunggu anak menekan tombol "Lanjut" sebelum pindah ke soal berikutnya.
+          document.getElementById("btn-next").disabled = false;
         } else {
           SFX.wrong();
-          // Salah cocok berarti ronde ini tidak lagi dihitung sebagai
-          // percobaan pertama untuk skor akhir.
           STATE.wrongTried[target.dataset.partId] = true;
           showWrongMark(target);
         }
@@ -1061,10 +1158,49 @@ function renderRound() {
   });
 }
 
-// Sentuh tulisan instruksi untuk mendengar perintahnya lagi
-document.getElementById("play-instruction").addEventListener("click", () => {
+// Menyiapkan gambar + dataset target untuk ronde saat ini secara
+// LANGSUNG (synchronous), tidak bergantung pada suara.
+function renderRound() {
+  updateBadge();
+  STATE.busy = false;
+  STATE.answered = false;
+  const target = document.getElementById("level4-target");
+  const targetId = STATE.order[STATE.index];
+  const part = findPart(targetId);
+  target.dataset.partId = targetId;
+  document.getElementById("level4-target-img").src = part.faceImg;
+  document.getElementById("level4-target-img").alt = part.name;
+  document.getElementById("level4-question").textContent = "Apa fungsi " + part.name + "?";
+
+  const praiseEl = document.getElementById("play-praise-text");
+  praiseEl.textContent = "";
+  praiseEl.classList.add("hidden");
+  document.getElementById("btn-next").disabled = true;
+}
+
+function advanceRound() {
+  STATE.index++;
+  if (STATE.index >= STATE.order.length) {
+    finishGame();
+    return;
+  }
+  renderRound();
+  const part = findPart(STATE.order[STATE.index]);
+  playKey(part.fungsiTanyaKey);
+}
+
+document.getElementById("btn-next").addEventListener("click", () => {
+  if (!STATE.answered) return; // jaga-jaga: hanya bisa lanjut setelah jawab benar
   SFX.click();
-  playKey("seret_label");
+  advanceRound();
+});
+
+// Sentuh tulisan pertanyaan untuk mendengar lagi
+document.getElementById("level4-question").addEventListener("click", () => {
+  SFX.click();
+  const targetId = STATE.order[STATE.index];
+  const part = findPart(targetId);
+  if (part) playKey(part.fungsiTanyaKey);
 });
 
 /* =========================================================
