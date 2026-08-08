@@ -4,13 +4,20 @@ import { Lock, Play, Sparkles, Baby, ArrowLeft } from "lucide-react";
 
 interface GameCatalogProps {
   games: Game[];
+  age: number;
   onPlayGame: (gameId: string) => void;
   isPremiumUser: boolean;
   onOpenPayment: () => void;
   onBack: () => void;
 }
 
-export default function GameCatalog({ games, onPlayGame, isPremiumUser, onOpenPayment, onBack }: GameCatalogProps) {
+export default function GameCatalog({ games, age, onPlayGame, isPremiumUser, onOpenPayment, onBack }: GameCatalogProps) {
+  // Cuma tampilin game yang sesuai kategori usia yang lagi dipilih user --
+  // sebelumnya katalog ini nampilin SEMUA game dari semua usia tercampur,
+  // padahal user masuk ke sini dari alur "pilih usia" jadi harusnya cuma
+  // lihat game yang relevan buat anaknya.
+  const games_ = games.filter((g) => g.ageRange.includes(String(age)));
+
   return (
     <section className="py-12 px-6 bg-gradient-to-b from-white to-blue-50/10 scroll-mt-20">
       <div className="max-w-7xl mx-auto space-y-8">
@@ -25,10 +32,10 @@ export default function GameCatalog({ games, onPlayGame, isPremiumUser, onOpenPa
               Kembali ke Materi
             </button>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              Katalog <span className="text-blue-600">Game Lengkap</span>
+              Katalog <span className="text-blue-600">Game Usia {age} Tahun</span>
             </h2>
             <p className="text-slate-500 text-sm">
-              Semua {games.length} game edukasi GamEdu, terkurasi berdasarkan kebutuhan kognitif tiap usia.
+              Semua {games_.length} game edukasi GamEdu untuk usia {age} tahun, terkurasi sesuai kebutuhan kognitifnya.
             </p>
           </div>
 
@@ -53,7 +60,7 @@ export default function GameCatalog({ games, onPlayGame, isPremiumUser, onOpenPa
               !isPremiumUser ? "pointer-events-none select-none" : ""
             }`}
           >
-            {games.map((game) => (
+            {games_.map((game) => (
               <div
                 key={game.id}
                 className={`bg-white rounded-2xl sm:rounded-[32px] overflow-hidden border border-slate-200/60 shadow-sm transition-all duration-300 flex flex-col justify-between group transform-gpu ${
@@ -105,7 +112,7 @@ export default function GameCatalog({ games, onPlayGame, isPremiumUser, onOpenPa
                 </div>
                 <h3 className="text-lg font-bold text-slate-900">Katalog Game Khusus Member Premium</h3>
                 <p className="text-slate-500 text-sm leading-relaxed">
-                  Semua {games.length} game di katalog ini eksklusif untuk member Premium. Coba dulu 1 game gratis di
+                  Semua {games_.length} game di katalog ini eksklusif untuk member Premium. Coba dulu 1 game gratis di
                   halaman "Coba Gratis", atau langsung upgrade untuk akses penuh.
                 </p>
                 <button
