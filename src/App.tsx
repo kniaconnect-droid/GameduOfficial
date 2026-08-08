@@ -30,6 +30,9 @@ import fungsiAlatInderaCover from "./assets/images/game_fungsi_alat_indera_cover
 import akuIstimewaAdvanceCover from "./assets/images/game_aku_istimewa_advance_cover.jpg";
 import berburuAngka1_10Cover from "./assets/images/game_berburu_angka_1_10_cover.jpg";
 import berburuAngka6_10Cover from "./assets/images/game_berburu_angka_6_10_cover.jpg";
+import sentuh3WarnaCover from "./assets/images/game_sentuh_3warna_benda_2gambar_cover.jpg";
+import mengenal3WarnaCover from "./assets/images/game_mengenal_3warna_merah_kuning_biru_2gambar_cover.jpg";
+import mengenal4WarnaCover from "./assets/images/game_mengenal_4warna_merah_kuning_biru_hijau_3gambar_cover.jpg";
 
 // Profil "tamu" dipakai selama user belum login, supaya Homepage, pilih usia,
 // dan game trial tetap bisa diakses tanpa perlu daftar/login dulu. Login cuma
@@ -188,6 +191,30 @@ export default function App() {
       premium: true,
       description: "Latihan lengkap 4 level: sentuh anggota wajah, tebak yang ditunjuk, cocokkan nama alat indera, dan kenali fungsinya — persiapan matang sebelum masuk SD.",
       coverImage: akuIstimewaAdvanceCover
+    },
+    {
+      id: "sentuh_3warna_benda_2gambar",
+      name: "Sentuh 3 Warna - 2 Gambar",
+      ageRange: "3 Tahun",
+      premium: true,
+      description: "Dengarkan perintah warna, lalu sentuh gambar benda dengan warna yang sesuai di antara 2 pilihan. Melatih pengenalan 3 warna dasar (merah, kuning, biru) dan konsentrasi mendengarkan.",
+      coverImage: sentuh3WarnaCover
+    },
+    {
+      id: "mengenal_3warna_merah_kuning_biru_2gambar",
+      name: "Mengenal 3 Warna (Merah, Kuning, Biru) - 2 Gambar",
+      ageRange: "4 Tahun",
+      premium: true,
+      description: "Dengarkan suara lalu sentuh warna yang benar dari 2 pilihan gambar. Melatih pengenalan warna merah, kuning, dan biru lewat instruksi suara yang interaktif.",
+      coverImage: mengenal3WarnaCover
+    },
+    {
+      id: "mengenal_4warna_merah_kuning_biru_hijau_3gambar",
+      name: "Mengenal 4 Warna (Merah, Kuning, Biru, Hijau) - 3 Gambar",
+      ageRange: "4 Tahun",
+      premium: true,
+      description: "Level lanjutan mengenal warna dengan tambahan warna hijau dan 3 pilihan gambar. Mengasah pengenalan 4 warna dasar sekaligus konsentrasi dan daya dengar anak.",
+      coverImage: mengenal4WarnaCover
     }
   ];
 
