@@ -26,6 +26,8 @@ import akuIstimewa4Cover from "./assets/images/game_aku_istimewa_4_gambar_cover.
 import anakMenunjukApaCover from "./assets/images/game_anak_menunjuk_apa_cover.jpg";
 import susunHuruf8TubuhCover from "./assets/images/game_susun_huruf_8_anggota_tubuh_cover.jpg";
 import mencocokkanAlatInderaCover from "./assets/images/game_mencocokkan_nama_alat_indera_cover.jpg";
+import fungsiAlatInderaCover from "./assets/images/game_fungsi_alat_indera_cover.jpg";
+import akuIstimewaAdvanceCover from "./assets/images/game_aku_istimewa_advance_cover.jpg";
 
 // Profil "tamu" dipakai selama user belum login, supaya Homepage, pilih usia,
 // dan game trial tetap bisa diakses tanpa perlu daftar/login dulu. Login cuma
@@ -152,6 +154,22 @@ export default function App() {
       premium: true,
       description: "Seret label nama alat indera (mata, hidung, mulut, telinga) ke gambar yang sesuai untuk melatih pengenalan kosakata dan logika mencocokkan.",
       coverImage: mencocokkanAlatInderaCover
+    },
+    {
+      id: "fungsi_alat_indera",
+      name: "Fungsi Alat Indera",
+      ageRange: "5 Tahun",
+      premium: true,
+      description: "Seret label nama alat indera (mata, hidung, mulut, telinga) ke gambar yang sesuai lewat tantangan level lanjutan untuk mengasah kosakata dan logika mencocokkan.",
+      coverImage: fungsiAlatInderaCover
+    },
+    {
+      id: "aku_istimewa_advance",
+      name: "Aku Istimewa - Ayo Kenali Alat Indera di Wajahmu!",
+      ageRange: "5 Tahun",
+      premium: true,
+      description: "Latihan lengkap 4 level: sentuh anggota wajah, tebak yang ditunjuk, cocokkan nama alat indera, dan kenali fungsinya — persiapan matang sebelum masuk SD.",
+      coverImage: akuIstimewaAdvanceCover
     }
   ];
 
