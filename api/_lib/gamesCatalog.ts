@@ -65,6 +65,12 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     premium: true,
   },
   {
+    id: "sentuh_3warna_benda_2gambar",
+    name: "Sentuh 3 Warna - 2 Gambar",
+    ageRange: "3 Tahun",
+    premium: true,
+  },
+  {
     id: "susun_huruf_8_anggota_tubuh",
     name: "Susun Huruf 8 Anggota Tubuh",
     ageRange: "4 Tahun",
@@ -89,24 +95,6 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     premium: true,
   },
   {
-    id: "fungsi_alat_indera",
-    name: "Fungsi Alat Indera",
-    ageRange: "5 Tahun",
-    premium: true,
-  },
-  {
-    id: "aku_istimewa_advance",
-    name: "Aku Istimewa - Ayo Kenali Alat Indera di Wajahmu!",
-    ageRange: "5 Tahun",
-    premium: true,
-  },
-  {
-    id: "sentuh_3warna_benda_2gambar",
-    name: "Sentuh 3 Warna - 2 Gambar",
-    ageRange: "3 Tahun",
-    premium: true,
-  },
-  {
     id: "mengenal_3warna_merah_kuning_biru_2gambar",
     name: "Mengenal 3 Warna (Merah, Kuning, Biru) - 2 Gambar",
     ageRange: "4 Tahun",
@@ -116,6 +104,18 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     id: "mengenal_4warna_merah_kuning_biru_hijau_3gambar",
     name: "Mengenal 4 Warna (Merah, Kuning, Biru, Hijau) - 3 Gambar",
     ageRange: "4 Tahun",
+    premium: true,
+  },
+  {
+    id: "fungsi_alat_indera",
+    name: "Fungsi Alat Indera",
+    ageRange: "5 Tahun",
+    premium: true,
+  },
+  {
+    id: "aku_istimewa_advance",
+    name: "Aku Istimewa - Ayo Kenali Alat Indera di Wajahmu!",
+    ageRange: "5 Tahun",
     premium: true,
   },
   // TODO: tambahkan 45 game lainnya di sini, format sama seperti di atas.
