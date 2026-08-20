@@ -1456,6 +1456,19 @@ html, body {
     createStars(starsLayerEnd, 60);
     finalScoreValueEl.textContent = state.score;
 
+    // Post ke parent React app (GamEdu) supaya skor tersimpan & watermark usia muncul
+    if (window.parent) {
+      window.parent.postMessage({
+        type: "GAME_OVER",
+        gameId: "berburu_angka_6_10",
+        gameName: "Berburu Angka 6-10",
+        score: state.score,
+        mistakes: state.wrongTaps || 0,
+        durationSec: 100,
+        cognitiveGain: "Mengenal Angka 6-10 (+15%)"
+      }, "*");
+    }
+
     if (window.GameMusic && typeof window.GameMusic.playVictory === 'function') {
       window.GameMusic.playVictory();
     }
@@ -1506,6 +1519,17 @@ html, body {
   document.addEventListener('DOMContentLoaded', function () {
     initOpening();
     showScreen(openingScreen);
+  });
+
+  // Dengarkan perintah reset cepat dari parent (tombol "Reset Game" / "Main Lagi"
+  // di header GamEdu) supaya game bisa diulang tanpa fetch ulang ke server.
+  window.addEventListener('message', function (event) {
+    var data = event.data;
+    if (data && data.type === 'GAMEDU_RESET') {
+      resetState();
+      showScreen(openingScreen);
+      initOpening();
+    }
   });
 
   // In case DOMContentLoaded already fired (script at end of body)

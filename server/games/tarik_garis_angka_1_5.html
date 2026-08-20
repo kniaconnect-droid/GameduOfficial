@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>🌈 Hubungkan Angka</title>
+<style>
+/* ================= RESET ================= */
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html, body {
+  width:100%; height:100%; overflow:hidden;
+  font-family:'Trebuchet MS','Segoe UI',sans-serif;
+  touch-action:none;
+  user-select:none;
+}
+button { font-family:inherit; border:none; cursor:pointer; }
+img { -webkit-user-drag:none; user-select:none; }
+
+/* ================= BACKGROUND ================= */
+.sky-bg {
+  position:fixed; inset:0; z-index:0;
+  background:linear-gradient(180deg,#8ec9ff 0%,#bfe3ff 40%,#eaf8ff 75%,#d7f6d0 100%);
+  overflow:hidden;
+}
+.sun {
+  position:absolute; top:4%; right:8%; font-size:9vmin;
+  filter:drop-shadow(0 0 25px rgba(255,235,120,0.9));
+  animation:spin 20s linear infinite;
+}
+@keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+
+.cloud { position:absolute; font-size:7vmin; opacity:0.9; animation:drift 40s linear infinite; }
+.c1 { top:10%; left:-10%; animation-duration:55s; }
+.c2 { top:20%; left:-15%; animation-duration:70s; animation-delay:-20s; font-size:5vmin;}
+.c3 { top:6%; left:-20%; animation-duration:45s; animation-delay:-10s; font-size:6vmin;}
+@keyframes drift { from{ transform:translateX(0);} to{ transform:translateX(140vw);} }
+
+.butterfly { position:absolute; font-size:4vmin; animation:flutter 8s ease-in-out infinite; }
+.b1 { top:35%; left:15%; animation-duration:7s; }
+.b2 { top:50%; right:12%; animation-duration:9s; animation-delay:-3s;}
+.b3 { top:65%; left:40%; animation-duration:6s; animation-delay:-1s;}
+@keyframes flutter {
+  0%,100% { transform:translate(0,0) rotate(0deg);}
+  25% { transform:translate(6vmin,-4vmin) rotate(10deg);}
+  50% { transform:translate(0,-8vmin) rotate(-6deg);}
+  75% { transform:translate(-6vmin,-3vmin) rotate(8deg);}
+}
+
+.hills {
+  position:absolute; bottom:0; left:0; width:100%; height:22%;
+  background:linear-gradient(180deg,#bdeb9a,#8fd86a);
+  border-radius:50% 50% 0 0 / 100% 100% 0 0;
+}
+.tree, .flower { position:absolute; bottom:4%; font-size:8vmin; }
+.t1 { left:6%; font-size:10vmin;} .t2 { left:20%; font-size:7vmin; bottom:2%;} .t3 { right:8%; font-size:9vmin;}
+.flower { font-size:4vmin; bottom:2%; animation:sway 4s ease-in-out infinite; }
+.f1{left:38%;} .f2{left:48%; animation-delay:-1s;} .f3{left:58%; animation-delay:-2s;}
+.f4{left:70%; animation-delay:-1.5s;} .f5{left:30%; animation-delay:-0.5s;}
+@keyframes sway { 0%,100%{transform:rotate(-6deg);} 50%{transform:rotate(6deg);} }
+
+#particles { position:absolute; inset:0; width:100%; height:100%; }
+
+/* ================= SCREENS ================= */
+.screen {
+  position:fixed; inset:0; z-index:5;
+  display:none; flex-direction:column; align-items:center; justify-content:center;
+  width:100%; height:100%; padding:2vmin;
+}
+.screen.active { display:flex; }
+
+/* ---------- START SCREEN ---------- */
+.title-wrap {
+  text-align:center; margin-bottom:6vmin;
+  background:rgba(255,255,255,0.9);
+  padding:4vmin 6vmin;
+  border-radius:5vmin;
+  box-shadow:0 1.5vmin 0 rgba(0,0,0,0.08), 0 2vmin 4vmin rgba(30,20,60,0.18);
+  animation:pop-in 0.8s cubic-bezier(.34,1.56,.64,1);
+  max-width:88vw;
+}
+.game-title {
+  font-size:clamp(24px, 6.5vmin, 54px);
+  color:#4a3d8f;
+  letter-spacing:0.5px;
+  font-weight:900;
+}
+.game-subtitle {
+  font-size:clamp(13px, 2.6vmin, 19px);
+  color:#3a8fbf; font-weight:bold; margin-top:1.5vmin;
+}
+@keyframes pop-in { from{ transform:scale(0.5); opacity:0;} to{ transform:scale(1); opacity:1;} }
+
+.start-buttons { display:flex; flex-direction:column; align-items:center; gap:3vmin; }
+.btn-row { display:flex; gap:3vmin; }
+
+.btn-primary {
+  background:linear-gradient(180deg,#ffd166,#ff9f43);
+  color:#7a3e00;
+  font-weight:900;
+  box-shadow:0 1vmin 0 #d97b1d, 0 1.5vmin 2vmin rgba(0,0,0,0.25);
+  border-radius:6vmin;
+  transition:transform .1s;
+}
+.btn-primary:active { transform:translateY(0.8vmin); box-shadow:0 0.2vmin 0 #d97b1d; }
+.btn-big { font-size:clamp(20px,4.5vmin,32px); padding:2.5vmin 8vmin; min-height:48px; }
+
+.btn-secondary {
+  background:#fff;
+  color:#5a3d8a;
+  box-shadow:0 1vmin 0 #d8d0ea, 0 1.5vmin 2vmin rgba(0,0,0,0.15);
+  border-radius:6vmin;
+  transition:transform .1s;
+}
+.btn-secondary:active { transform:translateY(0.8vmin); box-shadow:0 0.2vmin 0 #d8d0ea; }
+
+.btn-round {
+  width:12vmin; height:12vmin; min-width:56px; min-height:56px; max-width:70px; max-height:70px;
+  border-radius:50%;
+  background:#fff;
+  font-size:clamp(20px,4vmin,28px);
+  box-shadow:0 0.8vmin 0 #d8d8d8, 0 1vmin 1.5vmin rgba(0,0,0,0.2);
+}
+.btn-round.small { width:9vmin; height:9vmin; min-width:44px; min-height:44px; max-width:52px; max-height:52px; font-size:20px; }
+.btn-round:active { transform:translateY(0.5vmin); }
+
+/* ---------- TOP BAR ---------- */
+.top-bar {
+  position:absolute; top:1.5vmin; left:0; right:0;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 3vmin; z-index:6;
+}
+.pill {
+  background:rgba(255,255,255,0.92);
+  border-radius:6vmin;
+  padding:1.2vmin 3vmin;
+  font-weight:900; font-size:clamp(14px,3vmin,20px);
+  color:#5a3d8a;
+  box-shadow:0 0.6vmin 1.5vmin rgba(0,0,0,0.15);
+}
+.score-pill { color:#c77c00; }
+.round-pill { color:#3a8fbf; }
+
+/* ---------- GAMEPLAY ---------- */
+#screen-game { padding-top:9vmin; padding-bottom:2vmin; justify-content:flex-start; }
+.play-area {
+  position:relative;
+  width:100%; max-width:900px; flex:1;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:2vmin;
+}
+.line-svg { position:absolute; inset:0; width:100%; height:100%; z-index:2; pointer-events:none; overflow:visible; }
+
+.number-side { flex:0 0 30%; display:flex; justify-content:center; z-index:3; }
+.number-card {
+  width:min(28vmin,150px); height:min(28vmin,150px);
+  background:linear-gradient(160deg,#ffe08a,#ff9f43);
+  border-radius:5vmin;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 1.5vmin 0 #d9791b, 0 2vmin 3vmin rgba(0,0,0,0.25);
+  position:relative;
+  touch-action:none;
+  cursor:grab;
+}
+.number-card img { width:70%; height:70%; object-fit:contain; pointer-events:none; }
+.number-card.dragging { cursor:grabbing; filter:brightness(1.08); }
+.number-card.locked { opacity:0.5; filter:grayscale(0.4); cursor:default; }
+.drag-handle {
+  position:absolute; inset:0; border-radius:5vmin;
+}
+
+.pictures-side {
+  flex:1; display:flex; flex-direction:column; gap:2.2vmin; z-index:3;
+  align-items:flex-end;
+}
+.pic-card {
+  width:min(24vmin,130px); height:min(24vmin,130px);
+  background:#fff;
+  border-radius:4.5vmin;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 1vmin 0 #d8d8d8, 0 1.5vmin 2.5vmin rgba(0,0,0,0.15);
+  border:0.6vmin solid #fff;
+  transition:transform .2s, box-shadow .2s, border-color .2s;
+  position:relative;
+}
+.pic-card img { width:78%; height:78%; object-fit:contain; pointer-events:none; }
+.pic-card.hover-target { transform:scale(1.06); border-color:#8ecbff; }
+.pic-card.correct { border-color:#5fd068; box-shadow:0 0 0 0.8vmin rgba(95,208,104,0.4), 0 1vmin 2.5vmin rgba(0,0,0,0.15); animation:bounce-correct .6s; }
+.pic-card.wrong { border-color:#ff6b6b; animation:shake .4s; }
+@keyframes bounce-correct {
+  0% { transform:scale(1); } 40% { transform:scale(1.18); } 70%{ transform:scale(0.95);} 100%{ transform:scale(1.05);}
+}
+@keyframes shake {
+  0%,100% { transform:translateX(0); }
+  20% { transform:translateX(-1.5vmin); }
+  40% { transform:translateX(1.5vmin); }
+  60% { transform:translateX(-1vmin); }
+  80% { transform:translateX(1vmin); }
+}
+
+.hint-hand {
+  position:absolute; font-size:9vmin; z-index:5; pointer-events:none;
+  opacity:0; transform:translate(-50%,-50%);
+  filter:drop-shadow(0 0.6vmin 1vmin rgba(0,0,0,0.35));
+  transition:opacity .25s;
+}
+.hint-hand.show { opacity:1; }
+.hint-bubble {
+  position:absolute; z-index:5; background:#fff; color:#5a3d8a; font-weight:800;
+  padding:1.2vmin 3vmin; border-radius:5vmin; font-size:clamp(12px,2.6vmin,17px);
+  box-shadow:0 0.8vmin 1.5vmin rgba(0,0,0,0.15);
+  opacity:0; transition:opacity .25s; transform:translate(-50%,-100%);
+  white-space:nowrap; pointer-events:none;
+}
+.hint-bubble.show { opacity:1; }
+
+.sparkle {
+  position:absolute; pointer-events:none; font-size:3vmin;
+  animation:sparkle-pop 0.8s ease-out forwards;
+}
+@keyframes sparkle-pop {
+  0% { transform:scale(0) translateY(0); opacity:1; }
+  100% { transform:scale(1.4) translateY(-6vmin); opacity:0; }
+}
+
+.feedback-banner {
+  position:absolute; left:50%; translate:-50% 0; bottom:16vmin;
+  background:#fff; color:#e05a5a; font-weight:900;
+  font-size:clamp(16px,3.5vmin,24px);
+  padding:1.5vmin 4vmin; border-radius:6vmin;
+  box-shadow:0 1vmin 2vmin rgba(0,0,0,0.2);
+  opacity:0; pointer-events:none; z-index:8;
+  transition:opacity .25s, transform .25s;
+  transform:translate(-50%,1vmin);
+}
+.feedback-banner.show { opacity:1; transform:translate(-50%,0); }
+
+.btn-next {
+  position:absolute; bottom:3vmin; left:50%; translate:-50% 0;
+  z-index:9;
+  animation:pop-in .5s cubic-bezier(.34,1.56,.64,1), nudge 1.2s ease-in-out infinite 0.6s;
+}
+@keyframes nudge { 0%,100%{transform:translate(-50%,0);} 50%{transform:translate(-50%,-1.2vmin);} }
+.hidden { display:none !important; }
+
+/* ---------- END SCREEN ---------- */
+.end-card {
+  background:rgba(255,255,255,0.95);
+  border-radius:6vmin;
+  padding:6vmin 8vmin;
+  text-align:center;
+  box-shadow:0 2vmin 4vmin rgba(0,0,0,0.25);
+  z-index:6;
+  animation:pop-in .6s cubic-bezier(.34,1.56,.64,1);
+}
+.end-title { font-size:clamp(30px,8vmin,56px); color:#ff8f43; text-shadow:0 0.5vmin 0 #ffd166; }
+.end-sub { font-size:clamp(16px,3.5vmin,24px); color:#6a4fb0; margin-top:1vmin; font-weight:bold; }
+.stars { font-size:clamp(28px,7vmin,48px); color:#ffcc33; margin:3vmin 0; text-shadow:0 0.3vmin 0.6vmin rgba(0,0,0,0.15); }
+.final-score { font-size:clamp(16px,3.5vmin,22px); color:#3a8fbf; font-weight:900; margin-bottom:3vmin; }
+.end-buttons { display:flex; flex-wrap:wrap; gap:2.5vmin; justify-content:center; }
+.end-buttons .btn-big { padding:2.2vmin 5vmin; font-size:clamp(16px,3.5vmin,24px); }
+#confetti-canvas { position:fixed; inset:0; z-index:7; pointer-events:none; }
+
+/* ---------- responsive tweak for very small phones ---------- */
+@media (max-width:380px) {
+  .number-card, .pic-card { border-radius:3.5vmin; }
+}
+
+@media (orientation:landscape) and (max-height:480px) {
+  #screen-game { padding-top:7vmin; }
+  .top-bar { top:1vmin; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============ BACKGROUND (always visible) ============ -->
+<div class="sky-bg">
+  <div class="cloud c1">☁️</div>
+  <div class="cloud c2">☁️</div>
+  <div class="cloud c3">☁️</div>
+  <div class="sun">☀️</div>
+  <div class="butterfly b1">🦋</div>
+  <div class="butterfly b2">🦋</div>
+  <div class="butterfly b3">🦋</div>
+  <div class="hills">
+    <div class="tree t1">🌳</div>
+    <div class="tree t2">🌲</div>
+    <div class="tree t3">🌳</div>
+    <div class="flower f1">🌼</div>
+    <div class="flower f2">🌸</div>
+    <div class="flower f3">🌷</div>
+    <div class="flower f4">🌼</div>
+    <div class="flower f5">🌸</div>
+  </div>
+  <canvas id="particles"></canvas>
+</div>
+
+<!-- ============ SCREEN 1: OPENING ============ -->
+<section id="screen-start" class="screen active">
+  <div class="title-wrap">
+    <h1 class="game-title">HUBUNGKAN ANGKA</h1>
+    <p class="game-subtitle">Tarik Garis ke Gambar yang Tepat</p>
+  </div>
+  <div class="start-buttons">
+    <button id="btn-play" class="btn btn-primary btn-big">▶ MULAI</button>
+    <div class="btn-row">
+      <button id="btn-music" class="btn btn-round" aria-label="Musik">🔊</button>
+      <button id="btn-fullscreen" class="btn btn-round" aria-label="Layar Penuh">🖥</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 2: GAMEPLAY ============ -->
+<section id="screen-game" class="screen">
+  <header class="top-bar">
+    <div class="pill score-pill">⭐ <span id="score-value">0</span></div>
+    <div class="pill round-pill">Ronde <span id="round-value">1</span>/5</div>
+    <button id="btn-music-2" class="btn btn-round small" aria-label="Musik">🔊</button>
+  </header>
+
+  <div class="play-area" id="play-area">
+    <svg id="line-svg" class="line-svg"></svg>
+    <div class="hint-hand" id="hint-hand">👆</div>
+    <div class="hint-bubble" id="hint-bubble">Tarik ke gambar yang cocok!</div>
+
+    <div class="number-side">
+      <div class="number-card" id="number-card">
+        <img id="number-img" src="" alt="angka" draggable="false">
+        <div class="drag-handle" id="drag-handle" aria-label="Tarik dari sini"></div>
+      </div>
+    </div>
+
+    <div class="pictures-side" id="pictures-side">
+      <!-- picture cards injected by JS -->
+    </div>
+  </div>
+
+  <div class="feedback-banner" id="feedback-banner"></div>
+
+  <button id="btn-next" class="btn btn-primary btn-big btn-next hidden">LANJUT ➜</button>
+</section>
+
+<!-- ============ SCREEN 3: ENDING ============ -->
+<section id="screen-end" class="screen">
+  <div class="end-card">
+    <h1 class="end-title">🎉 SELAMAT!</h1>
+    <p class="end-sub">Kamu Hebat!</p>
+    <div class="stars" id="end-stars">★★★★★</div>
+    <p class="final-score">Skor Akhir: <span id="final-score-value">0</span></p>
+    <div class="end-buttons">
+      <button id="btn-replay" class="btn btn-primary btn-big">🔁 MAIN LAGI</button>
+      <button id="btn-menu" class="btn btn-secondary btn-big">🏠 MENU UTAMA</button>
+    </div>
+  </div>
+  <canvas id="confetti-canvas"></canvas>
+</section>
+
+<script>
+(() => {
+"use strict";
+
+/* ============================================================
+   1. ASSET URLS  (GitHub blob -> raw.githubusercontent.com)
+   ============================================================ */
+function toRaw(url) {
+  return url
+    .replace("https://github.com/", "https://raw.githubusercontent.com/")
+    .replace("/blob/", "/");
+}
+
+const NUMBER_IMG = {
+  1: toRaw("https://github.com/mhrofficialid/angka-polos-warna-warni-1-10/blob/db7472e0253d7184ccc9d58d2b1755621e52a3d2/1.png"),
+  2: toRaw("https://github.com/mhrofficialid/angka-polos-warna-warni-1-10/blob/db7472e0253d7184ccc9d58d2b1755621e52a3d2/2.png"),
+  3: toRaw("https://github.com/mhrofficialid/angka-polos-warna-warni-1-10/blob/db7472e0253d7184ccc9d58d2b1755621e52a3d2/3.png"),
+  4: toRaw("https://github.com/mhrofficialid/angka-polos-warna-warni-1-10/blob/db7472e0253d7184ccc9d58d2b1755621e52a3d2/4.png"),
+  5: toRaw("https://github.com/mhrofficialid/angka-polos-warna-warni-1-10/blob/db7472e0253d7184ccc9d58d2b1755621e52a3d2/5.png"),
+};
+
+const SET_A = {
+  1: toRaw("https://github.com/mhrofficialid/ASET-MATEMATIKA-1-5-PART-1/blob/b26690e5862fb42016dc90c22dc09f1d226087d0/1.png"),
+  2: toRaw("https://github.com/mhrofficialid/ASET-MATEMATIKA-1-5-PART-1/blob/b26690e5862fb42016dc90c22dc09f1d226087d0/2.png"),
+  3: toRaw("https://github.com/mhrofficialid/ASET-MATEMATIKA-1-5-PART-1/blob/b26690e5862fb42016dc90c22dc09f1d226087d0/3.png"),
+  4: toRaw("https://github.com/mhrofficialid/ASET-MATEMATIKA-1-5-PART-1/blob/b26690e5862fb42016dc90c22dc09f1d226087d0/4.png"),
+  5: toRaw("https://github.com/mhrofficialid/ASET-MATEMATIKA-1-5-PART-1/blob/b26690e5862fb42016dc90c22dc09f1d226087d0/5.png"),
+};
+
+const SET_B = {
+  1: toRaw("https://github.com/mhrofficialid/Aset-MATEMATIKA-PAUD-1-5-PART-2/blob/5bd18e8d2c4c67a20a8155443c957acf80f3aea9/1.png"),
+  2: toRaw("https://github.com/mhrofficialid/Aset-MATEMATIKA-PAUD-1-5-PART-2/blob/5bd18e8d2c4c67a20a8155443c957acf80f3aea9/2.png"),
+  3: toRaw("https://github.com/mhrofficialid/Aset-MATEMATIKA-PAUD-1-5-PART-2/blob/5bd18e8d2c4c67a20a8155443c957acf80f3aea9/3.png"),
+  4: toRaw("https://github.com/mhrofficialid/Aset-MATEMATIKA-PAUD-1-5-PART-2/blob/5bd18e8d2c4c67a20a8155443c957acf80f3aea9/4.png"),
+  5: toRaw("https://github.com/mhrofficialid/Aset-MATEMATIKA-PAUD-1-5-PART-2/blob/5bd18e8d2c4c67a20a8155443c957acf80f3aea9/5.png"),
+};
+
+/* Fallback picture generator (used only if a remote image fails to load,
+   so the game always keeps working). Draws colored dots = quantity. */
+function fallbackDataUrl(n) {
+  const colors = ["#ff6b6b","#ffb84d","#63d9ff","#8ce99a","#a78bfa"];
+  let dots = "";
+  const positions = [
+    [[50,50]],
+    [[30,35],[70,65]],
+    [[50,25],[25,70],[75,70]],
+    [[30,30],[70,30],[30,70],[70,70]],
+    [[50,20],[20,45],[80,45],[32,80],[68,80]],
+  ][n-1];
+  positions.forEach((p,i)=>{
+    dots += `<circle cx="${p[0]}" cy="${p[1]}" r="13" fill="${colors[i%colors.length]}" stroke="#fff" stroke-width="2"/>`;
+  });
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <rect width="100" height="100" rx="16" fill="#fff9f0"/>${dots}</svg>`;
+  return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+}
+function fallbackNumberDataUrl(n) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <text x="50" y="68" font-size="70" text-anchor="middle" font-family="Arial" font-weight="900" fill="#fff">${n}</text></svg>`;
+  return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+}
+
+/* ============================================================
+   2. STATE
+   ============================================================ */
+const state = {
+  round: 1,
+  score: 0,
+  target: null,
+  choices: [],       // [{num, img, correct}]
+  locked: false,
+  musicOn: true,
+  dragging: false,
+  pointerId: null,
+};
+
+const TOTAL_ROUNDS = 5;
+
+/* ============================================================
+   3. DOM REFS
+   ============================================================ */
+const $ = (id) => document.getElementById(id);
+const screens = {
+  start: $("screen-start"),
+  game: $("screen-game"),
+  end: $("screen-end"),
+};
+const numberCard = $("number-card");
+const numberImg = $("number-img");
+const picturesSide = $("pictures-side");
+const lineSvg = $("line-svg");
+const playArea = $("play-area");
+const feedbackBanner = $("feedback-banner");
+const btnNext = $("btn-next");
+const scoreValue = $("score-value");
+const roundValue = $("round-value");
+const finalScoreValue = $("final-score-value");
+const hintHand = $("hint-hand");
+const hintBubble = $("hint-bubble");
+
+function showScreen(name) {
+  Object.values(screens).forEach(s => s.classList.remove("active"));
+  screens[name].classList.add("active");
+}
+
+/* ============================================================
+   4. AUDIO (Web Audio API — synthesized, no external files)
+   ============================================================ */
+let actx = null;
+function audioCtx() {
+  if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+  return actx;
+}
+function beep(freq, duration, type = "sine", delay = 0, gainVal = 0.18) {
+  if (!state.musicOn) return;
+  try {
+    const ctx = audioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    gain.gain.value = gainVal;
+    osc.connect(gain).connect(ctx.destination);
+    const t0 = ctx.currentTime + delay;
+    gain.gain.setValueAtTime(gainVal, t0);
+    gain.gain.exponentialRampToValueAtTime(0.001, t0 + duration);
+    osc.start(t0);
+    osc.stop(t0 + duration + 0.05);
+  } catch (e) { /* audio unsupported, ignore */ }
+}
+function playCorrectSound() {
+  const praises = [
+    () => { beep(523, .15,"sine",0); beep(659,.15,"sine",.12); beep(784,.25,"sine",.24); },
+    () => { beep(660,.12,"triangle",0); beep(880,.12,"triangle",.1); beep(990,.2,"triangle",.2); },
+    () => { beep(494,.15,"sine",0); beep(587,.15,"sine",.1); beep(740,.3,"sine",.2); },
+  ];
+  praises[Math.floor(Math.random()*praises.length)]();
+}
+function playWrongSound() {
+  beep(220, .18, "sawtooth", 0, 0.12);
+  beep(160, .22, "sawtooth", .1, 0.1);
+}
+function playClickSound() { beep(440, .08, "square", 0, 0.1); }
+function playFinishSound() {
+  [523,659,784,1046,1318].forEach((f,i)=>beep(f,.2,"sine",i*0.12));
+}
+
+/* ============================================================
+   5. AMBIENT PARTICLES (background canvas)
+   ============================================================ */
+const pCanvas = $("particles");
+const pCtx = pCanvas.getContext("2d");
+let particles = [];
+function resizeParticles() {
+  pCanvas.width = window.innerWidth;
+  pCanvas.height = window.innerHeight;
+}
+function initParticles() {
+  particles = Array.from({length: 22}, () => ({
+    x: Math.random()*pCanvas.width,
+    y: Math.random()*pCanvas.height,
+    r: 2 + Math.random()*4,
+    speed: 0.3 + Math.random()*0.6,
+    drift: (Math.random()-0.5)*0.6,
+    hue: Math.random()*360,
+  }));
+}
+function animateParticles() {
+  pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);
+  particles.forEach(p => {
+    p.y -= p.speed;
+    p.x += p.drift;
+    if (p.y < -10) { p.y = pCanvas.height + 10; p.x = Math.random()*pCanvas.width; }
+    pCtx.beginPath();
+    pCtx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    pCtx.fillStyle = `hsla(${p.hue}, 90%, 75%, 0.75)`;
+    pCtx.fill();
+  });
+  requestAnimationFrame(animateParticles);
+}
+window.addEventListener("resize", resizeParticles);
+resizeParticles();
+initParticles();
+animateParticles();
+
+/* ============================================================
+   6. CONFETTI (end screen)
+   ============================================================ */
+const confCanvas = $("confetti-canvas");
+const confCtx = confCanvas.getContext("2d");
+let confetti = [];
+let confettiRunning = false;
+function resizeConfetti() {
+  confCanvas.width = window.innerWidth;
+  confCanvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeConfetti);
+function launchConfetti() {
+  resizeConfetti();
+  const colors = ["#ff6b6b","#ffb84d","#fff066","#8ce99a","#63d9ff","#a78bfa","#ff8fb1"];
+  confetti = Array.from({length: 140}, () => ({
+    x: Math.random()*confCanvas.width,
+    y: -20 - Math.random()*confCanvas.height*0.5,
+    w: 6+Math.random()*6,
+    h: 8+Math.random()*8,
+    speed: 2+Math.random()*3,
+    rot: Math.random()*360,
+    rotSpeed: (Math.random()-0.5)*10,
+    color: colors[Math.floor(Math.random()*colors.length)],
+    sway: Math.random()*2,
+  }));
+  if (!confettiRunning) { confettiRunning = true; animateConfetti(); }
+}
+function animateConfetti() {
+  confCtx.clearRect(0,0,confCanvas.width,confCanvas.height);
+  let stillActive = false;
+  confetti.forEach(c => {
+    c.y += c.speed;
+    c.x += Math.sin(c.y/30)*c.sway;
+    c.rot += c.rotSpeed;
+    if (c.y < confCanvas.height + 20) stillActive = true;
+    confCtx.save();
+    confCtx.translate(c.x, c.y);
+    confCtx.rotate(c.rot*Math.PI/180);
+    confCtx.fillStyle = c.color;
+    confCtx.fillRect(-c.w/2, -c.h/2, c.w, c.h);
+    confCtx.restore();
+  });
+  if (stillActive && screens.end.classList.contains("active")) {
+    requestAnimationFrame(animateConfetti);
+  } else {
+    confettiRunning = false;
+    confCtx.clearRect(0,0,confCanvas.width,confCanvas.height);
+  }
+}
+
+/* ============================================================
+   7. ROUND GENERATION
+   ============================================================ */
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+function pickImgForNumber(n) {
+  const set = Math.random() < 0.5 ? SET_A : SET_B;
+  return set[n];
+}
+function buildRound(targetNum) {
+  const others = shuffle([1,2,3,4,5].filter(n => n !== targetNum)).slice(0,2);
+  const choices = [
+    { num: targetNum, img: pickImgForNumber(targetNum), correct: true },
+    { num: others[0], img: pickImgForNumber(others[0]), correct: false },
+    { num: others[1], img: pickImgForNumber(others[1]), correct: false },
+  ];
+  return shuffle(choices);
+}
+
+function renderRound() {
+  state.locked = false;
+  btnNext.classList.add("hidden");
+  feedbackBanner.classList.remove("show");
+  numberCard.classList.remove("locked");
+  lineSvg.innerHTML = "";
+
+  numberImg.src = NUMBER_IMG[state.target];
+  numberImg.onerror = () => { numberImg.onerror=null; numberImg.src = fallbackNumberDataUrl(state.target); };
+
+  picturesSide.innerHTML = "";
+  state.choices.forEach((choice, idx) => {
+    const card = document.createElement("div");
+    card.className = "pic-card";
+    card.dataset.index = idx;
+    const img = document.createElement("img");
+    img.src = choice.img;
+    img.alt = "pilihan";
+    img.draggable = false;
+    img.onerror = () => { img.onerror=null; img.src = fallbackDataUrl(choice.num); };
+    card.appendChild(img);
+    picturesSide.appendChild(card);
+  });
+
+  roundValue.textContent = state.round;
+  scheduleHint();
+}
+
+function startRound(n) {
+  state.round = n;
+  state.target = Math.floor(Math.random()*5)+1; // random target each round, still 5 rounds total
+  // Ensure round number itself maps to a fair sequence but ALSO keep variety:
+  // spec shows round n -> target n by default flow, but randomization section
+  // asks for varying combinations game-to-game. We keep target === round number
+  // (matches "Round 1 -> Target 1" example) while choices/images are randomized.
+  state.target = n;
+  state.choices = buildRound(state.target);
+  renderRound();
+}
+
+/* ============================================================
+   8. DRAG + CURVED SVG LINE LOGIC
+   ============================================================ */
+const NS = "http://www.w3.org/2000/svg";
+let currentPath = null;
+let currentStar = null;
+let startPoint = { x:0, y:0 };
+
+function svgPoint(clientX, clientY) {
+  const rect = playArea.getBoundingClientRect();
+  return { x: clientX - rect.left, y: clientY - rect.top };
+}
+function cardCenter(el) {
+  const rect = el.getBoundingClientRect();
+  const areaRect = playArea.getBoundingClientRect();
+  return {
+    x: rect.left - areaRect.left + rect.width/2,
+    y: rect.top - areaRect.top + rect.height/2,
+  };
+}
+function makeCurvePath(p0, p1, color) {
+  const midX = (p0.x + p1.x) / 2;
+  const dx = p1.x - p0.x, dy = p1.y - p0.y;
+  const curveOffset = Math.max(30, Math.min(90, Math.abs(dy) * 0.4));
+  const c1 = { x: p0.x + dx*0.3, y: p0.y + curveOffset };
+  const c2 = { x: p0.x + dx*0.7, y: p1.y - curveOffset };
+  return `M ${p0.x} ${p0.y} C ${c1.x} ${c1.y}, ${c2.x} ${c2.y}, ${p1.x} ${p1.y}`;
+}
+function drawLine(p0, p1, color) {
+  if (!currentPath) {
+    currentPath = document.createElementNS(NS, "path");
+    currentPath.setAttribute("fill", "none");
+    currentPath.setAttribute("stroke-width", "9");
+    currentPath.setAttribute("stroke-linecap", "round");
+    lineSvg.appendChild(currentPath);
+  }
+  currentPath.setAttribute("stroke", color);
+  currentPath.setAttribute("d", makeCurvePath(p0, p1, color));
+
+  if (!currentStar) {
+    currentStar = document.createElementNS(NS, "text");
+    currentStar.setAttribute("font-size", "34");
+    currentStar.textContent = "⭐";
+    currentStar.setAttribute("filter", "drop-shadow(0 0 6px gold)");
+    lineSvg.appendChild(currentStar);
+  }
+  currentStar.setAttribute("x", p1.x - 17);
+  currentStar.setAttribute("y", p1.y + 12);
+}
+function clearLine() {
+  if (currentPath) { currentPath.remove(); currentPath = null; }
+  if (currentStar) { currentStar.remove(); currentStar = null; }
+}
+function animateLineBack() {
+  // smoothly return the line to the number card, then remove
+  let steps = 10;
+  const target = cardCenter(numberCard);
+  const interval = setInterval(() => {
+    steps--;
+    if (!currentPath || steps <= 0) { clearInterval(interval); clearLine(); return; }
+    const cur = svgPoint.lastX !== undefined ? {x:svgPoint.lastX, y:svgPoint.lastY} : target;
+    drawLine(startPoint, {
+      x: cur.x + (target.x - cur.x) * (1 - steps/10),
+      y: cur.y + (target.y - cur.y) * (1 - steps/10)
+    }, "#ff6b6b");
+  }, 20);
+}
+
+function spawnSparkles(el) {
+  const rect = el.getBoundingClientRect();
+  const areaRect = playArea.getBoundingClientRect();
+  for (let i=0;i<8;i++) {
+    const s = document.createElement("div");
+    s.className = "sparkle";
+    s.textContent = ["✨","⭐","🌟"][Math.floor(Math.random()*3)];
+    s.style.left = (rect.left - areaRect.left + rect.width/2 + (Math.random()-0.5)*rect.width) + "px";
+    s.style.top = (rect.top - areaRect.top + rect.height/2 + (Math.random()-0.5)*rect.height) + "px";
+    s.style.animationDelay = (Math.random()*0.2)+"s";
+    playArea.appendChild(s);
+    setTimeout(()=>s.remove(), 900);
+  }
+}
+function spawnMiniConfetti() {
+  launchConfetti();
+  confetti = confetti.slice(0, 40); // smaller burst for in-round celebration
+  setTimeout(()=>{ confCtx.clearRect(0,0,confCanvas.width,confCanvas.height); confetti=[]; }, 1200);
+}
+
+let lastPointerPos = { x:0, y:0 };
+
+function onPointerDown(e) {
+  if (state.locked) return;
+  e.preventDefault();
+  stopHint();
+  state.dragging = true;
+  state.pointerId = e.pointerId;
+  numberCard.classList.add("dragging");
+  numberCard.setPointerCapture && numberCard.setPointerCapture(e.pointerId);
+  startPoint = cardCenter(numberCard);
+  const p = svgPoint(e.clientX, e.clientY);
+  lastPointerPos = p;
+  drawLine(startPoint, p, "#63d9ff");
+}
+function onPointerMove(e) {
+  if (!state.dragging) return;
+  const p = svgPoint(e.clientX, e.clientY);
+  lastPointerPos = p;
+  svgPoint.lastX = p.x; svgPoint.lastY = p.y;
+  drawLine(startPoint, p, "#63d9ff");
+
+  document.querySelectorAll(".pic-card").forEach(card => {
+    const r = card.getBoundingClientRect();
+    const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+    card.classList.toggle("hover-target", inside);
+  });
+}
+function onPointerUp(e) {
+  if (!state.dragging) return;
+  state.dragging = false;
+  numberCard.classList.remove("dragging");
+
+  let dropped = null;
+  document.querySelectorAll(".pic-card").forEach(card => {
+    card.classList.remove("hover-target");
+    const r = card.getBoundingClientRect();
+    const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+    if (inside) dropped = card;
+  });
+
+  if (!dropped) { animateLineBack(); return; }
+
+  const idx = Number(dropped.dataset.index);
+  const choice = state.choices[idx];
+
+  if (choice.correct) {
+    handleCorrect(dropped);
+  } else {
+    handleWrong(dropped);
+  }
+}
+
+function handleCorrect(cardEl) {
+  state.locked = true;
+  stopHint();
+  const p1 = cardCenter(cardEl);
+  drawLine(startPoint, p1, "#5fd068");
+  cardEl.classList.add("correct");
+  numberCard.classList.add("locked");
+  spawnSparkles(cardEl);
+  spawnMiniConfetti();
+  playCorrectSound();
+  state.score += 20;
+  scoreValue.textContent = state.score;
+  btnNext.classList.remove("hidden");
+}
+function handleWrong(cardEl) {
+  const p1 = cardCenter(cardEl);
+  drawLine(startPoint, p1, "#ff6b6b");
+  cardEl.classList.add("wrong");
+  setTimeout(()=>cardEl.classList.remove("wrong"), 450);
+  playWrongSound();
+  feedbackBanner.textContent = "😊 Coba Lagi";
+  feedbackBanner.classList.add("show");
+  setTimeout(()=> feedbackBanner.classList.remove("show"), 1200);
+  setTimeout(animateLineBack, 150);
+}
+
+playArea.addEventListener("pointerdown", (e) => {
+  if (e.target === numberCard || e.target.closest("#number-card")) onPointerDown(e);
+});
+window.addEventListener("pointermove", onPointerMove);
+window.addEventListener("pointerup", onPointerUp);
+window.addEventListener("pointercancel", onPointerUp);
+
+/* ============================================================
+   8b. DRAG HINT (teaches the child how to play)
+   ============================================================ */
+let hintPathEl = null;
+let hintTimeoutId = null;
+let hintRafId = null;
+let hintActive = false;
+
+function getHintPathEl() {
+  if (!hintPathEl) {
+    hintPathEl = document.createElementNS(NS, "path");
+    hintPathEl.setAttribute("fill", "none");
+    hintPathEl.setAttribute("stroke", "rgba(255,255,255,0.9)");
+    hintPathEl.setAttribute("stroke-width", "7");
+    hintPathEl.setAttribute("stroke-linecap", "round");
+    hintPathEl.setAttribute("stroke-dasharray", "2 16");
+    lineSvg.insertBefore(hintPathEl, lineSvg.firstChild);
+  }
+  return hintPathEl;
+}
+
+function findCorrectCardEl() {
+  const idx = state.choices.findIndex(c => c.correct);
+  return picturesSide.querySelector(`.pic-card[data-index="${idx}"]`);
+}
+
+function stopHint() {
+  hintActive = false;
+  if (hintTimeoutId) { clearTimeout(hintTimeoutId); hintTimeoutId = null; }
+  if (hintRafId) { cancelAnimationFrame(hintRafId); hintRafId = null; }
+  hintHand.classList.remove("show");
+  hintBubble.classList.remove("show");
+  if (hintPathEl) { hintPathEl.setAttribute("d", ""); }
+}
+
+function playHintAnimationOnce(onDone) {
+  if (state.locked || state.dragging) return;
+  const correctEl = findCorrectCardEl();
+  if (!correctEl) return;
+  const p0 = cardCenter(numberCard);
+  const p1 = cardCenter(correctEl);
+  const path = getHintPathEl();
+  path.setAttribute("d", makeCurvePath(p0, p1));
+  const len = path.getTotalLength();
+
+  hintBubble.style.left = p0.x + "px";
+  hintBubble.style.top = (p0.y - 62) + "px";
+  hintBubble.classList.add("show");
+  hintHand.classList.add("show");
+
+  const duration = 1400;
+  const startTime = performance.now();
+
+  function step(now) {
+    if (state.locked || state.dragging) { stopHint(); return; }
+    const t = Math.min(1, (now - startTime) / duration);
+    const pt = path.getPointAtLength(t * len);
+    hintHand.style.left = pt.x + "px";
+    hintHand.style.top = pt.y + "px";
+    if (t < 1) {
+      hintRafId = requestAnimationFrame(step);
+    } else {
+      hintHand.classList.remove("show");
+      hintBubble.classList.remove("show");
+      hintTimeoutId = setTimeout(() => {
+        if (typeof onDone === "function") onDone();
+      }, 500);
+    }
+  }
+  hintRafId = requestAnimationFrame(step);
+}
+
+function hintLoop() {
+  if (!hintActive || state.locked || state.dragging) return;
+  playHintAnimationOnce(() => {
+    if (hintActive) hintTimeoutId = setTimeout(hintLoop, 300);
+  });
+}
+
+function scheduleHint() {
+  stopHint();
+  hintActive = true;
+  hintTimeoutId = setTimeout(hintLoop, 2200);
+}
+
+/* ============================================================
+   9. FLOW / BUTTONS
+   ============================================================ */
+function goToNextRound() {
+  playClickSound();
+  if (state.round >= TOTAL_ROUNDS) {
+    finishGame();
+  } else {
+    startRound(state.round + 1);
+  }
+}
+function finishGame() {
+  stopHint();
+  finalScoreValue.textContent = state.score;
+  showScreen("end");
+  playFinishSound();
+  launchConfetti();
+
+  // Post ke parent React app (GamEdu) supaya skor tersimpan
+  if (window.parent) {
+    window.parent.postMessage({
+      type: "GAME_OVER",
+      gameId: "tarik_garis_angka_1_5",
+      gameName: "Tarik Garis Angka 1-5",
+      score: state.score,
+      mistakes: 0,
+      durationSec: 90,
+      cognitiveGain: "Pengenalan Angka & Koordinasi Motorik (+15%)"
+    }, "*");
+  }
+}
+function startGame() {
+  playClickSound();
+  state.score = 0;
+  scoreValue.textContent = 0;
+  showScreen("game");
+  startRound(1);
+}
+function replayGame() {
+  playClickSound();
+  startGame();
+}
+function backToMenu() {
+  playClickSound();
+  showScreen("start");
+}
+
+$("btn-play").addEventListener("click", startGame);
+$("btn-next").addEventListener("click", goToNextRound);
+$("btn-replay").addEventListener("click", replayGame);
+$("btn-menu").addEventListener("click", backToMenu);
+
+function toggleMusic(btn1, btn2) {
+  state.musicOn = !state.musicOn;
+  const icon = state.musicOn ? "🔊" : "🔇";
+  btn1.textContent = icon;
+  if (btn2) btn2.textContent = icon;
+  if (state.musicOn) beep(660,.1,"sine",0,0.12);
+}
+$("btn-music").addEventListener("click", () => toggleMusic($("btn-music"), $("btn-music-2")));
+$("btn-music-2").addEventListener("click", () => toggleMusic($("btn-music-2"), $("btn-music")));
+
+$("btn-fullscreen").addEventListener("click", () => {
+  playClickSound();
+  const el = document.documentElement;
+  if (!document.fullscreenElement) {
+    (el.requestFullscreen && el.requestFullscreen()) ||
+    (el.webkitRequestFullscreen && el.webkitRequestFullscreen());
+  } else {
+    (document.exitFullscreen && document.exitFullscreen()) ||
+    (document.webkitExitFullscreen && document.webkitExitFullscreen());
+  }
+});
+
+/* initial screen */
+showScreen("start");
+
+window.addEventListener("message", function (event) {
+  var data = event.data;
+  if (data && data.type === "GAMEDU_RESET") {
+    backToMenu();
+  }
+});
+
+})();
+
+</script>
+</body>
+</html>
