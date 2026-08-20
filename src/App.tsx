@@ -33,6 +33,11 @@ import berburuAngka6_10Cover from "./assets/images/game_berburu_angka_6_10_cover
 import sentuh3WarnaCover from "./assets/images/game_sentuh_3warna_benda_2gambar_cover.jpg";
 import mengenal3WarnaCover from "./assets/images/game_mengenal_3warna_merah_kuning_biru_2gambar_cover.jpg";
 import mengenal4WarnaCover from "./assets/images/game_mengenal_4warna_merah_kuning_biru_hijau_3gambar_cover.jpg";
+import tunjukAngka1_5_3GambarCover from "./assets/images/game_tunjuk_angka_1_5_3gambar_cover.jpg";
+import sentuh3Warna3GambarCover from "./assets/images/game_sentuh_3warna_benda_3gambar_cover.jpg";
+import tarikGarisAngka1_5Cover from "./assets/images/game_tarik_garis_angka_1_5_cover.jpg";
+import mengenal5WarnaCover from "./assets/images/game_mengenal_5warna_4gambar_cover.jpg";
+import mengenal6WarnaCover from "./assets/images/game_mengenal_6warna_4gambar_cover.jpg";
 
 // Profil "tamu" dipakai selama user belum login, supaya Homepage, pilih usia,
 // dan game trial tetap bisa diakses tanpa perlu daftar/login dulu. Login cuma
@@ -201,6 +206,38 @@ export default function App() {
       coverImage: mengenal4WarnaCover
     },
     {
+      id: "sentuh_3warna_benda_3gambar",
+      name: "Sentuh 3warna benda 3gambar",
+      ageRange: "4 Tahun",
+      premium: true,
+      description: "Dengarkan perintah warna, lalu sentuh gambar benda dengan warna yang sesuai di antara 3 pilihan. Melatih pengenalan warna merah, kuning, dan biru lewat instruksi suara yang interaktif.",
+      coverImage: sentuh3Warna3GambarCover
+    },
+    {
+      id: "tarik_garis_angka_1_5",
+      name: "Tarik Garis Angka 1-5",
+      ageRange: "4 Tahun",
+      premium: true,
+      description: "Tarik garis dari angka ke gambar dengan jumlah benda yang sesuai. Melatih koordinasi motorik halus dan pengenalan angka 1 sampai 5 lewat 5 ronde interaktif.",
+      coverImage: tarikGarisAngka1_5Cover
+    },
+    {
+      id: "mengenal_5warna_4gambar",
+      name: "Mengenal 5warna-merah-kuning-biru-hijau(4gambar)",
+      ageRange: "4 Tahun",
+      premium: true,
+      description: "Dengarkan suara lalu sentuh warna yang benar dari 4 pilihan gambar. Melatih pengenalan 5 warna dasar (merah, kuning, biru, hijau, putih) lewat instruksi suara yang interaktif.",
+      coverImage: mengenal5WarnaCover
+    },
+    {
+      id: "mengenal_6warna_4gambar",
+      name: "Mengenal 6warna (4gambar)",
+      ageRange: "4 Tahun",
+      premium: true,
+      description: "Level lanjutan mengenal warna dengan tambahan warna ungu dan 4 pilihan gambar per soal. Mengasah pengenalan 6 warna dasar sekaligus konsentrasi dan daya dengar anak.",
+      coverImage: mengenal6WarnaCover
+    },
+    {
       id: "fungsi_alat_indera",
       name: "Fungsi Alat Indera",
       ageRange: "5 Tahun",
@@ -215,6 +252,14 @@ export default function App() {
       premium: true,
       description: "Latihan lengkap 4 level: sentuh anggota wajah, tebak yang ditunjuk, cocokkan nama alat indera, dan kenali fungsinya — persiapan matang sebelum masuk SD.",
       coverImage: akuIstimewaAdvanceCover
+    },
+    {
+      id: "tunjuk_angka_1_5_3gambar",
+      name: "Tunjuk sesuai angka (3 gambar)",
+      ageRange: "5 Tahun",
+      premium: true,
+      description: "Dengarkan suara angka lalu sentuh gambar angka yang benar di antara 3 pilihan. Melatih pengenalan angka 1–5 dan konsentrasi mendengarkan anak.",
+      coverImage: tunjukAngka1_5_3GambarCover
     }
   ];
 
