@@ -134,7 +134,7 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     id: "fungsi_alat_indera",
     name: "Fungsi Alat Indera",
     ageRange: "5 Tahun",
-    premium: true,
+    premium: false,
   },
   {
     id: "aku_istimewa_advance",
