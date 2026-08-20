@@ -1,6 +1,6 @@
 import React from "react";
 import { Game } from "../types";
-import { ArrowLeft, ArrowRight, ShieldCheck, Sparkles, Play, FileText, LayoutGrid, BookOpen, Lock } from "lucide-react";
+import { ArrowLeft, ShieldCheck, Sparkles, Play, FileText, LayoutGrid, BookOpen, Lock } from "lucide-react";
 import { MATERI_KOGNITIF_3_TAHUN } from "../lib/materiKognitif3Tahun";
 import { MATERI_KOGNITIF_4_TAHUN } from "../lib/materiKognitif4Tahun";
 import { MATERI_KOGNITIF_5_TAHUN } from "../lib/materiKognitif5Tahun";
@@ -26,7 +26,8 @@ interface GameGalleryProps {
 // di halaman ini, tanpa perlu daftar/login dulu.
 const TRIAL_GAME_BY_AGE: Record<number, string> = {
   3: "berburu_angka",
-  4: "susun_huruf_8_anggota_tubuh"
+  4: "susun_huruf_8_anggota_tubuh",
+  5: "fungsi_alat_indera"
 };
 
 const MATERI_BY_AGE: Record<number, typeof MATERI_KOGNITIF_3_TAHUN> = {
@@ -75,62 +76,6 @@ export default function GameGallery({
           <div className="flex items-center gap-2 bg-blue-50/50 border border-blue-100/50 rounded-xl px-4 py-2 text-[11px] font-bold text-blue-800 self-start sm:self-center">
             <ShieldCheck className="w-3.5 h-3.5" /> Data Game Aman & Terenkripsi Server
           </div>
-        </div>
-
-        {/* GALERI PREVIEW: strip cover semua game usia ini */}
-        <div className="space-y-4">
-          <div className="flex items-center justify-between gap-3">
-            <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
-              Galeri Preview Game Usia {age} Tahun
-            </h3>
-            <button
-              onClick={onGoToGameCatalog}
-              className="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700 cursor-pointer flex-shrink-0"
-            >
-              Lihat Semua <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-
-          {gamesForAge.length > 0 ? (
-            <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory">
-              {gamesForAge.map((game) => (
-                <button
-                  key={game.id}
-                  onClick={onGoToGameCatalog}
-                  className="group relative flex-shrink-0 w-28 sm:w-36 aspect-square rounded-2xl overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-md transition-all snap-start cursor-pointer"
-                  title={game.name}
-                >
-                  <img
-                    src={game.coverImage}
-                    alt={game.name}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  {game.premium && (
-                    <span className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-white/90 flex items-center justify-center text-amber-500 shadow-sm">
-                      <Lock className="w-2.5 h-2.5" />
-                    </span>
-                  )}
-                  <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-2 py-1.5">
-                    <span className="text-[9px] font-bold text-white leading-tight line-clamp-2">{game.name}</span>
-                  </span>
-                </button>
-              ))}
-            </div>
-          ) : (
-            <div className="bg-amber-50/50 border border-amber-100/60 rounded-3xl p-8 text-center space-y-2">
-              <Sparkles className="w-8 h-8 mx-auto text-amber-500" />
-              <p className="text-slate-500 text-sm">Galeri game untuk kategori usia ini sedang dipersiapkan.</p>
-            </div>
-          )}
-
-          <button
-            onClick={onGoToGameCatalog}
-            className="sm:hidden inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700 cursor-pointer"
-          >
-            Lihat Semua Game <ArrowRight className="w-3.5 h-3.5" />
-          </button>
         </div>
 
         {/* 3 KARTU NAVIGASI: Materi, Game, Worksheet */}
