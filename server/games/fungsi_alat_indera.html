@@ -1017,11 +1017,17 @@ function makeDraggable(el, handlers) {
   let offsetY = 0;
   let dragging = false;
   let ghost = null;
+  let startX = 0;
+  let startY = 0;
   const targetSelector = handlers.targetSelector || ".match-target";
+  // Jarak gerak minimum (px) supaya dianggap "drag" beneran, bukan cuma tap.
+  const TAP_MOVE_THRESHOLD = 10;
 
   el.addEventListener("pointerdown", (e) => {
     if (el.classList.contains("placed") || STATE.busy) return;
     dragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
     el.setPointerCapture(e.pointerId);
     el.classList.add("dragging");
     if (handlers.onPickup) handlers.onPickup(el);
@@ -1069,7 +1075,25 @@ function makeDraggable(el, handlers) {
     document.querySelectorAll(targetSelector).forEach((t) => t.classList.remove("drop-hover"));
 
     const under = document.elementFromPoint(e.clientX, e.clientY);
-    const target = under ? under.closest(targetSelector) : null;
+    let target = under ? under.closest(targetSelector) : null;
+
+    // FALLBACK "TAP-TO-PILIH": kalau jari/kursor nyaris nggak bergerak (anak
+    // cuma NGETUK label, bukan nge-drag ke gambar), dan cuma ada SATU target
+    // yang aktif di layar (kasus "Apa fungsi X?" cuma 1 gambar per ronde),
+    // anggap ketukan itu sebagai jawaban buat target satu-satunya itu. Tanpa
+    // ini, anak yang ngetuk pilihan jawaban (perilaku wajar utk "pilihan
+    // ganda") nggak dapet respons sama sekali karena elementFromPoint di titik
+    // ketukan itu ya cuma label itu sendiri, bukan gambar targetnya.
+    if (!target) {
+      const movedDist = Math.hypot(e.clientX - startX, e.clientY - startY);
+      if (movedDist < TAP_MOVE_THRESHOLD) {
+        const allTargets = document.querySelectorAll(targetSelector);
+        if (allTargets.length === 1) {
+          target = allTargets[0];
+        }
+      }
+    }
+
     if (target && handlers.onDrop) handlers.onDrop(el, target);
   }
 
