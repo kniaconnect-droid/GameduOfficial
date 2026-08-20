@@ -107,6 +107,30 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     premium: true,
   },
   {
+    id: "sentuh_3warna_benda_3gambar",
+    name: "Sentuh 3warna benda 3gambar",
+    ageRange: "4 Tahun",
+    premium: true,
+  },
+  {
+    id: "tarik_garis_angka_1_5",
+    name: "Tarik Garis Angka 1-5",
+    ageRange: "4 Tahun",
+    premium: true,
+  },
+  {
+    id: "mengenal_5warna_4gambar",
+    name: "Mengenal 5warna-merah-kuning-biru-hijau(4gambar)",
+    ageRange: "4 Tahun",
+    premium: true,
+  },
+  {
+    id: "mengenal_6warna_4gambar",
+    name: "Mengenal 6warna (4gambar)",
+    ageRange: "4 Tahun",
+    premium: true,
+  },
+  {
     id: "fungsi_alat_indera",
     name: "Fungsi Alat Indera",
     ageRange: "5 Tahun",
@@ -115,6 +139,12 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
   {
     id: "aku_istimewa_advance",
     name: "Aku Istimewa - Ayo Kenali Alat Indera di Wajahmu!",
+    ageRange: "5 Tahun",
+    premium: true,
+  },
+  {
+    id: "tunjuk_angka_1_5_3gambar",
+    name: "Tunjuk sesuai angka (3 gambar)",
     ageRange: "5 Tahun",
     premium: true,
   },
