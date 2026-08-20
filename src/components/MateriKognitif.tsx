@@ -45,12 +45,16 @@ export default function MateriKognitif({ age, isPremiumUser, onOpenPayment }: Ma
         {/* Locked state for non-premium users */}
         {!isPremiumUser ? (
           <div className="relative">
-            {/* Blurred teaser of first item */}
-            <div className="p-6 sm:p-8 blur-sm select-none pointer-events-none opacity-70">
-              <KemampuanCard item={data.kemampuan[0]} isOpen onToggle={() => {}} />
+            {/* Blurred teaser of first item — clipped short so it doesn't push the CTA far down */}
+            <div className="relative max-h-[130px] sm:max-h-[160px] overflow-hidden">
+              <div className="p-6 sm:p-8 blur-sm select-none pointer-events-none opacity-70">
+                <KemampuanCard item={data.kemampuan[0]} isOpen={false} onToggle={() => {}} />
+              </div>
+              {/* Fade the clipped teaser into the CTA below */}
+              <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent pointer-events-none" />
             </div>
-            <div className="absolute inset-0 flex items-center justify-center bg-white/85 p-6">
-              <div className="bg-white border border-slate-200 shadow-xl rounded-3xl p-8 max-w-md w-full text-center space-y-4">
+            <div className="px-6 pb-6 sm:px-8 sm:pb-8 -mt-2">
+              <div className="bg-white border border-slate-200 shadow-xl rounded-3xl p-6 sm:p-8 max-w-md w-full mx-auto text-center space-y-4">
                 <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center mx-auto text-amber-500">
                   <Lock className="w-7 h-7" />
                 </div>

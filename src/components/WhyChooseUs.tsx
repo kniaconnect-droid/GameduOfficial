@@ -30,8 +30,8 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section className="py-16 px-6 bg-slate-50/30">
-      <div className="max-w-7xl mx-auto space-y-12">
+    <section className="py-10 sm:py-16 px-6 bg-slate-50/30">
+      <div className="max-w-7xl mx-auto space-y-8 sm:space-y-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <span className="text-[10px] font-black uppercase tracking-widest text-orange-700 bg-orange-50 border border-orange-100/60 px-3 py-1.5 rounded-full inline-block">

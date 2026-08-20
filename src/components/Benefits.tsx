@@ -42,8 +42,8 @@ export default function Benefits() {
   ];
 
   return (
-    <section className="py-16 px-6 bg-slate-50/40">
-      <div className="max-w-7xl mx-auto space-y-12">
+    <section className="py-10 sm:py-16 px-6 bg-slate-50/40">
+      <div className="max-w-7xl mx-auto space-y-8 sm:space-y-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <span className="text-[10px] font-black uppercase tracking-widest text-blue-700 bg-blue-50 border border-blue-100/60 px-3 py-1.5 rounded-full inline-block">

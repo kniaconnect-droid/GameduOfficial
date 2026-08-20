@@ -10,7 +10,7 @@ interface HeroProps {
 
 export default function Hero({ onStartLearning, onExploreGames }: HeroProps) {
   return (
-    <section className="relative bg-gradient-to-b from-slate-50 via-white to-white py-16 px-6 overflow-hidden">
+    <section className="relative bg-gradient-to-b from-slate-50 via-white to-white py-10 sm:py-16 px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 items-center gap-12 relative z-10">
         {/* Left column: Text CTA */}
         <div className="lg:col-span-6 space-y-6 text-center lg:text-left">
@@ -57,7 +57,7 @@ export default function Hero({ onStartLearning, onExploreGames }: HeroProps) {
           </div>
 
           {/* Benefits Grid */}
-          <div className="mt-12 grid grid-cols-2 gap-4 max-w-md mx-auto lg:mx-0 pt-6 border-t border-slate-100">
+          <div className="mt-8 sm:mt-12 grid grid-cols-2 gap-4 max-w-md mx-auto lg:mx-0 pt-5 sm:pt-6 border-t border-slate-100">
             <div className="flex items-center gap-3 p-3 bg-emerald-50 rounded-xl border border-emerald-100/30">
               <div className="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
               <span className="text-xs font-bold text-emerald-900">Melatih Logika</span>
@@ -78,7 +78,7 @@ export default function Hero({ onStartLearning, onExploreGames }: HeroProps) {
         </div>
 
         {/* Right column: Generated Hero Illustration */}
-        <div className="lg:col-span-6 relative">
+        <div className="lg:col-span-6 relative mt-2 sm:mt-0">
           <div className="absolute -inset-4 bg-gradient-to-r from-blue-300/20 to-purple-300/20 rounded-full blur-2xl opacity-75"></div>
           <div className="relative border-4 border-white bg-white rounded-[36px] shadow-2xl overflow-hidden aspect-[4/3] transform hover:rotate-1 transition-transform duration-300">
             <img

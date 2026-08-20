@@ -43,8 +43,8 @@ export default function AgeCategory({ selectedAge, onSelectAge, games }: AgeCate
   ];
 
   return (
-    <section id="age-categories" className="py-16 px-6">
-      <div className="max-w-7xl mx-auto space-y-12">
+    <section id="age-categories" className="py-10 sm:py-16 px-6">
+      <div className="max-w-7xl mx-auto space-y-8 sm:space-y-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <span className="text-[10px] font-black uppercase tracking-widest text-purple-700 bg-purple-50 border border-purple-100/60 px-3 py-1.5 rounded-full inline-block">

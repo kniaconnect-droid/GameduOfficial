@@ -40,8 +40,8 @@ export default function GameGallery({
   const isTrialGame = (gameId: string) => showcaseIds?.trial === gameId;
 
   return (
-    <section className="py-12 px-6 bg-gradient-to-b from-white to-blue-50/10 scroll-mt-20" id="gallery-container">
-      <div className="max-w-7xl mx-auto space-y-12">
+    <section className="py-8 sm:py-12 px-6 bg-gradient-to-b from-white to-blue-50/10 scroll-mt-20" id="gallery-container">
+      <div className="max-w-7xl mx-auto space-y-8 sm:space-y-12">
         {/* Gallery Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-200/60">
           <div className="space-y-1">
