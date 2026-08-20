@@ -244,7 +244,7 @@ export default function App() {
       id: "fungsi_alat_indera",
       name: "Fungsi Alat Indera",
       ageRange: "5 Tahun",
-      premium: true,
+      premium: false,
       description: "Seret jawaban fungsi (melihat, mencium, makan, mendengar) ke gambar alat indera yang sesuai untuk melatih pemahaman fungsi tiap indera lewat tantangan level lanjutan.",
       coverImage: fungsiAlatInderaCover
     },
