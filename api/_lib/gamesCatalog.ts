@@ -148,6 +148,12 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     ageRange: "5 Tahun",
     premium: true,
   },
+  {
+    id: "tunjuk_angka_1_5_4gambar",
+    name: "Tunjuk Sesuai Angka (4 gambar)",
+    ageRange: "5 Tahun",
+    premium: true,
+  },
   // TODO: tambahkan 45 game lainnya di sini, format sama seperti di atas.
 ];
 
