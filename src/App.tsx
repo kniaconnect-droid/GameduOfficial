@@ -6,6 +6,8 @@ import AgeCategory from "./components/AgeCategory";
 import GameGallery from "./components/GameGallery";
 import GameCatalog from "./components/GameCatalog";
 import WorksheetCatalog from "./components/WorksheetCatalog";
+import MateriKognitif from "./components/MateriKognitif";
+import { ArrowLeft } from "lucide-react";
 import Footer from "./components/Footer";
 import SecureGamePlayer from "./components/SecureGamePlayer";
 import PaymentModal from "./components/PaymentModal";
@@ -34,6 +36,7 @@ import sentuh3WarnaCover from "./assets/images/game_sentuh_3warna_benda_2gambar_
 import mengenal3WarnaCover from "./assets/images/game_mengenal_3warna_merah_kuning_biru_2gambar_cover.jpg";
 import mengenal4WarnaCover from "./assets/images/game_mengenal_4warna_merah_kuning_biru_hijau_3gambar_cover.jpg";
 import tunjukAngka1_5_3GambarCover from "./assets/images/game_tunjuk_angka_1_5_3gambar_cover.jpg";
+import tunjukAngka1_5_4GambarCover from "./assets/images/game_tunjuk_angka_1_5_4gambar_cover.jpg";
 import sentuh3Warna3GambarCover from "./assets/images/game_sentuh_3warna_benda_3gambar_cover.jpg";
 import tarikGarisAngka1_5Cover from "./assets/images/game_tarik_garis_angka_1_5_cover.jpg";
 import mengenal5WarnaCover from "./assets/images/game_mengenal_5warna_4gambar_cover.jpg";
@@ -260,6 +263,14 @@ export default function App() {
       premium: true,
       description: "Dengarkan suara angka lalu sentuh gambar angka yang benar di antara 3 pilihan. Melatih pengenalan angka 1–5 dan konsentrasi mendengarkan anak.",
       coverImage: tunjukAngka1_5_3GambarCover
+    },
+    {
+      id: "tunjuk_angka_1_5_4gambar",
+      name: "Tunjuk Sesuai Angka (4 gambar)",
+      ageRange: "5 Tahun",
+      premium: true,
+      description: "Level lanjutan dengan 4 pilihan gambar sekaligus. Dengarkan suara angka lalu sentuh gambar angka yang tepat untuk mengasah pengenalan angka 1–5 dan konsentrasi mendengarkan anak yang lebih matang.",
+      coverImage: tunjukAngka1_5_4GambarCover
     }
   ];
 
@@ -466,11 +477,11 @@ export default function App() {
 
   // Navigasi "Kembali" satu langkah, dipakai Navbar (menggantikan tab menu
   // lama yang sekarang dihapus supaya alur lebih simpel & linear):
-  // Beranda -> Kategori Usia -> Coba Gratis -> (Katalog Game / Worksheet)
+  // Beranda -> Kategori Usia -> Hub Usia -> (Materi / Katalog Game / Worksheet)
   const handleBack = () => {
     if (currentPage === 2) setCurrentPage(1);
     else if (currentPage === 3) setCurrentPage(2);
-    else if (currentPage === 4 || currentPage === 5) setCurrentPage(3);
+    else if (currentPage === 4 || currentPage === 5 || currentPage === 6) setCurrentPage(3);
   };
 
   return (
@@ -561,6 +572,7 @@ export default function App() {
               onOpenPayment={() => setShowPaymentModal(true)}
               onGoToGameCatalog={() => setCurrentPage(4)}
               onGoToWorksheets={() => setCurrentPage(5)}
+              onGoToMateri={() => setCurrentPage(6)}
             />
           </div>
         )}
@@ -603,6 +615,26 @@ export default function App() {
               onNeedAuth={() => setShowAuthModal(true)}
               isLoggedIn={!!authUser}
             />
+          </div>
+        )}
+
+        {/* Page 6: Materi Edukasi Orang Tua (halaman penuh, sebelumnya nempel di Page 3) */}
+        {currentPage === 6 && (
+          <div className="animate-fade-in py-8 sm:py-12 px-6 bg-gradient-to-b from-white to-blue-50/10">
+            <div className="max-w-7xl mx-auto space-y-4">
+              <button
+                onClick={() => setCurrentPage(3)}
+                className="group inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-blue-600 transition-colors cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+                Kembali ke Kategori Usia
+              </button>
+              <MateriKognitif
+                age={selectedAge !== null ? selectedAge : 3}
+                isPremiumUser={user.isPremium}
+                onOpenPayment={() => setShowPaymentModal(true)}
+              />
+            </div>
           </div>
         )}
       </div>
