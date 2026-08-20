@@ -109,17 +109,17 @@ function renderLockScreen(game: { name: string; ageRange: string }): string {
 }
 
 function renderWatermark(ageRange: string): string {
+  // Diposisikan di POJOK KANAN ATAS (bukan bawah-kiri) dan dibikin lebih kecil/
+  // transparan. Sebelumnya watermark ini fixed di bottom-left dengan z-index
+  // 99999 -- di hampir semua game, tombol aksi utama ("Lanjut", "Main Lagi",
+  // dsb.) atau materi soal juga ada di area bawah layar, jadi watermark selalu
+  // menutupi elemen penting itu di layar HP yang kecil. Pojok kanan atas jauh
+  // lebih jarang dipakai game untuk elemen interaktif.
   return `
     <!-- GamEdu Watermark -->
-    <div style="position: fixed; bottom: 14px; left: 14px; z-index: 99999; display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.92); padding: 8px 16px; border-radius: 50px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 800; color: #2B2250; box-shadow: 0 8px 24px rgba(43,34,80,0.22); border: 2px solid #FFA857; pointer-events: none;">
-      <span style="font-size: 16px; animation: heartbeat 1.5s infinite;">🎮</span>
-      <span>GamEdu <span style="font-size: 10px; color: #FFFFFF; background: #FF6FA0; padding: 2px 8px; border-radius: 20px; font-weight: bold; margin-left: 4px;">Usia ${ageRange}</span></span>
-      <style>
-        @keyframes heartbeat {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.15); }
-        }
-      </style>
+    <div style="position: fixed; top: 10px; right: 10px; z-index: 9999; display: flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.75); padding: 5px 10px; border-radius: 50px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 10px; font-weight: 800; color: #2B2250; box-shadow: 0 4px 12px rgba(43,34,80,0.15); border: 1.5px solid #FFA857; pointer-events: none; opacity: 0.55; max-width: 46vw;">
+      <span style="font-size: 12px;">🎮</span>
+      <span style="white-space: nowrap;">GamEdu <span style="font-size: 8px; color: #FFFFFF; background: #FF6FA0; padding: 1px 6px; border-radius: 20px; font-weight: bold; margin-left: 3px;">Usia ${ageRange}</span></span>
     </div>
   `;
 }
