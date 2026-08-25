@@ -25,7 +25,7 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
   {
     id: "susun_kata",
     name: "Susun Kata 4 Alat Indera",
-    ageRange: "4-5 Tahun",
+    ageRange: "6-7 Tahun",
     premium: true,
   },
   {
@@ -37,7 +37,7 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
   {
     id: "susun_huruf_anggota_tubuh",
     name: "Susun huruf 4 anggota tubuh",
-    ageRange: "3 Tahun",
+    ageRange: "6-7 Tahun",
     premium: true,
   },
   {
@@ -73,14 +73,14 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
   {
     id: "susun_huruf_8_anggota_tubuh",
     name: "Susun Huruf 8 Anggota Tubuh",
-    ageRange: "4 Tahun",
-    premium: false,
+    ageRange: "6-7 Tahun",
+    premium: true,
   },
   {
     id: "mencocokkan_nama_alat_indera",
     name: "Mencocokkan Nama Alat Indera",
     ageRange: "4 Tahun",
-    premium: true,
+    premium: false,
   },
   {
     id: "berburu_angka_1_10",
