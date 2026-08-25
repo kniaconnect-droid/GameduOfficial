@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Lock, Sparkles, ChevronDown, Target, Eye, Home as HomeIcon, Gamepad2, FileText } from "lucide-react";
+import { Lock, Sparkles, ChevronDown, Target, Eye, Home as HomeIcon, Gamepad2, FileText, Clock } from "lucide-react";
 import { MATERI_KOGNITIF_3_TAHUN } from "../lib/materiKognitif3Tahun";
 import { MATERI_KOGNITIF_4_TAHUN } from "../lib/materiKognitif4Tahun";
 import { MATERI_KOGNITIF_5_TAHUN } from "../lib/materiKognitif5Tahun";
@@ -17,6 +17,7 @@ const MATERI_BY_AGE: Record<number, typeof MATERI_KOGNITIF_3_TAHUN> = {
 };
 
 export default function MateriKognitif({ age, isPremiumUser, onOpenPayment }: MateriKognitifProps) {
+  const hasData = age in MATERI_BY_AGE;
   const data = MATERI_BY_AGE[age] ?? MATERI_KOGNITIF_3_TAHUN;
   const [openId, setOpenId] = useState<string | null>(data.kemampuan[0].id);
 
@@ -24,6 +25,30 @@ export default function MateriKognitif({ age, isPremiumUser, onOpenPayment }: Ma
   React.useEffect(() => {
     setOpenId(data.kemampuan[0]?.id ?? null);
   }, [age]);
+
+  if (!hasData) {
+    return (
+      <section className="py-4">
+        <div className="bg-white rounded-[32px] border border-slate-200/60 shadow-sm overflow-hidden">
+          <div className="bg-gradient-to-br from-indigo-50 via-white to-blue-50 p-6 sm:p-8 border-b border-slate-200/60">
+            <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-wider text-indigo-600 mb-2">
+              <FileText className="w-3.5 h-3.5" />
+              Materi Edukasi Orang Tua
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Usia {age}-{age + 1} Tahun</h2>
+          </div>
+          <div className="p-12 text-center space-y-4 max-w-xl mx-auto">
+            <Clock className="w-10 h-10 mx-auto text-slate-400" />
+            <h3 className="text-lg font-bold text-slate-800">Coming Soon</h3>
+            <p className="text-slate-500 text-sm leading-relaxed">
+              Materi edukasi orang tua untuk kategori ini sedang disiapkan tim kurikulum kami. Nantikan update
+              selanjutnya, ya!
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-4">

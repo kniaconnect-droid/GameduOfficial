@@ -1,6 +1,6 @@
 import React from "react";
 import { Game } from "../types";
-import { Apple, Eye, Rocket, ArrowRight } from "lucide-react";
+import { Apple, Eye, Rocket, GraduationCap, ArrowRight } from "lucide-react";
 
 interface AgeCategoryProps {
   selectedAge: number | null;
@@ -39,6 +39,16 @@ export default function AgeCategory({ selectedAge, onSelectAge, games }: AgeCate
       accentBg: "bg-amber-600 text-white shadow-md shadow-amber-100",
       icon: Rocket,
       tag: "Persiapan Masuk SD"
+    },
+    {
+      age: 6,
+      title: "Usia 6-7 Tahun",
+      desc: "Lanjutan pra-sekolah dengan mengeja kata yang lebih kompleks, melatih logika, dan penguatan konsentrasi anak.",
+      gameCount: games.filter((g) => g.ageRange.includes("6")).length,
+      bgClass: "bg-teal-50/40 border-teal-100 hover:border-teal-300 hover:bg-teal-50/80",
+      accentBg: "bg-teal-600 text-white shadow-md shadow-teal-100",
+      icon: GraduationCap,
+      tag: "Lanjutan SD"
     }
   ];
 

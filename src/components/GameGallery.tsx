@@ -26,7 +26,7 @@ interface GameGalleryProps {
 // di halaman ini, tanpa perlu daftar/login dulu.
 const TRIAL_GAME_BY_AGE: Record<number, string> = {
   3: "berburu_angka",
-  4: "susun_huruf_8_anggota_tubuh",
+  4: "mencocokkan_nama_alat_indera",
   5: "fungsi_alat_indera"
 };
 
@@ -109,9 +109,8 @@ export default function GameGallery({
                 <h3 className="text-xl font-bold text-slate-900 leading-tight">Materi Edukasi Orang Tua</h3>
                 <p className="text-slate-500 text-sm leading-relaxed">
                   {materi
-                    ? `Panduan lengkap ${materi.kemampuan.length} kemampuan kognitif penting untuk anak usia ${age} tahun.`
-                    : `Panduan lengkap perkembangan kognitif anak usia ${age} tahun.`}{" "}
-                  Pahami tanda perkembangan anak, ide stimulasi sederhana di rumah, dan aktivitas GamEdu yang paling sesuai.
+                    ? `Panduan lengkap ${materi.kemampuan.length} kemampuan kognitif penting untuk anak usia ${age} tahun. Pahami tanda perkembangan anak, ide stimulasi sederhana di rumah, dan aktivitas GamEdu yang paling sesuai.`
+                    : "Coming Soon — materi edukasi orang tua untuk kategori usia ini sedang disiapkan tim kurikulum kami."}
                 </p>
               </div>
               <button
@@ -201,8 +200,9 @@ export default function GameGallery({
               <div className="space-y-2">
                 <h3 className="text-xl font-bold text-slate-900 leading-tight">Worksheet Cetak</h3>
                 <p className="text-slate-500 text-sm leading-relaxed">
-                  {worksheetsForAge.length > 0 ? worksheetsForAge.length : WORKSHEETS.length} lembar kerja siap cetak untuk melatih
-                  motorik halus & konsentrasi. Tinggal unduh, cetak di rumah, dan kerjakan bersama anak.
+                  {worksheetsForAge.length > 0
+                    ? `${worksheetsForAge.length} lembar kerja siap cetak untuk melatih motorik halus & konsentrasi. Tinggal unduh, cetak di rumah, dan kerjakan bersama anak.`
+                    : "Coming Soon — worksheet cetak untuk kategori usia ini sedang disiapkan tim kurikulum kami."}
                 </p>
               </div>
               <button
