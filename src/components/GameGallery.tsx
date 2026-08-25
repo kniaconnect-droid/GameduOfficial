@@ -6,9 +6,9 @@ import { MATERI_KOGNITIF_4_TAHUN } from "../lib/materiKognitif4Tahun";
 import { MATERI_KOGNITIF_5_TAHUN } from "../lib/materiKognitif5Tahun";
 import { WORKSHEETS } from "../lib/worksheets";
 
-import hubMateriCover from "../assets/images/hub_materi_cover.jpg";
-import hubGameCover from "../assets/images/hub_game_cover.jpg";
-import hubWorksheetCover from "../assets/images/hub_worksheet_cover.jpg";
+import hubMateriCover from "../assets/images/CoverEdukasiOrangtua.jpeg";
+import hubGameCover from "../assets/images/CoverKataloggame.jpeg";
+import hubWorksheetCover from "../assets/images/CoverKatalogworksheet.jpeg";
 
 interface GameGalleryProps {
   age: number;

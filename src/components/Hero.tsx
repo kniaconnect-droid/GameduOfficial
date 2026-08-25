@@ -1,6 +1,6 @@
 import React from "react";
 import { Play, Eye, Award, Sparkles, BookOpen } from "lucide-react";
-import heroIllustration from "../assets/images/gamedu_hero_illustration_1783908408781.jpg";
+import heroIllustration from "../assets/images/gamedu_hero_illustration_1783908408781.jpeg";
 import gameduLogo from "../assets/images/gamedu_logo_1783910706826.jpg";
 
 interface HeroProps {
