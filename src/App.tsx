@@ -99,7 +99,7 @@ export default function App() {
     {
       id: "susun_kata",
       name: "Susun Kata 4 Alat Indera",
-      ageRange: "3 Tahun",
+      ageRange: "6-7 Tahun",
       premium: true,
       description: "Asah kemampuan mengeja kosa kata anatomi tubuh dasar (mata, mulut, hidung, telinga) dengan menyusun huruf-huruf abjad interaktif yang ceria.",
       coverImage: susunKataCover
@@ -115,7 +115,7 @@ export default function App() {
     {
       id: "susun_huruf_anggota_tubuh",
       name: "Susun huruf 4 anggota tubuh",
-      ageRange: "3 Tahun",
+      ageRange: "6-7 Tahun",
       premium: true,
       description: "Asah kemampuan mengeja kosa kata anggota tubuh (kaki, tangan, perut, rambut) dengan menyusun huruf-huruf abjad interaktif yang ceria.",
       coverImage: susunHurufTubuhCover
@@ -163,8 +163,8 @@ export default function App() {
     {
       id: "susun_huruf_8_anggota_tubuh",
       name: "Susun Huruf 8 Anggota Tubuh",
-      ageRange: "4 Tahun",
-      premium: false,
+      ageRange: "6-7 Tahun",
+      premium: true,
       description: "Susun huruf jadi kata sambil belajar 8 anggota tubuh (mata, kaki, perut, mulut, rambut, tangan, hidung, telinga) lewat petunjuk gambar dan clue yang ceria.",
       coverImage: susunHuruf8TubuhCover
     },
@@ -172,7 +172,7 @@ export default function App() {
       id: "mencocokkan_nama_alat_indera",
       name: "Mencocokkan Nama Alat Indera",
       ageRange: "4 Tahun",
-      premium: true,
+      premium: false,
       description: "Seret label nama alat indera (mata, hidung, mulut, telinga) ke gambar yang sesuai untuk melatih pengenalan kosakata dan logika mencocokkan.",
       coverImage: mencocokkanAlatInderaCover
     },
