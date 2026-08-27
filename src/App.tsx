@@ -41,6 +41,8 @@ import sentuh3Warna3GambarCover from "./assets/images/game_sentuh_3warna_benda_3
 import tarikGarisAngka1_5Cover from "./assets/images/game_tarik_garis_angka_1_5_cover.jpg";
 import mengenal5WarnaCover from "./assets/images/game_mengenal_5warna_4gambar_cover.jpg";
 import mengenal6WarnaCover from "./assets/images/game_mengenal_6warna_4gambar_cover.jpg";
+import tunjukAngka1_5_2GambarCover from "./assets/images/game_tunjuk_angka_1_5_2gambar_cover.jpg";
+import akuMengenalWarnaCover from "./assets/images/game_aku_mengenal_warna_cover.jpg";
 
 // Profil "tamu" dipakai selama user belum login, supaya Homepage, pilih usia,
 // dan game trial tetap bisa diakses tanpa perlu daftar/login dulu. Login cuma
@@ -271,6 +273,22 @@ export default function App() {
       premium: true,
       description: "Level lanjutan dengan 4 pilihan gambar sekaligus. Dengarkan suara angka lalu sentuh gambar angka yang tepat untuk mengasah pengenalan angka 1–5 dan konsentrasi mendengarkan anak yang lebih matang.",
       coverImage: tunjukAngka1_5_4GambarCover
+    },
+    {
+      id: "tunjuk_angka_1_5_2gambar",
+      name: "Tunjuk sesuai angka (2 gambar)",
+      ageRange: "3 Tahun",
+      premium: true,
+      description: "Dengarkan suara angka lalu sentuh gambar angka yang benar di antara 2 pilihan. Melatih pengenalan angka 1–5 dan konsentrasi mendengarkan anak usia 3 tahun.",
+      coverImage: tunjukAngka1_5_2GambarCover
+    },
+    {
+      id: "aku_mengenal_warna",
+      name: "Aku Mengenal Warna",
+      ageRange: "3 Tahun",
+      premium: true,
+      description: "Lihat contoh warna lalu sentuh gambar dengan warna yang sama dari beberapa pilihan. Melatih pengenalan warna dasar dan kemampuan mencocokkan visual anak usia 3 tahun.",
+      coverImage: akuMengenalWarnaCover
     }
   ];
 
