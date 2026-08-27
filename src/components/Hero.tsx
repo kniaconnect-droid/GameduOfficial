@@ -25,6 +25,18 @@ export default function Hero({ onStartLearning, onExploreGames }: HeroProps) {
             />
           </div>
 
+          {/* Ilustrasi utama - khusus tampilan mobile/tablet, diletakkan tepat di bawah logo */}
+          <div className="lg:hidden relative mt-2">
+            <div className="absolute -inset-4 bg-gradient-to-r from-blue-300/20 to-purple-300/20 rounded-full blur-2xl opacity-75"></div>
+            <div className="relative border-4 border-white bg-white rounded-[36px] shadow-2xl overflow-hidden aspect-[4/3]">
+              <img
+                src={heroIllustration}
+                alt="Anak Belajar Sambil Bermain GamEdu"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-full px-4 py-1.5 text-xs font-bold text-blue-700 shadow-sm uppercase tracking-wider mb-2">
             <Sparkles className="w-3.5 h-3.5 fill-blue-700 animate-pulse" />
@@ -77,8 +89,8 @@ export default function Hero({ onStartLearning, onExploreGames }: HeroProps) {
           </div>
         </div>
 
-        {/* Right column: Generated Hero Illustration */}
-        <div className="lg:col-span-6 relative mt-2 sm:mt-0">
+        {/* Right column: Generated Hero Illustration (khusus tampilan laptop/desktop) */}
+        <div className="hidden lg:block lg:col-span-6 relative mt-2 sm:mt-0">
           <div className="absolute -inset-4 bg-gradient-to-r from-blue-300/20 to-purple-300/20 rounded-full blur-2xl opacity-75"></div>
           <div className="relative border-4 border-white bg-white rounded-[36px] shadow-2xl overflow-hidden aspect-[4/3] transform hover:rotate-1 transition-transform duration-300">
             <img
