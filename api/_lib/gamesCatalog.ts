@@ -166,7 +166,13 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     ageRange: "3 Tahun",
     premium: true,
   },
-  // TODO: tambahkan 45 game lainnya di sini, format sama seperti di atas.
+  {
+    id: "puzzle_hewan_2keping",
+    name: "Puzzle Hewan Ternak Ceria",
+    ageRange: "3 Tahun",
+    premium: true,
+  },
+  // TODO: tambahkan 44 game lainnya di sini, format sama seperti di atas.
 ];
 
 export function findGame(gameId: string): GameCatalogEntry | undefined {
