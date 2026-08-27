@@ -154,6 +154,18 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     ageRange: "5 Tahun",
     premium: true,
   },
+  {
+    id: "tunjuk_angka_1_5_2gambar",
+    name: "Tunjuk sesuai angka (2 gambar)",
+    ageRange: "3 Tahun",
+    premium: true,
+  },
+  {
+    id: "aku_mengenal_warna",
+    name: "Aku Mengenal Warna",
+    ageRange: "3 Tahun",
+    premium: true,
+  },
   // TODO: tambahkan 45 game lainnya di sini, format sama seperti di atas.
 ];
 
