@@ -52,6 +52,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   let fileContent = fs.readFileSync(filePath, "utf-8");
+
+  // PENTING: game ini dimuat di frontend lewat Blob URL (lihat SecureGamePlayer.tsx),
+  // bukan lewat <iframe src="/api/games/..."> langsung. Dokumen Blob URL nggak
+  // punya "alamat" yang jelas buat browser jadiin patokan resolve path relatif
+  // seperti "/games-assets/...", jadi kalau dibiarkan, gambar/audio yang pakai
+  // path model itu (bukan URL lengkap https://...) gagal dimuat sama sekali --
+  // ini penyebab bug "gambar kosong" di game Aku Mengenal Warna.
+  // Suntik <base href="..."> di awal <head> supaya SEMUA path relatif/root-relative
+  // di game manapun otomatis kepatok ke origin situs asli, apapun cara framing-nya.
+  const requestOrigin = `${(req.headers["x-forwarded-proto"] as string) || "https"}://${req.headers.host}`;
+  fileContent = fileContent.replace(
+    /<head(\s[^>]*)?>/i,
+    (match) => `${match}\n<base href="${requestOrigin}/">`
+  );
+
   fileContent = fileContent.replace("</body>", `${renderWatermark(game.ageRange)}</body>`);
 
   res.setHeader("Content-Type", "text/html");
