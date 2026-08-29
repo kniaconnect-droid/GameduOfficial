@@ -1,5 +1,4 @@
 import React from "react";
-import { Sparkles, Brain, Award, Palette, Calendar, FileText } from "lucide-react";
 import belajarSambilMainImg from "../assets/images/belajar sambil main.jpeg";
 import fokusImg from "../assets/images/fokus.jpeg";
 import logikaImg from "../assets/images/logika.jpeg";
@@ -12,43 +11,31 @@ export default function Benefits() {
     {
       title: "Belajar sambil bermain",
       desc: "Metode gamifikasi modern untuk menumbuhkan minat belajar intrinsik anak tanpa paksaan.",
-      icon: <Sparkles className="w-6 h-6 text-blue-600" />,
-      color: "bg-blue-50 border-blue-100 text-blue-600",
       image: belajarSambilMainImg,
     },
     {
       title: "Melatih konsentrasi",
       desc: "Latihan visual adaptif yang secara bertahap memperpanjang rentang atensi dan fokus anak.",
-      icon: <Brain className="w-6 h-6 text-emerald-600" />,
-      color: "bg-emerald-50 border-emerald-100 text-emerald-600",
       image: fokusImg,
     },
     {
       title: "Mengembangkan logika",
       desc: "Game asah otak, angka, dan kata yang merangsang problem solving, penalaran, dan analisis dasar.",
-      icon: <Award className="w-6 h-6 text-amber-600" />,
-      color: "bg-amber-50 border-amber-100 text-amber-600",
       image: logikaImg,
     },
     {
       title: "Meningkatkan kreativitas",
       desc: "Aktivitas interaktif penuh warna yang memicu imajinasi kognitif dan eksplorasi sensori-motorik.",
-      icon: <Palette className="w-6 h-6 text-purple-600" />,
-      color: "bg-purple-50 border-purple-100 text-purple-600",
       image: kreativitasImg,
     },
     {
       title: "Belajar sesuai usia",
       desc: "Materi terkurasi rapi dalam kategori usia 3, 4, hingga 5 tahun sesuai tahap perkembangan.",
-      icon: <Calendar className="w-6 h-6 text-red-600" />,
-      color: "bg-red-50 border-red-100 text-red-600",
       image: sesuaiTahapanUsiaImg,
     },
     {
       title: "Worksheet siap cetak",
       desc: "Dukungan penuh dengan lembar kerja fisik gratis yang bisa diunduh untuk melatih motorik halus.",
-      icon: <FileText className="w-6 h-6 text-teal-600" />,
-      color: "bg-teal-50 border-teal-100 text-teal-600",
       image: worksheetImg,
     },
   ];
@@ -86,9 +73,6 @@ export default function Benefits() {
                 />
               </div>
               <div className="p-7">
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border mb-6 shadow-sm ${b.color}`}>
-                  {b.icon}
-                </div>
                 <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
                   {b.title}
                 </h3>
