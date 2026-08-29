@@ -53,6 +53,8 @@ import sentuh6Warna12SoalCover from "./assets/images/game_sentuh6warnabenda12soa
 import puzzleAngka1_5_4KepingCover from "./assets/images/game_puzzle_angka_1_5_4keping_cover.jpg";
 import tarikBendake3Warna6SoalCover from "./assets/images/game_tarikbendake3warna6soal_cover.jpg";
 import tarikGambarke6Warna12SoalCover from "./assets/images/game_tarikgambarke6warna12soal_cover.jpg";
+import lebihBesarDanKecil5Soal1Cover from "./assets/images/game_lebihbesardankecil5soal1_cover.jpg";
+import puzzleHewanTernak9KepingCover from "./assets/images/game_puzzlehewanternak9keping_cover.jpg";
 
 // Profil "tamu" dipakai selama user belum login, supaya Homepage, pilih usia,
 // dan game trial tetap bisa diakses tanpa perlu daftar/login dulu. Login cuma
@@ -355,6 +357,22 @@ export default function App() {
       premium: true,
       description: "Susun puzzle 4 keping untuk membentuk angka 1 sampai 5 bersama maskot kelinci. Melatih koordinasi tangan-mata, ketelitian, dan pengenalan angka pada anak usia 5 tahun.",
       coverImage: puzzleAngka1_5_4KepingCover
+    },
+    {
+      id: "lebihbesardankecil5soal1",
+      name: "Kelompokkan Besar dan Kecil (5 Soal)",
+      ageRange: "5 Tahun",
+      premium: true,
+      description: "Seret benda ke kotak BESAR atau KECIL sesuai ukurannya lewat 5 soal interaktif. Melatih kemampuan membandingkan ukuran dan koordinasi tangan-mata anak usia 5 tahun.",
+      coverImage: lebihBesarDanKecil5Soal1Cover
+    },
+    {
+      id: "puzzlehewanternak9keping",
+      name: "Puzzle Hewan Ternak Ceria (9 Keping)",
+      ageRange: "5 Tahun",
+      premium: true,
+      description: "Susun puzzle 9 keping untuk membentuk gambar sapi, ayam, dan kambing sambil belajar nama dan suara hewan ternak. Melatih ketelitian, kesabaran, dan koordinasi tangan-mata anak usia 5 tahun.",
+      coverImage: puzzleHewanTernak9KepingCover
     },
     {
       id: "tunjuk_angka_1_5_2gambar",
