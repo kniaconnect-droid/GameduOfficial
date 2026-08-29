@@ -47,6 +47,12 @@ import puzzleHewan2KepingCover from "./assets/images/game_puzzle_hewan_2keping_c
 import sentuh3Warna4GambarCover from "./assets/images/game_sentuh_3warna_benda_4gambar_cover.jpg";
 import sentuh4Warna4Gambar10SoalCover from "./assets/images/game_sentuh_4warna_benda_4gambar_10soal_cover.jpg";
 import mengenal3Warna3GambarCover from "./assets/images/game_mengenal_3warna_merah_kuning_biru_3gambar_cover.jpg";
+import puzzle3GambarBuah4KepingCover from "./assets/images/game_puzzle3gambarbuah4keping_cover.jpg";
+import sentuh5Warna6Gambar10SoalCover from "./assets/images/game_sentuh5warnabenda6gambar10soal_cover.jpg";
+import sentuh6Warna12SoalCover from "./assets/images/game_sentuh6warnabenda12soal_cover.jpg";
+import puzzleAngka1_5_4KepingCover from "./assets/images/game_puzzle_angka_1_5_4keping_cover.jpg";
+import tarikBendake3Warna6SoalCover from "./assets/images/game_tarikbendake3warna6soal_cover.jpg";
+import tarikGambarke6Warna12SoalCover from "./assets/images/game_tarikgambarke6warna12soal_cover.jpg";
 
 // Profil "tamu" dipakai selama user belum login, supaya Homepage, pilih usia,
 // dan game trial tetap bisa diakses tanpa perlu daftar/login dulu. Login cuma
@@ -271,6 +277,14 @@ export default function App() {
       coverImage: mengenal6WarnaCover
     },
     {
+      id: "puzzle3gambarbuah4keping",
+      name: "Puzzle Buah Ceria",
+      ageRange: "4 Tahun",
+      premium: true,
+      description: "Susun puzzle 4 keping untuk membentuk gambar apel, nanas, dan pisang. Melatih koordinasi tangan-mata, ketelitian, dan pengenalan buah pada anak usia 4 tahun.",
+      coverImage: puzzle3GambarBuah4KepingCover
+    },
+    {
       id: "fungsi_alat_indera",
       name: "Fungsi Alat Indera",
       ageRange: "5 Tahun",
@@ -301,6 +315,46 @@ export default function App() {
       premium: true,
       description: "Level lanjutan dengan 4 pilihan gambar sekaligus. Dengarkan suara angka lalu sentuh gambar angka yang tepat untuk mengasah pengenalan angka 1–5 dan konsentrasi mendengarkan anak yang lebih matang.",
       coverImage: tunjukAngka1_5_4GambarCover
+    },
+    {
+      id: "sentuh5warnabenda6gambar10soal",
+      name: "Sentuh 5 Warna Benda (6 Gambar, 10 Soal)",
+      ageRange: "5 Tahun",
+      premium: true,
+      description: "Dengarkan perintah warna, lalu sentuh gambar benda dengan warna yang sesuai di antara 6 pilihan gambar, mencakup 5 warna (merah, kuning, biru, hijau, putih) lewat 10 soal berturut-turut.",
+      coverImage: sentuh5Warna6Gambar10SoalCover
+    },
+    {
+      id: "sentuh6warnabenda12soal",
+      name: "Sentuh 6 Warna Benda (12 Soal)",
+      ageRange: "5 Tahun",
+      premium: true,
+      description: "Level lanjutan dengan tambahan warna ungu, mencakup 6 warna dan 12 soal berturut-turut. Mengasah pengenalan warna, konsentrasi, dan daya tahan fokus anak usia 5 tahun.",
+      coverImage: sentuh6Warna12SoalCover
+    },
+    {
+      id: "tarikbendake3warna6soal",
+      name: "Tarik Benda ke 3 Warna (6 Soal)",
+      ageRange: "5 Tahun",
+      premium: true,
+      description: "Tarik garis dari gambar benda ke warna yang sama di antara 3 pilihan warna. Melatih koordinasi tangan-mata dan pengenalan warna lewat 6 soal berturut-turut.",
+      coverImage: tarikBendake3Warna6SoalCover
+    },
+    {
+      id: "tarikgambarke6warna12soal",
+      name: "Tarik Gambar ke 6 Warna (12 Soal)",
+      ageRange: "5 Tahun",
+      premium: true,
+      description: "Level lanjutan menarik garis dari gambar ke warna yang sesuai, mencakup 6 pilihan warna dan 12 soal berturut-turut untuk mengasah ketelitian dan konsentrasi anak usia 5 tahun.",
+      coverImage: tarikGambarke6Warna12SoalCover
+    },
+    {
+      id: "puzzle_angka_1_5_4keping",
+      name: "Game Puzzle Angka 1-5 4 Keping",
+      ageRange: "5 Tahun",
+      premium: true,
+      description: "Susun puzzle 4 keping untuk membentuk angka 1 sampai 5 bersama maskot kelinci. Melatih koordinasi tangan-mata, ketelitian, dan pengenalan angka pada anak usia 5 tahun.",
+      coverImage: puzzleAngka1_5_4KepingCover
     },
     {
       id: "tunjuk_angka_1_5_2gambar",
