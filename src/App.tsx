@@ -44,6 +44,9 @@ import mengenal6WarnaCover from "./assets/images/game_mengenal_6warna_4gambar_co
 import tunjukAngka1_5_2GambarCover from "./assets/images/game_tunjuk_angka_1_5_2gambar_cover.jpg";
 import akuMengenalWarnaCover from "./assets/images/game_aku_mengenal_warna_cover.jpg";
 import puzzleHewan2KepingCover from "./assets/images/game_puzzle_hewan_2keping_cover.jpg";
+import sentuh3Warna4GambarCover from "./assets/images/game_sentuh_3warna_benda_4gambar_cover.jpg";
+import sentuh4Warna4Gambar10SoalCover from "./assets/images/game_sentuh_4warna_benda_4gambar_10soal_cover.jpg";
+import mengenal3Warna3GambarCover from "./assets/images/game_mengenal_3warna_merah_kuning_biru_3gambar_cover.jpg";
 
 // Profil "tamu" dipakai selama user belum login, supaya Homepage, pilih usia,
 // dan game trial tetap bisa diakses tanpa perlu daftar/login dulu. Login cuma
@@ -204,6 +207,14 @@ export default function App() {
       coverImage: mengenal3WarnaCover
     },
     {
+      id: "mengenal_3warna_merah_kuning_biru_3gambar",
+      name: "Mengenal 3 Warna (Merah, Kuning, Biru) - 3 Gambar",
+      ageRange: "4 Tahun",
+      premium: true,
+      description: "Dengarkan suara lalu sentuh warna yang benar dari 3 pilihan gambar. Level lanjutan dengan lebih banyak pilihan untuk mengasah pengenalan warna merah, kuning, dan biru serta konsentrasi anak usia 4 tahun.",
+      coverImage: mengenal3Warna3GambarCover
+    },
+    {
       id: "mengenal_4warna_merah_kuning_biru_hijau_3gambar",
       name: "Mengenal 4 Warna (Merah, Kuning, Biru, Hijau) - 3 Gambar",
       ageRange: "4 Tahun",
@@ -218,6 +229,22 @@ export default function App() {
       premium: true,
       description: "Dengarkan perintah warna, lalu sentuh gambar benda dengan warna yang sesuai di antara 3 pilihan. Melatih pengenalan warna merah, kuning, dan biru lewat instruksi suara yang interaktif.",
       coverImage: sentuh3Warna3GambarCover
+    },
+    {
+      id: "sentuh_3warna_benda_4gambar",
+      name: "Sentuh 3warna benda 4gambar",
+      ageRange: "4 Tahun",
+      premium: true,
+      description: "Dengarkan perintah warna, lalu sentuh gambar benda dengan warna yang sesuai di antara 4 pilihan. Level lanjutan dengan lebih banyak pengecoh untuk mengasah pengenalan warna merah, kuning, dan biru serta konsentrasi anak usia 4 tahun.",
+      coverImage: sentuh3Warna4GambarCover
+    },
+    {
+      id: "sentuh_4warna_benda_4gambar_10soal",
+      name: "Sentuh4warnabenda4gambar10soal",
+      ageRange: "4 Tahun",
+      premium: true,
+      description: "Dengarkan perintah warna, lalu sentuh gambar benda dengan warna yang sesuai di antara 4 pilihan, dengan tambahan warna hijau dan 10 soal berturut-turut. Melatih pengenalan 4 warna dasar sekaligus konsentrasi dan daya tahan fokus anak usia 4 tahun.",
+      coverImage: sentuh4Warna4Gambar10SoalCover
     },
     {
       id: "tarik_garis_angka_1_5",
