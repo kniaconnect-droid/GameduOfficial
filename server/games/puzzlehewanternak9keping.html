@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Puzzle Hewan Ternak Ceria | GamEdu</title>
+<meta name="description" content="Puzzle Hewan Ternak Ceria — belajar nama, suara, dan fakta hewan ternak lewat puzzle seru untuk anak usia dini, oleh GamEdu." />
+<meta name="theme-color" content="#8fd3f4" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="GamEdu Puzzle" />
+<meta name="mobile-web-app-capable" content="yes" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* style.css — Puzzle Hewan Ternak Ceria (GamEdu) */
+
+:root {
+  --sky-top: #4fa3e0;
+  --sky-mid: #8fd0ef;
+  --sky-bottom: #d8f3fd;
+  --grass-dark: #5aab4c;
+  --grass-light: #86d16e;
+  --hill-back: #6cc06a;
+  --hill-front: #86d16e;
+  --barn-red: #d9553d;
+  --barn-red-dark: #b8402c;
+  --barn-roof: #6b3f30;
+  --barn-roof-light: #8a5641;
+  --wood: #c99a5b;
+  --wood-dark: #a67840;
+  --cream: #fff8ea;
+  --ink: #4a3728;
+  --pink: #ff9ecb;
+  --yellow: #ffd75e;
+  --blue-btn: #4fb0e8;
+  --green-btn: #6bc164;
+  --purple-btn: #b184e0;
+  --shadow: 0 8px 0 rgba(0,0,0,0.12);
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: "Fredoka", "Trebuchet MS", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 32%, var(--sky-bottom) 55%, var(--grass-light) 55%, var(--grass-dark) 100%);
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+button, input, select { font-family: inherit; }
+
+.app {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--safe-top);
+  padding-bottom: var(--safe-bottom);
+  overflow: hidden;
+}
+
+/* ---------- Watermark ---------- */
+.watermark {
+  position: fixed;
+  inset: 0;
+  background-image: url("https://raw.githubusercontent.com/mhrofficialid/Logo-GamEdu/a435d70a906f5cc4cfd92cb974b978eeccb161f9/Logo%20GamEdu.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: min(60vw, 320px);
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---------- Farm background scenery (pure CSS, no heavy images) ---------- */
+.scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Soft glowing sun sitting high in the sky for warmth and depth. */
+.sun {
+  position: absolute;
+  top: 5%;
+  right: 12%;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 32%, #fffbe6, #ffe27a 55%, #ffd75e 85%);
+  box-shadow: 0 0 36px 12px rgba(255, 215, 94, 0.4);
+  animation: sunGlow 6s ease-in-out infinite;
+}
+@keyframes sunGlow {
+  0%, 100% { box-shadow: 0 0 36px 12px rgba(255, 215, 94, 0.4); }
+  50% { box-shadow: 0 0 50px 18px rgba(255, 215, 94, 0.55); }
+}
+
+/* Two soft, overlapping hill layers break up the flat horizon line and add
+   a sense of atmospheric depth (distant hill slightly muted, near hill brighter). */
+.hill {
+  position: absolute;
+  left: -12%;
+  width: 124%;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+.hill--back {
+  top: 46%;
+  height: 74px;
+  background: linear-gradient(180deg, var(--hill-back), var(--grass-dark));
+  opacity: 0.5;
+}
+.hill--front {
+  top: 51%;
+  height: 56px;
+  background: linear-gradient(180deg, var(--hill-front), var(--grass-light));
+  opacity: 0.75;
+}
+
+.cloud {
+  position: absolute;
+  background: linear-gradient(180deg, #ffffff, #eef8ff);
+  border-radius: 50px;
+  opacity: 0.95;
+  filter: drop-shadow(0 6px 3px rgba(70, 110, 140, 0.12));
+  animation: drift linear infinite;
+}
+.cloud::before, .cloud::after {
+  content: "";
+  position: absolute;
+  background: linear-gradient(180deg, #ffffff, #eef8ff);
+  border-radius: 50%;
+}
+.cloud--a { width: 90px; height: 32px; top: 8%; left: -20%; animation-duration: 42s; }
+.cloud--a::before { width: 46px; height: 46px; top: -22px; left: 12px; }
+.cloud--a::after { width: 34px; height: 34px; top: -14px; left: 50px; }
+.cloud--b { width: 70px; height: 26px; top: 16%; left: -30%; animation-duration: 55s; animation-delay: -12s; }
+.cloud--b::before { width: 36px; height: 36px; top: -16px; left: 10px; }
+.cloud--b::after { width: 26px; height: 26px; top: -10px; left: 38px; }
+.cloud--c { width: 60px; height: 22px; top: 5%; left: -40%; animation-duration: 65s; animation-delay: -30s; }
+.cloud--c::before { width: 30px; height: 30px; top: -14px; left: 8px; }
+.cloud--c::after { width: 22px; height: 22px; top: -8px; left: 32px; }
+
+@keyframes drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(140vw); }
+}
+
+.bird {
+  position: absolute;
+  font-size: 14px;
+  opacity: 0.75;
+  animation: fly 18s linear infinite, bob 1.4s ease-in-out infinite;
+}
+.bird--1 { top: 12%; left: -10%; animation-duration: 20s, 1.3s; }
+.bird--2 { top: 20%; left: -10%; animation-duration: 26s, 1.6s; animation-delay: -6s, 0s; }
+.bird--3 { top: 9%; left: -10%; animation-duration: 23s, 1.2s; animation-delay: -14s, 0s; }
+@keyframes fly { from { transform: translateX(0); } to { transform: translateX(130vw); } }
+@keyframes bob { 0%, 100% { margin-top: 0; } 50% { margin-top: -6px; } }
+
+.butterfly {
+  position: absolute;
+  width: 14px;
+  height: 12px;
+  opacity: 0.85;
+  animation: flutter 6s ease-in-out infinite;
+}
+.butterfly::before, .butterfly::after {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 10px;
+  background: var(--pink);
+  border-radius: 60% 60% 60% 60%;
+  top: 0;
+  animation: wing 0.35s ease-in-out infinite alternate;
+}
+.butterfly::before { left: 0; transform-origin: right center; }
+.butterfly::after { right: 0; background: var(--yellow); transform-origin: left center; animation-delay: -0.15s; }
+@keyframes wing { from { transform: scaleX(1); } to { transform: scaleX(0.55); } }
+@keyframes flutter {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(14px, -18px); }
+  50% { transform: translate(30px, 4px); }
+  75% { transform: translate(10px, 18px); }
+  100% { transform: translate(0, 0); }
+}
+.butterfly--1 { bottom: 30%; left: 12%; animation-duration: 7s; }
+.butterfly--2 { bottom: 40%; right: 15%; animation-duration: 8.5s; animation-delay: -3s; }
+
+.flower {
+  position: absolute;
+  bottom: 4%;
+  width: 16px;
+  height: 16px;
+  animation: sway 3.5s ease-in-out infinite;
+}
+.flower::before {
+  content: "✿";
+  position: absolute;
+  font-size: 20px;
+  line-height: 1;
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,0.08));
+}
+.flower--1 { left: 6%; color: var(--pink); animation-delay: -1s; }
+.flower--2 { left: 22%; color: var(--yellow); animation-delay: -2s; }
+.flower--3 { right: 10%; color: #ff8fb0; animation-delay: -0.5s; }
+.flower--4 { right: 28%; color: #ffe27a; animation-delay: -2.6s; }
+.flower::before { color: inherit; }
+@keyframes sway {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+
+/* Fence: shaded planks + a subtle ground shadow so it reads as sitting on the grass. */
+.fence {
+  position: absolute;
+  bottom: 6%;
+  left: 0;
+  right: 0;
+  height: 34px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--wood) 0 10px,
+    var(--wood-dark) 10px 12px,
+    transparent 12px 26px
+  );
+  opacity: 0.6;
+  filter: drop-shadow(0 3px 0 rgba(70, 45, 20, 0.1));
+}
+.fence::before, .fence::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 5px;
+  background: var(--wood-dark);
+  opacity: 0.75;
+  border-radius: 2px;
+}
+.fence::before { top: 6px; }
+.fence::after { bottom: 6px; }
+
+/* Barn: layered walls, gabled roof with a highlight, a loft window and a door,
+   plus a soft contact shadow so it feels grounded rather than pasted on. */
+.barn {
+  position: absolute;
+  bottom: 8%;
+  right: 6%;
+  width: 52px;
+  height: 38px;
+  background: linear-gradient(155deg, var(--barn-red) 0%, var(--barn-red-dark) 100%);
+  border-radius: 3px;
+  opacity: 0.95;
+  box-shadow: inset -6px 0 0 rgba(0,0,0,0.08), 0 6px 6px -2px rgba(50, 30, 15, 0.25);
+}
+.barn::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -7px;
+  width: 0;
+  height: 0;
+  border-left: 33px solid transparent;
+  border-right: 33px solid transparent;
+  border-bottom: 22px solid var(--barn-roof);
+  filter: drop-shadow(-2px 2px 0 rgba(0,0,0,0.08));
+}
+.barn::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 15px;
+  height: 22px;
+  background: linear-gradient(180deg, #7a3f2e, #5c2f22);
+  border-radius: 4px 4px 0 0;
+  box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.08);
+}
+.barn .barn__window {
+  position: absolute;
+  top: 7px;
+  left: 8px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffe9b0, var(--yellow) 70%);
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.35);
+}
+.barn .barn__roof-highlight {
+  position: absolute;
+  top: -20px;
+  left: -7px;
+  width: 0;
+  height: 0;
+  border-left: 33px solid transparent;
+  border-right: 33px solid transparent;
+  border-bottom: 22px solid var(--barn-roof-light);
+  clip-path: polygon(0 100%, 50% 0, 50% 100%);
+  opacity: 0.55;
+}
+
+/* Trees: three overlapping foliage blobs (shaded darker at the base, lighter on
+   top) for a rounded, layered look, plus a soft ground shadow under the trunk. */
+.tree {
+  position: absolute;
+  bottom: 7%;
+  width: 30px;
+  height: 44px;
+}
+.tree__shadow {
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34px;
+  height: 8px;
+  background: rgba(30, 60, 20, 0.18);
+  border-radius: 50%;
+  filter: blur(1px);
+}
+.tree::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 17px;
+  background: linear-gradient(180deg, #9c6a44, #7a4d2e);
+  border-radius: 2px;
+}
+.tree::after {
+  content: "";
+  position: absolute;
+  bottom: 13px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 28px;
+  background: radial-gradient(circle at 35% 30%, #6cc060, #479148 78%);
+  border-radius: 50%;
+  box-shadow:
+    -11px 5px 0 -3px #57a552,
+    11px 5px 0 -3px #57a552,
+    0 -6px 0 -6px #86d16e;
+  opacity: 0.95;
+}
+.tree--1 { left: 4%; }
+.tree--2 { right: 22%; }
+.tree--2::after { animation: leafSway 4.5s ease-in-out infinite; }
+.tree--1::after { animation: leafSway 4.5s ease-in-out infinite -2.2s; }
+@keyframes leafSway {
+  0%, 100% { transform: translateX(-50%) rotate(-1.5deg); }
+  50% { transform: translateX(-50%) rotate(1.5deg); }
+}
+
+/* ---------- Layout shells ---------- */
+.screen {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 16px;
+  min-height: 100%;
+  text-align: center;
+  animation: fadeIn 0.5s ease both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  width: 100%;
+}
+
+.header__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header__logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 0 rgba(0,0,0,0.08));
+}
+
+.header__title {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.header__title small {
+  display: block;
+  font-weight: 500;
+  font-size: 11px;
+  opacity: 0.65;
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.85);
+  box-shadow: var(--shadow);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+.icon-btn:active { transform: translateY(3px); box-shadow: 0 4px 0 rgba(0,0,0,0.12); }
+
+/* ---------- Splash ---------- */
+.splash-logo {
+  width: min(38vw, 170px);
+  height: min(38vw, 170px);
+  object-fit: contain;
+  margin-bottom: 10px;
+  animation: popIn 0.7s cubic-bezier(.34,1.56,.64,1) both, floaty 3.4s ease-in-out infinite 0.7s;
+}
+@keyframes popIn {
+  0% { transform: scale(0.4) rotate(-8deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.title {
+  font-size: clamp(24px, 7vw, 32px);
+  font-weight: 700;
+  color: var(--ink);
+  text-shadow: 0 3px 0 rgba(255,255,255,0.6);
+  margin: 4px 0 2px;
+  line-height: 1.15;
+}
+
+.subtitle {
+  font-size: clamp(14px, 4vw, 17px);
+  font-weight: 500;
+  opacity: 0.75;
+  margin: 0 0 22px;
+}
+
+.animal-row {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 26px;
+}
+.animal-row img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  background: rgba(255,255,255,0.6);
+  border-radius: 50%;
+  padding: 6px;
+  box-shadow: var(--shadow);
+  animation: bounceIn 0.6s ease both;
+}
+.animal-row img:nth-child(1) { animation-delay: 0.1s; }
+.animal-row img:nth-child(2) { animation-delay: 0.25s; }
+.animal-row img:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounceIn {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  min-height: 64px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 19px;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: var(--shadow);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  touch-action: manipulation;
+}
+.btn:active {
+  transform: translateY(6px);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.12);
+}
+.btn--primary { background: linear-gradient(180deg, #6fd06a, var(--green-btn)); }
+.btn--blue { background: linear-gradient(180deg, #6cc4f2, var(--blue-btn)); }
+.btn--purple { background: linear-gradient(180deg, #c49bef, var(--purple-btn)); }
+.btn--pink { background: linear-gradient(180deg, #ffb0d9, var(--pink)); }
+.btn--ghost {
+  background: rgba(255,255,255,0.75);
+  color: var(--ink);
+}
+.btn--wide { width: min(320px, 84vw); }
+.btn__emoji { font-size: 22px; }
+
+/* ---------- Tutorial ---------- */
+.tutorial-card {
+  background: rgba(255,255,255,0.85);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  max-width: 340px;
+  box-shadow: 0 10px 0 rgba(0,0,0,0.08);
+  margin-bottom: 24px;
+}
+
+.tutorial-anim {
+  width: 160px;
+  height: 110px;
+  margin: 0 auto 14px;
+  position: relative;
+}
+.tutorial-piece {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--yellow), #ffb84f);
+  box-shadow: 0 4px 0 rgba(0,0,0,0.12);
+  animation: dragDemo 2.6s ease-in-out infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+.tutorial-slot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  border: 3px dashed rgba(120,96,60,0.4);
+}
+.tutorial-hand {
+  position: absolute;
+  font-size: 30px;
+  line-height: 1;
+  animation: dragDemoHand 2.6s ease-in-out infinite;
+  filter: drop-shadow(0 3px 2px rgba(0,0,0,0.2));
+  transform-origin: top left;
+}
+@keyframes dragDemo {
+  0%, 12% { top: 58px; left: 8px; }
+  45%, 60% { top: 8px; left: 108px; }
+  100% { top: 58px; left: 8px; }
+}
+@keyframes dragDemoHand {
+  0%, 12% { top: 76px; left: 26px; transform: scale(1); }
+  20% { transform: scale(0.92); }
+  45%, 60% { top: 26px; left: 126px; transform: scale(0.92); }
+  72% { transform: scale(1); }
+  100% { top: 76px; left: 26px; transform: scale(1); }
+}
+
+.tutorial-text {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* ---------- Puzzle screen ---------- */
+.puzzle-screen { justify-content: flex-start; padding-top: 4px; }
+
+.level-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 2px 0 0;
+}
+
+.level-sub {
+  font-size: 14px;
+  opacity: 0.7;
+  margin: 0 0 8px;
+  font-weight: 500;
+}
+
+.progress-dots {
+  display: flex;
+  gap: 8px;
+  margin: 6px 0 10px;
+}
+.progress-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.7);
+  border: 2px solid rgba(120,96,60,0.25);
+  transition: all 0.25s ease;
+}
+.progress-dots span.done { background: var(--green-btn); border-color: var(--green-btn); }
+.progress-dots span.current { background: var(--yellow); border-color: #e8b93a; transform: scale(1.2); }
+
+.canvas-wrap {
+  width: min(94vw, 380px);
+  margin: 0 auto;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.puzzle-canvas {
+  width: 100%;
+  display: block;
+  touch-action: none;
+}
+
+.replay-voice-btn {
+  margin-top: 10px;
+}
+
+/* ---------- Overlay (level complete / finish confetti) ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(90, 160, 210, 0.35);
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.35s ease both;
+}
+
+.overlay-card {
+  background: var(--cream);
+  border-radius: var(--radius-lg);
+  padding: 30px 26px;
+  width: min(88vw, 340px);
+  text-align: center;
+  box-shadow: 0 14px 0 rgba(0,0,0,0.12);
+  animation: popIn 0.5s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+.overlay-emoji {
+  font-size: 54px;
+  margin-bottom: 6px;
+  display: inline-block;
+  animation: wiggle 1s ease-in-out infinite;
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+
+.overlay-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.overlay-text {
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.8;
+  margin: 0 0 20px;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -10px;
+  width: 10px;
+  height: 14px;
+  opacity: 0.9;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  to { transform: translateY(110vh) rotate(540deg); opacity: 0.9; }
+}
+
+/* ---------- Finish screen ---------- */
+.finish-logo {
+  width: min(30vw, 130px);
+  margin-bottom: 8px;
+  animation: popIn 0.6s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+.stars-row {
+  font-size: 34px;
+  letter-spacing: 6px;
+  margin: 6px 0 16px;
+}
+.stars-row span { display: inline-block; animation: starPop 0.5s cubic-bezier(.34,1.56,.64,1) both; }
+.stars-row span:nth-child(1) { animation-delay: 0.1s; }
+.stars-row span:nth-child(2) { animation-delay: 0.3s; }
+.stars-row span:nth-child(3) { animation-delay: 0.5s; }
+@keyframes starPop { from { transform: scale(0) rotate(-20deg); } to { transform: scale(1) rotate(0); } }
+
+/* ---------- Toast (install prompt / offline notice) ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(18px + var(--safe-bottom));
+  transform: translate(-50%, 140%);
+  z-index: 30;
+  background: var(--ink);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease;
+  max-width: 92vw;
+}
+.toast.show { transform: translate(-50%, 0); }
+.toast button {
+  border: none;
+  background: var(--yellow);
+  color: var(--ink);
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 8px 14px;
+  min-height: 36px;
+  cursor: pointer;
+}
+
+/* ---------- Accessibility & motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 3px solid #2f6fb0;
+  outline-offset: 2px;
+}
+
+@media (min-width: 480px) {
+  .app { max-width: 480px; margin: 0 auto; }
+}
+
+@media (min-width: 700px) {
+  .app { max-width: 560px; }
+  .canvas-wrap { width: min(90vw, 460px); }
+}
+
+</style>
+</head>
+<body>
+
+<div id="watermark" class="watermark" aria-hidden="true"></div>
+
+<div id="app" class="app" role="main"></div>
+
+<div id="toast" class="toast" aria-live="polite"></div>
+
+<script>
+// ===== data.js =====
+// data.js
+// Single source of truth for all puzzle levels.
+// The engine in app.js iterates over this array in order.
+// Add a new object here and the game automatically creates another level —
+// nothing in app.js, ui.js, or puzzle.js needs to change.
+
+const BRAND = {
+  name: "GamEdu",
+  logo: "https://raw.githubusercontent.com/mhrofficialid/Logo-GamEdu/a435d70a906f5cc4cfd92cb974b978eeccb161f9/Logo%20GamEdu.png"
+};
+
+const APP_TITLE = "Puzzle Hewan Ternak Ceria";
+
+const ANIMALS = [
+  {
+    id: 1,
+    slug: "sapi",
+    name: "Sapi",
+    image: "https://raw.githubusercontent.com/mhrofficialid/Puzzle-hewan-jigsaw/1097fde8a4760fbc27a3b8812577cc24aefb76c2/sapi.png",
+    grid: 3,
+    soundWord: "Moooo",
+    fact: "Sapi menghasilkan susu.",
+    voice: [
+      "Ini adalah sapi.",
+      "Suara sapi moo.",
+      "Sapi menghasilkan susu."
+    ],
+    accent: "#8fc9e0"
+  },
+  {
+    id: 2,
+    slug: "ayam",
+    name: "Ayam",
+    image: "https://raw.githubusercontent.com/mhrofficialid/Puzzle-hewan-jigsaw/1097fde8a4760fbc27a3b8812577cc24aefb76c2/ayam.png",
+    grid: 3,
+    soundWord: "Kukuruyuk",
+    fact: "Ayam menghasilkan telur.",
+    voice: [
+      "Ini adalah ayam.",
+      "Ayam berbunyi kukuruyuk.",
+      "Ayam menghasilkan telur."
+    ],
+    accent: "#ffcf7a"
+  },
+  {
+    id: 3,
+    slug: "kambing",
+    name: "Kambing",
+    image: "https://raw.githubusercontent.com/mhrofficialid/Puzzle-hewan-jigsaw/1097fde8a4760fbc27a3b8812577cc24aefb76c2/kambing.png",
+    grid: 3,
+    soundWord: "Embeeek",
+    fact: "Kambing menghasilkan susu.",
+    voice: [
+      "Ini adalah kambing.",
+      "Kambing berbunyi embek.",
+      "Kambing menghasilkan susu."
+    ],
+    accent: "#c8e6a0"
+  }
+];
+
+const VOICE_SCRIPT = {
+  splash: [
+    "Halo teman-teman.",
+    "Selamat datang di Puzzle Hewan Ternak Ceria."
+  ],
+  tutorial: [
+    "Susun gambar sampai menjadi utuh."
+  ],
+  finish: [
+    "Selamat.",
+    "Kamu berhasil."
+  ]
+};
+
+
+// ===== audio.js =====
+// audio.js
+// Lightweight sound-effect engine built on the native Web Audio API.
+// No external audio files are used, so everything works fully offline
+// and there is nothing extra for the service worker to cache.
+
+let ctx = null;
+
+function getCtx() {
+  if (!ctx) {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    ctx = new AC();
+  }
+  if (ctx.state === "suspended") ctx.resume();
+  return ctx;
+}
+
+/** Must be called from within a user-gesture handler (button tap) to unlock audio on iOS/Safari. */
+function unlockAudio() {
+  const c = getCtx();
+  if (!c) return;
+  const buffer = c.createBuffer(1, 1, 22050);
+  const src = c.createBufferSource();
+  src.buffer = buffer;
+  src.connect(c.destination);
+  src.start(0);
+}
+
+function tone(freq, start, duration, { type = "sine", gain = 0.18, glideTo = null } = {}) {
+  const c = getCtx();
+  if (!c) return;
+  const osc = c.createOscillator();
+  const amp = c.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, c.currentTime + start);
+  if (glideTo) {
+    osc.frequency.exponentialRampToValueAtTime(glideTo, c.currentTime + start + duration);
+  }
+  amp.gain.setValueAtTime(0, c.currentTime + start);
+  amp.gain.linearRampToValueAtTime(gain, c.currentTime + start + 0.02);
+  amp.gain.exponentialRampToValueAtTime(0.001, c.currentTime + start + duration);
+  osc.connect(amp);
+  amp.connect(c.destination);
+  osc.start(c.currentTime + start);
+  osc.stop(c.currentTime + start + duration + 0.05);
+}
+
+/** Soft UI tap, used on every button press. */
+function playClick() {
+  tone(520, 0, 0.09, { type: "sine", gain: 0.14 });
+}
+
+/** Cheerful little "pop" used when a puzzle piece snaps into place. */
+function playSnap() {
+  tone(660, 0, 0.09, { type: "triangle", gain: 0.2, glideTo: 880 });
+  tone(990, 0.05, 0.09, { type: "triangle", gain: 0.14 });
+}
+
+/** Short ascending sparkle used when a level finishes. */
+function playLevelComplete() {
+  const notes = [523.25, 659.25, 783.99, 1046.5];
+  notes.forEach((f, i) => tone(f, i * 0.11, 0.22, { type: "sine", gain: 0.2 }));
+}
+
+/** Bigger fanfare for the finish screen. */
+function playFanfare() {
+  const notes = [392, 523.25, 659.25, 783.99, 1046.5, 1318.5];
+  notes.forEach((f, i) => tone(f, i * 0.1, 0.3, { type: "triangle", gain: 0.22 }));
+}
+
+/** Gentle "try again" nudge — used only for a soft mis-drop cue, never a harsh buzzer. */
+function playSoftBump() {
+  tone(220, 0, 0.12, { type: "sine", gain: 0.12 });
+}
+
+// ---------------- Background music ----------------
+// A short, cheerful looping tune built entirely from oscillator notes (no
+// audio files to download or cache) so it works fully offline. It plays on
+// its own timeline via a lookahead-free setTimeout loop, on a separate gain
+// bus from the sound effects above so the two can be controlled independently.
+
+const MUSIC_PREF_KEY = "gamedu-music-on";
+
+// Cheerful C-major melody, kept squarely in the pentatonic scale so any
+// reordering or looping of these notes still sounds happy and never sour.
+const MUSIC_MELODY = [
+  523.25, 587.33, 659.25, 783.99, 659.25, 587.33,
+  523.25, 659.25, 783.99, 880.0, 783.99, 659.25,
+  587.33, 659.25, 783.99, 659.25, 587.33, 523.25,
+  659.25, 783.99, 880.0, 1046.5, 880.0, 783.99
+];
+const MUSIC_NOTE_DUR = 0.34; // seconds per note
+const MUSIC_LOOP_DUR = MUSIC_MELODY.length * MUSIC_NOTE_DUR;
+
+let musicWanted = readMusicPreference();
+let musicTimer = null;
+let musicBus = null;
+
+function readMusicPreference() {
+  try {
+    const v = window.localStorage.getItem(MUSIC_PREF_KEY);
+    return v === null ? true : v === "1"; // cheerful by default
+  } catch {
+    return true;
+  }
+}
+
+function writeMusicPreference(on) {
+  try {
+    window.localStorage.setItem(MUSIC_PREF_KEY, on ? "1" : "0");
+  } catch {
+    /* private-browsing mode etc. — preference just won't persist */
+  }
+}
+
+function musicBusFor(c) {
+  if (!musicBus || musicBus.context !== c) {
+    musicBus = c.createGain();
+    musicBus.gain.value = 0.1; // sits well under the sound effects
+    musicBus.connect(c.destination);
+  }
+  return musicBus;
+}
+
+function playMusicNote(c, bus, freq, start, dur) {
+  const osc = c.createOscillator();
+  const amp = c.createGain();
+  osc.type = "triangle";
+  osc.frequency.setValueAtTime(freq, c.currentTime + start);
+  amp.gain.setValueAtTime(0, c.currentTime + start);
+  amp.gain.linearRampToValueAtTime(1, c.currentTime + start + 0.03);
+  amp.gain.exponentialRampToValueAtTime(0.001, c.currentTime + start + dur);
+  osc.connect(amp);
+  amp.connect(bus);
+  osc.start(c.currentTime + start);
+  osc.stop(c.currentTime + start + dur + 0.05);
+}
+
+function scheduleMusicLoop() {
+  const c = getCtx();
+  if (!c || !musicWanted) return;
+  const bus = musicBusFor(c);
+  MUSIC_MELODY.forEach((freq, i) => playMusicNote(c, bus, freq, i * MUSIC_NOTE_DUR, MUSIC_NOTE_DUR * 0.92));
+  musicTimer = setTimeout(scheduleMusicLoop, MUSIC_LOOP_DUR * 1000);
+}
+
+// Every note for an entire loop is scheduled ahead of time (see above), so
+// merely cancelling the *next* scheduling pass isn't enough to shut the
+// music up immediately — notes already queued would keep sounding for up to
+// one full loop. Disconnecting the shared bus stops all of them at once,
+// instantly, regardless of how many notes are still "in flight".
+function silenceMusicNow() {
+  if (musicTimer) {
+    clearTimeout(musicTimer);
+    musicTimer = null;
+  }
+  if (musicBus) {
+    try {
+      musicBus.disconnect();
+    } catch {
+      /* already disconnected */
+    }
+    musicBus = null;
+  }
+}
+
+/** Call once from a user-gesture handler to start the loop if the player wants music on. */
+function startMusicIfEnabled() {
+  if (!musicWanted || musicTimer) return;
+  const c = getCtx();
+  if (!c) return;
+  scheduleMusicLoop();
+}
+
+/** Flip music on/off, persist the choice, and start/stop the loop immediately. Returns the new state. */
+function toggleMusicPreference() {
+  musicWanted = !musicWanted;
+  writeMusicPreference(musicWanted);
+  if (musicWanted) {
+    startMusicIfEnabled();
+  } else {
+    silenceMusicNow();
+  }
+  return musicWanted;
+}
+
+/** Whether the player currently wants background music playing (for icon state). */
+function isMusicEnabled() {
+  return musicWanted;
+}
+
+
+// ===== speech.js =====
+// speech.js
+// Thin, dependency-free wrapper around the native Web Speech API
+// (window.speechSynthesis). No cloud TTS, no external libraries.
+
+let voices = [];
+let idVoice = null;
+let voicesReady = false;
+
+function pickIndonesianVoice(list) {
+  if (!list || !list.length) return null;
+  // Prefer an exact Indonesian locale, then any voice whose name mentions Indonesia.
+  return (
+    list.find((v) => v.lang && v.lang.toLowerCase() === "id-id") ||
+    list.find((v) => v.lang && v.lang.toLowerCase().startsWith("id")) ||
+    list.find((v) => /indones/i.test(v.name || "")) ||
+    null
+  );
+}
+
+function refreshVoices() {
+  if (!("speechSynthesis" in window)) return;
+  voices = window.speechSynthesis.getVoices();
+  if (voices && voices.length) {
+    idVoice = pickIndonesianVoice(voices);
+    voicesReady = true;
+  }
+}
+
+function initSpeech() {
+  if (!("speechSynthesis" in window)) return;
+  refreshVoices();
+  if (window.speechSynthesis.onvoiceschanged !== undefined) {
+    window.speechSynthesis.onvoiceschanged = refreshVoices;
+  }
+  // Some browsers (mobile Safari/Chrome) populate voices only after a delay.
+  let tries = 0;
+  const timer = setInterval(() => {
+    tries += 1;
+    refreshVoices();
+    if (voicesReady || tries > 20) clearInterval(timer);
+  }, 250);
+}
+
+/**
+ * Speak a single line of text using the best available Indonesian voice.
+ * Cancels any in-progress speech first, per spec.
+ * @param {string} text
+ * @param {{rate?:number, pitch?:number, onend?:Function}} [opts]
+ * @returns {SpeechSynthesisUtterance|null}
+ */
+function speak(text, opts = {}) {
+  if (!("speechSynthesis" in window) || !text) {
+    if (opts.onend) opts.onend();
+    return null;
+  }
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  if (idVoice) utter.voice = idVoice;
+  utter.lang = idVoice ? idVoice.lang : "id-ID";
+  utter.rate = opts.rate || 0.95;
+  utter.pitch = opts.pitch || 1.08;
+  utter.volume = 1;
+  if (opts.onend) utter.onend = opts.onend;
+  window.speechSynthesis.speak(utter);
+  return utter;
+}
+
+/**
+ * Speak an array of lines one after another.
+ * @param {string[]} lines
+ * @param {{onDone?:Function, gapMs?:number}} [opts]
+ */
+function speakQueue(lines, opts = {}) {
+  const gap = opts.gapMs ?? 250;
+  if (!lines || !lines.length) {
+    if (opts.onDone) opts.onDone();
+    return;
+  }
+  let i = 0;
+  const next = () => {
+    if (i >= lines.length) {
+      if (opts.onDone) opts.onDone();
+      return;
+    }
+    const line = lines[i];
+    i += 1;
+    speak(line, {
+      onend: () => setTimeout(next, gap)
+    });
+  };
+  next();
+}
+
+function stopSpeech() {
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+}
+
+
+// ===== puzzle.js =====
+// puzzle.js
+// Reusable Canvas-based jigsaw puzzle engine.
+// Works for any grid size, driven entirely by the "grid" value of a
+// data.js level object. No hardcoded levels live in this file.
+
+
+// Logical (device-independent) coordinate space the canvas is drawn in.
+// The canvas element is scaled to this via CSS + devicePixelRatio so the
+// same code works from small phones to tablets.
+const LOGICAL_W = 360;
+const BOARD_TOP = 22;
+const BOARD_SIZE = 270;
+const TRAY_TOP = BOARD_TOP + BOARD_SIZE + 26;
+const TRAY_H = 220;
+const LOGICAL_H = TRAY_TOP + TRAY_H + 16;
+
+const SNAP_DIST_RATIO = 0.32; // fraction of a cell size that counts as "close enough"
+const TRAY_GAP = 12; // logical-px gap kept between neighbouring tray pieces
+const TRAY_MIN_SCALE = 0.4; // never shrink pieces smaller than this fraction of board-cell size
+const TRAY_MAX_SCALE = 0.92; // leave a little breathing room even when pieces would fit at full size
+
+class JigsawPuzzle {
+  /**
+   * @param {HTMLCanvasElement} canvas
+   * @param {Object} level - one entry from ANIMALS in data.js
+   * @param {Object} callbacks - { onPieceLocked(count,total), onComplete(), onError(err) }
+   */
+  constructor(canvas, level, callbacks = {}) {
+    this.canvas = canvas;
+    this.level = level;
+    this.callbacks = callbacks;
+    this.grid = level.grid || 3;
+    this.ctx = canvas.getContext("2d");
+    this.pieces = [];
+    this.dragging = null;
+    this.dragOffset = { x: 0, y: 0 };
+    this.locked = 0;
+    this.destroyed = false;
+    this.raf = null;
+    this.dpr = Math.max(1, window.devicePixelRatio || 1);
+    this._topZ = this.grid ? this.grid * this.grid : 9;
+
+    this._onPointerDown = this._onPointerDown.bind(this);
+    this._onPointerMove = this._onPointerMove.bind(this);
+    this._onPointerUp = this._onPointerUp.bind(this);
+    this._loop = this._loop.bind(this);
+  }
+
+  async init() {
+    this._resizeCanvas();
+    this.image = await this._loadImage(this.level.image);
+    this._buildPieces();
+    this._shufflePieceLayout();
+    this._bindEvents();
+    this._resizeListener = () => this._resizeCanvas();
+    window.addEventListener("resize", this._resizeListener);
+    this.raf = requestAnimationFrame(this._loop);
+  }
+
+  destroy() {
+    this.destroyed = true;
+    if (this.raf) cancelAnimationFrame(this.raf);
+    this._unbindEvents();
+    if (this._resizeListener) window.removeEventListener("resize", this._resizeListener);
+  }
+
+  _loadImage(src) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => resolve(img);
+      img.onerror = (e) => reject(e);
+      img.src = src;
+    });
+  }
+
+  _resizeCanvas() {
+    const dpr = this.dpr;
+    this.canvas.width = Math.round(LOGICAL_W * dpr);
+    this.canvas.height = Math.round(LOGICAL_H * dpr);
+    this.canvas.style.aspectRatio = `${LOGICAL_W} / ${LOGICAL_H}`;
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  _buildPieces() {
+    const grid = this.grid;
+    const cell = BOARD_SIZE / grid;
+    const sw = this.image.naturalWidth / grid;
+    const sh = this.image.naturalHeight / grid;
+    const boardLeft = (LOGICAL_W - BOARD_SIZE) / 2;
+
+    this.cell = cell;
+    this.boardLeft = boardLeft;
+    this.boardTop = BOARD_TOP;
+
+    const n = grid * grid;
+    const trayLayout = this._computeTrayLayout(n, cell);
+    this.trayLayout = trayLayout;
+
+    this.pieces = [];
+    let z = 0;
+    for (let row = 0; row < grid; row++) {
+      for (let col = 0; col < grid; col++) {
+        const off = document.createElement("canvas");
+        off.width = sw;
+        off.height = sh;
+        const octx = off.getContext("2d");
+        octx.drawImage(this.image, col * sw, row * sh, sw, sh, 0, 0, sw, sh);
+
+        const trayW = cell * trayLayout.scale;
+        this.pieces.push({
+          row,
+          col,
+          img: off,
+          // current on-screen size: starts at the shrunk tray size and is
+          // restored to the full board-cell size the moment a piece locks in.
+          w: trayW,
+          h: trayW,
+          boardW: cell,
+          boardH: cell,
+          correctX: boardLeft + col * cell,
+          correctY: BOARD_TOP + row * cell,
+          x: 0,
+          y: 0,
+          locked: false,
+          z: z++,
+          glow: 0,
+          bounce: 0,
+          dragScale: 1
+        });
+      }
+    }
+  }
+
+  // Works out how much to shrink pieces so a whole grid's worth of them can
+  // sit in the tray, side by side, with a visible gap and no overlap —
+  // regardless of grid size (3x3, 4x4, ...) or how big/small the canvas is
+  // rendered on screen (phone, tablet, laptop all share this logical space).
+  _computeTrayLayout(n, cell) {
+    const trayLeft = 14;
+    const trayW = LOGICAL_W - trayLeft * 2;
+    const cols = Math.ceil(Math.sqrt(n));
+    const rows = Math.ceil(n / cols);
+    const slotW = trayW / cols;
+    const slotH = TRAY_H / rows;
+    const fitScale = Math.min((slotW - TRAY_GAP) / cell, (slotH - TRAY_GAP) / cell);
+    const scale = Math.max(TRAY_MIN_SCALE, Math.min(TRAY_MAX_SCALE, fitScale));
+    return { trayLeft, trayW, cols, rows, slotW, slotH, scale };
+  }
+
+  _shufflePieceLayout() {
+    const { trayLeft, cols, rows, slotW, slotH } = this.trayLayout;
+
+    const order = [...this.pieces].sort(() => Math.random() - 0.5);
+    order.forEach((piece, i) => {
+      const r = Math.floor(i / cols);
+      const c = i % cols;
+      const jitterX = (Math.random() - 0.5) * Math.min(8, (slotW - piece.w) * 0.4);
+      const jitterY = (Math.random() - 0.5) * Math.min(6, (slotH - piece.h) * 0.4);
+      piece.x = trayLeft + c * slotW + (slotW - piece.w) / 2 + jitterX;
+      piece.y = TRAY_TOP + r * slotH + (slotH - piece.h) / 2 + jitterY;
+    });
+  }
+
+  _bindEvents() {
+    const c = this.canvas;
+    c.style.touchAction = "none";
+    c.addEventListener("pointerdown", this._onPointerDown);
+    window.addEventListener("pointermove", this._onPointerMove);
+    window.addEventListener("pointerup", this._onPointerUp);
+    window.addEventListener("pointercancel", this._onPointerUp);
+  }
+
+  _unbindEvents() {
+    const c = this.canvas;
+    c.removeEventListener("pointerdown", this._onPointerDown);
+    window.removeEventListener("pointermove", this._onPointerMove);
+    window.removeEventListener("pointerup", this._onPointerUp);
+    window.removeEventListener("pointercancel", this._onPointerUp);
+  }
+
+  _toLogical(clientX, clientY) {
+    const rect = this.canvas.getBoundingClientRect();
+    const scaleX = LOGICAL_W / rect.width;
+    const scaleY = LOGICAL_H / rect.height;
+    return {
+      x: (clientX - rect.left) * scaleX,
+      y: (clientY - rect.top) * scaleY
+    };
+  }
+
+  _hitTest(x, y) {
+    // topmost (highest z) first, skip locked pieces
+    const candidates = this.pieces.filter((p) => !p.locked);
+    candidates.sort((a, b) => b.z - a.z);
+    for (const p of candidates) {
+      if (x >= p.x && x <= p.x + p.w && y >= p.y && y <= p.y + p.h) return p;
+    }
+    return null;
+  }
+
+  _onPointerDown(e) {
+    if (this.destroyed) return;
+    const { x, y } = this._toLogical(e.clientX, e.clientY);
+    const piece = this._hitTest(x, y);
+    if (!piece) return;
+    e.preventDefault();
+    this.canvas.setPointerCapture?.(e.pointerId);
+    this.dragging = piece;
+    this.dragOffset.x = x - piece.x;
+    this.dragOffset.y = y - piece.y;
+    this._topZ += 1;
+    piece.z = this._topZ;
+    piece.dragScale = 1.06;
+  }
+
+  _onPointerMove(e) {
+    if (!this.dragging) return;
+    const { x, y } = this._toLogical(e.clientX, e.clientY);
+    this.dragging.x = x - this.dragOffset.x;
+    this.dragging.y = y - this.dragOffset.y;
+  }
+
+  _onPointerUp() {
+    const piece = this.dragging;
+    if (!piece) return;
+    this.dragging = null;
+    piece.dragScale = 1;
+
+    const dx = piece.x - piece.correctX;
+    const dy = piece.y - piece.correctY;
+    const dist = Math.hypot(dx, dy);
+    const threshold = this.cell * SNAP_DIST_RATIO;
+
+    if (dist <= threshold) {
+      piece.x = piece.correctX;
+      piece.y = piece.correctY;
+      piece.w = piece.boardW;
+      piece.h = piece.boardH;
+      piece.locked = true;
+      piece.glow = 1;
+      piece.bounce = 1;
+      this.locked += 1;
+      playSnap();
+      this.callbacks.onPieceLocked?.(this.locked, this.pieces.length);
+      if (this.locked === this.pieces.length) {
+        setTimeout(() => this.callbacks.onComplete?.(), 350);
+      }
+    } else {
+      playSoftBump();
+    }
+  }
+
+  _loop() {
+    if (this.destroyed) return;
+    this._draw();
+    for (const p of this.pieces) {
+      if (p.glow > 0) p.glow = Math.max(0, p.glow - 0.035);
+      if (p.bounce > 0) p.bounce = Math.max(0, p.bounce - 0.06);
+    }
+    this.raf = requestAnimationFrame(this._loop);
+  }
+
+  _draw() {
+    const ctx = this.ctx;
+    ctx.clearRect(0, 0, LOGICAL_W, LOGICAL_H);
+
+    // Board backdrop (wooden frame look, fits the farm theme)
+    const boardLeft = this.boardLeft;
+    const boardTop = this.boardTop;
+    ctx.save();
+    ctx.fillStyle = "rgba(255,255,255,0.55)";
+    this._roundRect(ctx, boardLeft - 8, boardTop - 8, BOARD_SIZE + 16, BOARD_SIZE + 16, 18);
+    ctx.fill();
+    ctx.restore();
+
+    // Grid guide lines (dashed) — a target frame, not a placeholder square.
+    ctx.save();
+    ctx.strokeStyle = "rgba(120,96,60,0.35)";
+    ctx.setLineDash([6, 6]);
+    ctx.lineWidth = 2;
+    for (let i = 1; i < this.grid; i++) {
+      const gx = boardLeft + (BOARD_SIZE / this.grid) * i;
+      ctx.beginPath();
+      ctx.moveTo(gx, boardTop);
+      ctx.lineTo(gx, boardTop + BOARD_SIZE);
+      ctx.stroke();
+      const gy = boardTop + (BOARD_SIZE / this.grid) * i;
+      ctx.beginPath();
+      ctx.moveTo(boardLeft, gy);
+      ctx.lineTo(boardLeft + BOARD_SIZE, gy);
+      ctx.stroke();
+    }
+    ctx.strokeStyle = "rgba(120,96,60,0.45)";
+    ctx.setLineDash([]);
+    ctx.lineWidth = 3;
+    this._roundRect(ctx, boardLeft, boardTop, BOARD_SIZE, BOARD_SIZE, 12);
+    ctx.stroke();
+    ctx.restore();
+
+    // Tray backdrop
+    ctx.save();
+    ctx.fillStyle = "rgba(255,255,255,0.35)";
+    this._roundRect(ctx, 8, TRAY_TOP - 10, LOGICAL_W - 16, TRAY_H + 16, 20);
+    ctx.fill();
+    ctx.restore();
+
+    const ordered = [...this.pieces].sort((a, b) => a.z - b.z);
+    for (const p of ordered) {
+      this._drawPiece(p);
+    }
+  }
+
+  _drawPiece(p) {
+    const ctx = this.ctx;
+    const isActive = p === this.dragging;
+    const scale = p.dragScale + (p.bounce > 0 ? Math.sin(p.bounce * Math.PI) * 0.12 : 0);
+    const cx = p.x + p.w / 2;
+    const cy = p.y + p.h / 2;
+
+    ctx.save();
+
+    // shadow
+    ctx.save();
+    ctx.globalAlpha = isActive ? 0.28 : 0.16;
+    ctx.fillStyle = "#3a2a1a";
+    ctx.beginPath();
+    ctx.ellipse(cx, p.y + p.h - 4, (p.w / 2) * scale * 0.85, 6, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    ctx.translate(cx, cy);
+    ctx.scale(scale, scale);
+    ctx.translate(-p.w / 2, -p.h / 2);
+
+    // glow ring on correct placement
+    if (p.glow > 0) {
+      ctx.save();
+      ctx.globalAlpha = p.glow;
+      ctx.strokeStyle = "#ffd75e";
+      ctx.lineWidth = 6;
+      ctx.shadowColor = "#ffe28a";
+      ctx.shadowBlur = 16;
+      this._roundRect(ctx, -3, -3, p.w + 6, p.h + 6, 8);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    ctx.save();
+    this._roundRect(ctx, 0, 0, p.w, p.h, 6);
+    ctx.clip();
+    ctx.drawImage(p.img, 0, 0, p.w, p.h);
+    ctx.restore();
+
+    ctx.save();
+    ctx.strokeStyle = isActive ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.55)";
+    ctx.lineWidth = isActive ? 3 : 1.5;
+    this._roundRect(ctx, 0.75, 0.75, p.w - 1.5, p.h - 1.5, 6);
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.restore();
+  }
+
+  _roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+}
+
+
+// ===== ui.js =====
+// ui.js
+// Pure DOM builders for every screen. No framework — small, explicit,
+// and easy to follow for a static PWA. app.js owns state & wiring;
+// this file only ever builds and returns markup + element refs.
+
+
+
+function renderScene(root) {
+  const scene = document.createElement("div");
+  scene.className = "scene";
+  scene.innerHTML = `
+    <div class="sun"></div>
+    <div class="hill hill--back"></div>
+    <div class="hill hill--front"></div>
+    <div class="cloud cloud--a"></div>
+    <div class="cloud cloud--b"></div>
+    <div class="cloud cloud--c"></div>
+    <div class="bird bird--1">🐦</div>
+    <div class="bird bird--2">🐦</div>
+    <div class="bird bird--3">🐦</div>
+    <div class="tree tree--1"><div class="tree__shadow"></div></div>
+    <div class="tree tree--2"><div class="tree__shadow"></div></div>
+    <div class="fence"></div>
+    <div class="barn">
+      <div class="barn__roof-highlight"></div>
+      <div class="barn__window"></div>
+    </div>
+    <div class="flower flower--1"></div>
+    <div class="flower flower--2"></div>
+    <div class="flower flower--3"></div>
+    <div class="flower flower--4"></div>
+    <div class="butterfly butterfly--1"></div>
+    <div class="butterfly butterfly--2"></div>
+  `;
+  root.appendChild(scene);
+}
+
+function renderHeader(root, { showBack = false, onBack = null, subtitle = "" } = {}) {
+  const header = document.createElement("header");
+  header.className = "header";
+  header.innerHTML = `
+    <div class="header__brand">
+      <img class="header__logo" src="${BRAND.logo}" alt="Logo ${BRAND.name}" crossorigin="anonymous" />
+      <div class="header__title">${BRAND.name}<small>${subtitle}</small></div>
+    </div>
+    <div class="header__actions"></div>
+  `;
+  const actions = header.querySelector(".header__actions");
+
+  const musicBtn = document.createElement("button");
+  musicBtn.className = "icon-btn";
+  musicBtn.id = "musicToggleBtn";
+  musicBtn.type = "button";
+  musicBtn.setAttribute("aria-label", "Musik latar nyala/mati");
+  musicBtn.textContent = isMusicEnabled() ? "🎵" : "🔇";
+  musicBtn.addEventListener("click", () => {
+    const on = toggleMusicPreference();
+    musicBtn.textContent = on ? "🎵" : "🔇";
+  });
+  actions.appendChild(musicBtn);
+
+  if (showBack) {
+    const backBtn = document.createElement("button");
+    backBtn.className = "icon-btn";
+    backBtn.type = "button";
+    backBtn.setAttribute("aria-label", "Kembali");
+    backBtn.textContent = "🔈";
+    backBtn.addEventListener("click", () => onBack && onBack());
+    actions.appendChild(backBtn);
+  }
+
+  root.appendChild(header);
+  return header;
+}
+
+function clearRoot(root) {
+  root.innerHTML = "";
+}
+
+function renderSplash(root, { onStart }) {
+  clearRoot(root);
+  renderScene(root);
+  renderHeader(root, { subtitle: "Puzzle Edukasi Anak" });
+
+  const screen = document.createElement("section");
+  screen.className = "screen";
+  screen.innerHTML = `
+    <img class="splash-logo" src="${BRAND.logo}" alt="${BRAND.name}" crossorigin="anonymous" />
+    <h1 class="title">${APP_TITLE}</h1>
+    <p class="subtitle">Yuk, susun gambar hewan ternak!</p>
+    <div class="animal-row" id="splashAnimals"></div>
+    <button class="btn btn--primary btn--wide" id="startBtn" type="button">
+      <span class="btn__emoji">▶️</span> Mulai Main
+    </button>
+  `;
+  root.appendChild(screen);
+
+  document.getElementById("startBtn").addEventListener("click", () => onStart && onStart());
+  return screen;
+}
+
+function renderTutorial(root, { onNext }) {
+  clearRoot(root);
+  renderScene(root);
+  renderHeader(root, { subtitle: "Cara Bermain" });
+
+  const screen = document.createElement("section");
+  screen.className = "screen";
+  screen.innerHTML = `
+    <div class="tutorial-card">
+      <div class="tutorial-anim">
+        <div class="tutorial-slot"></div>
+        <div class="tutorial-piece">🧩</div>
+        <div class="tutorial-hand">👆</div>
+      </div>
+      <p class="tutorial-text">Susun gambar sampai menjadi utuh.<br />Geser potongan gambar ke tempat yang benar ya!</p>
+    </div>
+    <button class="btn btn--blue btn--wide" id="nextBtn" type="button">
+      <span class="btn__emoji">👉</span> Ayo Mulai
+    </button>
+  `;
+  root.appendChild(screen);
+
+  document.getElementById("nextBtn").addEventListener("click", () => onNext && onNext());
+  return screen;
+}
+
+function renderPuzzleScreen(root, { level, index, total }) {
+  clearRoot(root);
+  renderScene(root);
+  renderHeader(root, { subtitle: `Level ${index + 1} dari ${total}` });
+
+  const screen = document.createElement("section");
+  screen.className = "screen puzzle-screen";
+
+  const dots = Array.from({ length: total })
+    .map((_, i) => {
+      const cls = i < index ? "done" : i === index ? "current" : "";
+      return `<span class="${cls}"></span>`;
+    })
+    .join("");
+
+  screen.innerHTML = `
+    <h2 class="level-title">${level.name}</h2>
+    <p class="level-sub">Susun gambar ${level.name.toLowerCase()} sampai utuh</p>
+    <div class="progress-dots">${dots}</div>
+    <div class="canvas-wrap">
+      <canvas class="puzzle-canvas" id="puzzleCanvas" aria-label="Papan puzzle ${level.name}"></canvas>
+    </div>
+    <button class="btn btn--ghost replay-voice-btn" id="replayBtn" type="button">
+      <span class="btn__emoji">🔊</span> Dengar Lagi
+    </button>
+  `;
+  root.appendChild(screen);
+
+  return {
+    screen,
+    canvas: document.getElementById("puzzleCanvas"),
+    replayBtn: document.getElementById("replayBtn")
+  };
+}
+
+function showLevelCompleteOverlay({ level, onNext, isLastLevel }) {
+  const overlay = document.createElement("div");
+  overlay.className = "overlay";
+  overlay.innerHTML = `
+    <div class="overlay-card">
+      <span class="overlay-emoji">🎉</span>
+      <h3 class="overlay-title">Hebat sekali!</h3>
+      <p class="overlay-text">${level.fact}</p>
+      <button class="btn btn--primary btn--wide" id="overlayNextBtn" type="button">
+        <span class="btn__emoji">${isLastLevel ? "🏁" : "👉"}</span> ${isLastLevel ? "Lihat Hasil" : "Lanjut"}
+      </button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  spawnConfetti(overlay);
+  document.getElementById("overlayNextBtn").addEventListener("click", () => {
+    overlay.remove();
+    onNext && onNext();
+  });
+  return overlay;
+}
+
+function renderFinish(root, { onRestart }) {
+  clearRoot(root);
+  renderScene(root);
+  renderHeader(root, { subtitle: "Selesai!" });
+
+  const screen = document.createElement("section");
+  screen.className = "screen";
+  screen.innerHTML = `
+    <img class="finish-logo" src="${BRAND.logo}" alt="${BRAND.name}" crossorigin="anonymous" />
+    <div class="stars-row"><span>⭐</span><span>⭐</span><span>⭐</span></div>
+    <h1 class="title">Selamat!</h1>
+    <p class="subtitle">Kamu berhasil menyusun semua puzzle hewan ternak.</p>
+    <button class="btn btn--purple btn--wide" id="restartBtn" type="button">
+      <span class="btn__emoji">🔁</span> Main Lagi
+    </button>
+  `;
+  root.appendChild(screen);
+  spawnConfetti(screen, 26);
+
+  document.getElementById("restartBtn").addEventListener("click", () => onRestart && onRestart());
+  return screen;
+}
+
+function spawnConfetti(container, count = 18) {
+  const colors = ["#ff9ecb", "#ffd75e", "#6bc164", "#4fb0e8", "#b184e0"];
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement("div");
+    piece.className = "confetti-piece";
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.background = colors[i % colors.length];
+    piece.style.animationDuration = `${1.6 + Math.random() * 1.4}s`;
+    piece.style.animationDelay = `${Math.random() * 0.4}s`;
+    piece.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+    container.appendChild(piece);
+    setTimeout(() => piece.remove(), 3200);
+  }
+}
+
+function showToast(message, { actionLabel, onAction, timeout = 5000 } = {}) {
+  const toast = document.getElementById("toast");
+  if (!toast) return;
+  toast.innerHTML = "";
+  const text = document.createElement("span");
+  text.textContent = message;
+  toast.appendChild(text);
+  if (actionLabel) {
+    const btn = document.createElement("button");
+    btn.textContent = actionLabel;
+    btn.addEventListener("click", () => {
+      onAction && onAction();
+      hideToast();
+    });
+    toast.appendChild(btn);
+  }
+  toast.classList.add("show");
+  if (timeout) {
+    clearTimeout(showToast._timer);
+    showToast._timer = setTimeout(hideToast, timeout);
+  }
+}
+
+function hideToast() {
+  const toast = document.getElementById("toast");
+  if (toast) toast.classList.remove("show");
+}
+
+
+// ===== app.js =====
+// app.js
+// Main flow controller: Splash -> Tutorial -> Puzzle(s) -> Finish.
+// Levels are never hardcoded here — the app simply walks the ANIMALS
+// array from data.js, so adding a new object there adds a new level.
+
+
+
+
+
+
+const root = document.getElementById("app");
+let currentPuzzle = null;
+let deferredInstallPrompt = null;
+
+function withClick(handler) {
+  return (...args) => {
+    playClick();
+    handler(...args);
+  };
+}
+
+function destroyCurrentPuzzle() {
+  if (currentPuzzle) {
+    currentPuzzle.destroy();
+    currentPuzzle = null;
+  }
+}
+
+function goSplash() {
+  destroyCurrentPuzzle();
+  stopSpeech();
+  const screen = renderSplash(root, { onStart: withClick(goTutorial) });
+  const row = screen.querySelector("#splashAnimals");
+  ANIMALS.forEach((a) => {
+    const img = document.createElement("img");
+    img.crossOrigin = "anonymous";
+    img.src = a.image;
+    img.alt = a.name;
+    row.appendChild(img);
+  });
+  speakQueue(VOICE_SCRIPT.splash);
+}
+
+function goTutorial() {
+  destroyCurrentPuzzle();
+  unlockAudio();
+  startMusicIfEnabled();
+  renderTutorial(root, { onNext: withClick(() => goPuzzle(0)) });
+  speakQueue(VOICE_SCRIPT.tutorial);
+}
+
+async function goPuzzle(index) {
+  destroyCurrentPuzzle();
+  stopSpeech();
+
+  if (index >= ANIMALS.length) {
+    goFinish();
+    return;
+  }
+
+  const level = ANIMALS[index];
+  const { canvas, replayBtn } = renderPuzzleScreen(root, {
+    level,
+    index,
+    total: ANIMALS.length
+  });
+
+  replayBtn.addEventListener(
+    "click",
+    withClick(() => speakQueue(level.voice))
+  );
+
+  speakQueue(level.voice);
+
+  try {
+    currentPuzzle = new JigsawPuzzle(canvas, level, {
+      onPieceLocked: () => {
+        /* piece sound already handled inside the engine */
+      },
+      onComplete: () => onLevelComplete(index)
+    });
+    await currentPuzzle.init();
+  } catch (err) {
+    showToast("Gambar gagal dimuat. Periksa koneksi internet kamu.", {
+      actionLabel: "Coba Lagi",
+      onAction: () => goPuzzle(index),
+      timeout: 8000
+    });
+  }
+}
+
+function onLevelComplete(index) {
+  const level = ANIMALS[index];
+  const isLastLevel = index === ANIMALS.length - 1;
+  playLevelComplete();
+  speak(isLastLevel ? "Hore, semua selesai!" : "Hebat sekali!");
+  showLevelCompleteOverlay({
+    level,
+    isLastLevel,
+    onNext: withClick(() => goPuzzle(index + 1))
+  });
+}
+
+function goFinish() {
+  destroyCurrentPuzzle();
+  playFanfare();
+  renderFinish(root, { onRestart: withClick(goSplash) });
+  speakQueue(VOICE_SCRIPT.finish);
+}
+
+// ---------- PWA install prompt ----------
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  showToast("Pasang GamEdu Puzzle di layar utama?", {
+    actionLabel: "Pasang",
+    onAction: async () => {
+      if (!deferredInstallPrompt) return;
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+    },
+    timeout: 9000
+  });
+});
+
+window.addEventListener("appinstalled", () => {
+  hideToast();
+  deferredInstallPrompt = null;
+});
+
+window.addEventListener("offline", () => {
+  showToast("Kamu sedang offline. Beberapa gambar mungkin butuh internet.", { timeout: 5000 });
+});
+
+// ---------- Service worker registration ----------
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch(() => {
+      /* offline-first still works for already-cached assets */
+    });
+  });
+}
+
+// ---------- Boot ----------
+initSpeech();
+goSplash();
+
+</script>
+</body>
+</html>
