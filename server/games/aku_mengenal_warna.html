@@ -43,11 +43,15 @@ body {
 body {
   font-family: "Baloo 2", "Trebuchet MS", "Comic Sans MS", sans-serif;
   color: var(--ink);
+  /* Gambar background diset lewat JS (lihat RESOLVED_ORIGIN di bagian script),
+     supaya tetap kepatok ke origin situs asli walau dokumen ini dimuat dari
+     Blob URL (lihat penjelasan RESOLVED_ORIGIN). Gradient tetap di CSS sebagai
+     fallback warna kalau gambar belum/tidak sempat kepasang. */
   background-image: linear-gradient(
       rgba(255, 250, 240, 0.86),
       rgba(234, 246, 255, 0.86)
-    ),
-    url("/games-assets/aku_mengenal_warna/images/background.jpg");
+    );
+  background-color: var(--sky);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -519,7 +523,7 @@ img {
 
   <!-- ================= START SCREEN ================= -->
   <section id="screen-start" class="screen active">
-    <img src="/games-assets/aku_mengenal_warna/images/rainbow.png" alt="" class="start-rainbow-img" />
+    <img id="start-rainbow-img" alt="" class="start-rainbow-img" />
     <h1 class="start-title">Aku Mengenal<br />Warna</h1>
     <p class="start-subtitle">Level 1 — Sentuh Warna yang Sama</p>
     <button id="btn-mulai" class="btn-primary" type="button">▶️ Mulai</button>
@@ -529,7 +533,7 @@ img {
   <section id="screen-game" class="screen">
     <div class="hud">
       <button id="btn-home" class="hud-btn" type="button" aria-label="Menu Utama">
-        <img src="/games-assets/aku_mengenal_warna/images/cute.png" alt="" class="icon-img" />
+        <img id="btn-home-icon" alt="" class="icon-img" />
       </button>
       <div class="hud-center">
         <div id="soal-counter" class="soal-counter">Soal 1 / 10</div>
@@ -538,7 +542,7 @@ img {
         </div>
       </div>
       <div class="hud-score">
-        <img src="/games-assets/aku_mengenal_warna/images/star.png" alt="" class="icon-img-inline" />
+        <img id="score-star-icon" alt="" class="icon-img-inline" />
         <span id="score-value">0</span>
       </div>
       <button id="btn-repeat-audio" class="hud-btn" type="button" aria-label="Ulangi Audio">🔊</button>
@@ -580,9 +584,49 @@ img {
    Tidak ada logic game di file ini — murni data.
    ============================================================ */
 
-const IMAGE_BASE_URL = "/games-assets/aku_mengenal_warna/images/";
+/* PENTING — akar penyebab bug "gambar kosong" di game ini:
+   Dokumen game dimuat lewat Blob URL (lihat SecureGamePlayer.tsx), dan
+   "blob:" BUKAN termasuk "special scheme" menurut standar URL (beda dengan
+   http/https). Akibatnya path root-relative seperti "/games-assets/..."
+   gagal di-resolve ke origin situs asli oleh sebagian browser saat base
+   URL efektif dokumen adalah blob: URL itu sendiri -- request gambar jadi
+   salah alamat/gagal total, padahal nama filenya benar dan filenya ada.
 
-const AUDIO_BASE_URL = "/games-assets/aku_mengenal_warna/audio/";
+   Server (api/games/[gameId].ts) sudah menyuntikkan <base href="https://..."">
+   untuk mengatasi ini. RESOLVED_ORIGIN di bawah ini adalah lapisan pengaman
+   TAMBAHAN di sisi client: kalau karena sebab apapun <base> itu tidak ada/
+   tidak kepasang (mis. game dibuka lewat jalur lain di kemudian hari), kode
+   ini tetap bisa nemuin origin situs asli lewat window.parent (blob: URL
+   diperlakukan browser satu origin dengan halaman yang membuatnya, jadi
+   window.parent.location.origin aman diakses dari sini). */
+const RESOLVED_ORIGIN = (function resolveOrigin() {
+  try {
+    if (document.baseURI && /^https?:\/\//i.test(document.baseURI)) {
+      return new URL(document.baseURI).origin;
+    }
+  } catch (e) {
+    /* lanjut ke fallback berikutnya */
+  }
+  try {
+    if (window.parent && window.parent !== window && window.parent.location.origin) {
+      return window.parent.location.origin;
+    }
+  } catch (e) {
+    /* akses lintas-frame diblokir -> lanjut ke fallback berikutnya */
+  }
+  try {
+    if (window.location && /^https?:\/\//i.test(window.location.origin)) {
+      return window.location.origin;
+    }
+  } catch (e) {
+    /* window.location.origin bisa "null" kalau dokumen ini opaque origin */
+  }
+  return "";
+})();
+
+const IMAGE_BASE_URL = RESOLVED_ORIGIN + "/games-assets/aku_mengenal_warna/images/";
+
+const AUDIO_BASE_URL = RESOLVED_ORIGIN + "/games-assets/aku_mengenal_warna/audio/";
 
 /* Aset lingkaran warna contoh (dipakai di bagian atas setiap soal) */
 const COLOR_CIRCLE_ASSET = {
@@ -1214,7 +1258,27 @@ const GameManager = (() => {
     UIManager.showScreen("result");
   }
 
+  /* Pasang gambar-gambar statis (background halaman, ikon rainbow/home/star)
+     lewat JS pakai IMAGE_BASE_URL yang sudah pasti kepatok ke origin situs
+     asli (lihat RESOLVED_ORIGIN), bukan lewat atribut src/CSS url() statis
+     yang rawan gagal di-resolve saat dokumen ini dimuat dari Blob URL. */
+  function mountStaticImages() {
+    document.body.style.backgroundImage =
+      "linear-gradient(rgba(255, 250, 240, 0.86), rgba(234, 246, 255, 0.86)), " +
+      `url("${IMAGE_BASE_URL}background.jpg")`;
+
+    const rainbowImg = document.getElementById("start-rainbow-img");
+    if (rainbowImg) rainbowImg.src = IMAGE_BASE_URL + "rainbow.png";
+
+    const homeIcon = document.getElementById("btn-home-icon");
+    if (homeIcon) homeIcon.src = IMAGE_BASE_URL + "cute.png";
+
+    const starIcon = document.getElementById("score-star-icon");
+    if (starIcon) starIcon.src = IMAGE_BASE_URL + "star.png";
+  }
+
   function init() {
+    mountStaticImages();
     bindGlobalFirstInteraction();
 
     UIManager.el.btnMulai.addEventListener("click", () => {
