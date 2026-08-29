@@ -190,6 +190,42 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     ageRange: "3 Tahun",
     premium: true,
   },
+  {
+    id: "puzzle3gambarbuah4keping",
+    name: "Puzzle Buah Ceria",
+    ageRange: "4 Tahun",
+    premium: true,
+  },
+  {
+    id: "sentuh5warnabenda6gambar10soal",
+    name: "Sentuh 5 Warna Benda (6 Gambar, 10 Soal)",
+    ageRange: "5 Tahun",
+    premium: true,
+  },
+  {
+    id: "sentuh6warnabenda12soal",
+    name: "Sentuh 6 Warna Benda (12 Soal)",
+    ageRange: "5 Tahun",
+    premium: true,
+  },
+  {
+    id: "tarikbendake3warna6soal",
+    name: "Tarik Benda ke 3 Warna (6 Soal)",
+    ageRange: "5 Tahun",
+    premium: true,
+  },
+  {
+    id: "tarikgambarke6warna12soal",
+    name: "Tarik Gambar ke 6 Warna (12 Soal)",
+    ageRange: "5 Tahun",
+    premium: true,
+  },
+  {
+    id: "puzzle_angka_1_5_4keping",
+    name: "Game Puzzle Angka 1-5 4 Keping",
+    ageRange: "5 Tahun",
+    premium: true,
+  },
   // TODO: tambahkan 44 game lainnya di sini, format sama seperti di atas.
 ];
 
