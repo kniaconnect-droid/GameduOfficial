@@ -168,7 +168,7 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
   },
   {
     id: "puzzle_hewan_2keping",
-    name: "Puzzle Hewan Ternak Ceria",
+    name: "Puzzle Hewan 2 Keping",
     ageRange: "3 Tahun",
     premium: true,
   },
