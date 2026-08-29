@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>Sentuh 3 Warna Benda (3 Gambar)</title>
+<title>Sentuh 4 Warna Benda (4 Gambar, 10 Soal)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
@@ -76,6 +76,7 @@ html,body{
 .badge-dot.r{background:var(--red);}
 .badge-dot.y{background:var(--yellow);}
 .badge-dot.b{background:var(--blue);}
+.badge-dot.g{background:var(--green);}
 .title-main{
   font-family:'Fredoka', sans-serif;
   font-weight:600;
@@ -222,19 +223,24 @@ html,body{
 .command-card.theme-blue .btn-sound{ background: var(--blue); box-shadow: 0 4px 0 var(--blue-dark); }
 .command-card.theme-blue .btn-sound:active{ box-shadow: 0 1px 0 var(--blue-dark); }
 
+.command-card.theme-green .command-color-text{ color: var(--green); }
+.command-card.theme-green .btn-sound{ background: var(--green); box-shadow: 0 4px 0 var(--green-dark); }
+.command-card.theme-green .btn-sound:active{ box-shadow: 0 1px 0 var(--green-dark); }
+
 .cards-row{
-  display:flex; gap:12px; justify-content:center;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:14px;
   width:100%;
   padding: 0 4px;
 }
 .obj-card{
-  flex:1 1 0;
-  max-width: 160px;
+  width:100%;
   background:var(--paper);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
   border: 3px solid var(--line);
-  padding: 14px 8px 12px;
+  padding: 18px 10px 14px;
   display:flex; flex-direction:column; align-items:center;
   cursor:pointer;
   min-height: 48px;
@@ -244,7 +250,7 @@ html,body{
 }
 .obj-card:active{ transform: scale(0.96); }
 .obj-card.locked{ pointer-events:none; opacity:0.88; }
-.obj-card img{ width:100%; height:auto; max-height:110px; object-fit:contain; display:block; filter: drop-shadow(0 6px 10px rgba(44,42,58,0.12)); }
+.obj-card img{ width:100%; height:auto; max-height:170px; object-fit:contain; display:block; filter: drop-shadow(0 6px 10px rgba(44,42,58,0.12)); }
 @media (hover:hover){
   .obj-card:not(.locked):hover{ transform: translateY(-3px); box-shadow: var(--shadow-soft); border-color:#DCD9EA; }
 }
@@ -388,6 +394,7 @@ html,body{
       <div class="badge-dot r"></div>
       <div class="badge-dot y"></div>
       <div class="badge-dot b"></div>
+      <div class="badge-dot g"></div>
     </div>
     <h1 class="title-main">Mengenal<br>Warna</h1>
     <p class="subtitle">Dengarkan perintahnya, lalu sentuh gambar dengan warna yang sesuai.</p>
@@ -400,7 +407,7 @@ html,body{
 
   <!-- QUESTION SCREEN -->
   <section id="screen-question" class="screen">
-    <div class="progress-pill" id="progressPill">Soal 1 / 5</div>
+    <div class="progress-pill" id="progressPill">Soal 1 / 10</div>
     <div class="command-card" id="commandCard">
       <div class="command-label">Sentuh yang warnanya</div>
       <div class="command-main">
@@ -426,7 +433,7 @@ html,body{
   <section id="screen-result" class="screen">
     <div class="result-card">
       <h2 class="result-title">Permainan Selesai</h2>
-      <div class="score-text" id="scoreText">0 / 5</div>
+      <div class="score-text" id="scoreText">0 / 10</div>
       <div class="stars-row" id="starsRow">⭐</div>
       <button class="btn-replay" id="btnReplay">Main Lagi</button>
     </div>
@@ -448,13 +455,14 @@ html,body{
      domain raw.githubusercontent.com kadang diblokir/lambat pada
      beberapa jaringan/ISP, sehingga gambar & suara gagal muncul.
   ========================================================= */
-  const COLOR_LABEL = { red:'Merah', yellow:'Kuning', blue:'Biru' };
+  const COLOR_LABEL = { red:'Merah', yellow:'Kuning', blue:'Biru', green:'Hijau' };
 
   const INSTRUCTION_BASE = 'https://cdn.jsdelivr.net/gh/mhrofficialid/aset-suara-warna@024f19d5f8557f7fcd790a1da5dd0cf0d6677f67/';
   const INSTRUCTION_AUDIO = {
     red:    INSTRUCTION_BASE + 'sentuh%20merah.mp3',
     yellow: INSTRUCTION_BASE + 'sentuh%20kuning.mp3',
-    blue:   INSTRUCTION_BASE + 'sentuh%20biru.mp3'
+    blue:   INSTRUCTION_BASE + 'sentuh%20biru.mp3',
+    green:  INSTRUCTION_BASE + 'sentuh%20hijau.mp3'
   };
 
   const OBJ_BASE = 'https://cdn.jsdelivr.net/gh/mhrofficialid/aset-Gambar-warna-benda@ee76e818e0ef0f4ff3ab2e8c829607fd6bfeb8d4/';
@@ -484,9 +492,9 @@ html,body{
      boleh memakai objek warna hijau juga supaya makin bervariasi.
      Setiap kali soal dimuat, tipe & warna objek diacak ulang.
   ========================================================= */
-  const ANSWER_COLORS = ['red', 'yellow', 'blue'];
+  const ANSWER_COLORS = ['red', 'yellow', 'blue', 'green'];
   const ALL_OBJECT_COLORS = ['red', 'yellow', 'blue', 'green'];
-  const QUESTIONS_PER_GAME = 5;
+  const QUESTIONS_PER_GAME = 10;
 
   function buildQuestionPool(){
     const pool = [];
@@ -720,7 +728,7 @@ html,body{
     progressPill.textContent = 'Soal ' + qNum + ' / ' + QUESTIONS_PER_GAME;
 
     const q = state.questions[state.currentIndex];
-    const distractors = pickDistractors(q.answer, q.correctType, 2);
+    const distractors = pickDistractors(q.answer, q.correctType, 3);
     const rawOptions = [
       { type: q.correctType, color: q.answer },
       ...distractors
@@ -728,7 +736,7 @@ html,body{
 
     // set teks perintah + tema warna kartu perintah
     commandColorText.textContent = COLOR_LABEL[q.answer];
-    commandCard.classList.remove('theme-red','theme-yellow','theme-blue');
+    commandCard.classList.remove('theme-red','theme-yellow','theme-blue','theme-green');
     commandCard.classList.add('theme-' + q.answer);
     audioInstruction.src = INSTRUCTION_AUDIO[q.answer];
 
@@ -797,9 +805,9 @@ html,body{
     scoreText.textContent = state.score + ' / ' + QUESTIONS_PER_GAME;
 
     let stars;
-    if(state.score === 5) stars = '⭐⭐⭐';
-    else if(state.score === 4) stars = '⭐⭐';
-    else stars = '⭐'; // 0-3 benar
+    if(state.score >= 9) stars = '⭐⭐⭐';       // 9-10 benar
+    else if(state.score >= 6) stars = '⭐⭐';    // 6-8 benar
+    else stars = '⭐';                            // 0-5 benar
 
     starsRow.textContent = stars;
 
@@ -824,7 +832,7 @@ html,body{
      KONFETI SEDERHANA
   ========================================================= */
   const confettiLayer = document.getElementById('confetti-layer');
-  const CONFETTI_COLORS = ['#E4544D', '#E8AA2E', '#3C7DD9'];
+  const CONFETTI_COLORS = ['#E4544D', '#E8AA2E', '#3C7DD9', '#3FAA6B'];
 
   function launchConfetti(){
     clearConfetti();
