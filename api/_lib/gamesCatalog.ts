@@ -101,6 +101,12 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     premium: true,
   },
   {
+    id: "mengenal_3warna_merah_kuning_biru_3gambar",
+    name: "Mengenal 3 Warna (Merah, Kuning, Biru) - 3 Gambar",
+    ageRange: "4 Tahun",
+    premium: true,
+  },
+  {
     id: "mengenal_4warna_merah_kuning_biru_hijau_3gambar",
     name: "Mengenal 4 Warna (Merah, Kuning, Biru, Hijau) - 3 Gambar",
     ageRange: "4 Tahun",
@@ -109,6 +115,18 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
   {
     id: "sentuh_3warna_benda_3gambar",
     name: "Sentuh 3warna benda 3gambar",
+    ageRange: "4 Tahun",
+    premium: true,
+  },
+  {
+    id: "sentuh_3warna_benda_4gambar",
+    name: "Sentuh 3warna benda 4gambar",
+    ageRange: "4 Tahun",
+    premium: true,
+  },
+  {
+    id: "sentuh_4warna_benda_4gambar_10soal",
+    name: "Sentuh4warnabenda4gambar10soal",
     ageRange: "4 Tahun",
     premium: true,
   },
