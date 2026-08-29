@@ -226,6 +226,18 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     ageRange: "5 Tahun",
     premium: true,
   },
+  {
+    id: "lebihbesardankecil5soal1",
+    name: "Kelompokkan Besar dan Kecil (5 Soal)",
+    ageRange: "5 Tahun",
+    premium: true,
+  },
+  {
+    id: "puzzlehewanternak9keping",
+    name: "Puzzle Hewan Ternak Ceria (9 Keping)",
+    ageRange: "5 Tahun",
+    premium: true,
+  },
   // TODO: tambahkan 44 game lainnya di sini, format sama seperti di atas.
 ];
 
