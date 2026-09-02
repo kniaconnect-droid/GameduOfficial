@@ -82,9 +82,9 @@ export default function GameGallery({
         {/* sm:grid-cols-2 dulu (bukan langsung md:grid-cols-3) supaya di lebar
             tablet (768-1024px) kartu masih cukup lega buat 2 badge pojok atas
             tanpa jadi mepet/potensi tabrakan. */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 sm:gap-x-10 sm:gap-y-12 lg:gap-x-12 lg:gap-y-14">
           {/* Kartu Materi */}
-          <div className="bg-white rounded-[32px] overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group transform-gpu">
+          <div className="bg-white rounded-2xl overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group transform-gpu">
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-indigo-50">
               <img
                 src={hubMateriCover}
@@ -104,10 +104,10 @@ export default function GameGallery({
                 )}
               </div>
             </div>
-            <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
-              <div className="space-y-2">
-                <h3 className="text-xl font-bold text-slate-900 leading-tight">Materi Edukasi Orang Tua</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">
+            <div className="p-4 sm:p-5 space-y-3 flex-1 flex flex-col justify-between">
+              <div className="space-y-1.5">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-tight">Materi Edukasi Orang Tua</h3>
+                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
                   {materi
                     ? `Panduan lengkap ${materi.kemampuan.length} kemampuan kognitif penting untuk anak usia ${age} tahun. Pahami tanda perkembangan anak, ide stimulasi sederhana di rumah, dan aktivitas GamEdu yang paling sesuai.`
                     : "Coming Soon — materi edukasi orang tua untuk kategori usia ini sedang disiapkan tim kurikulum kami."}
@@ -115,16 +115,16 @@ export default function GameGallery({
               </div>
               <button
                 onClick={onGoToMateri}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-100 hover:scale-105 transition-all cursor-pointer"
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-100 hover:scale-105 transition-all cursor-pointer"
               >
-                <FileText className="w-4 h-4" />
+                <FileText className="w-3.5 h-3.5" />
                 Buka Halaman Materi
               </button>
             </div>
           </div>
 
           {/* Kartu Game */}
-          <div className="bg-white rounded-[32px] overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group transform-gpu">
+          <div className="bg-white rounded-2xl overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group transform-gpu">
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-orange-50">
               <img
                 src={hubGameCover}
@@ -142,10 +142,10 @@ export default function GameGallery({
                 </span>
               </div>
             </div>
-            <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
-              <div className="space-y-2">
-                <h3 className="text-xl font-bold text-slate-900 leading-tight">Katalog Game</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">
+            <div className="p-4 sm:p-5 space-y-3 flex-1 flex flex-col justify-between">
+              <div className="space-y-1.5">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-tight">Katalog Game</h3>
+                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
                   {gamesForAge.length} game edukasi interaktif untuk usia {age} tahun, lengkap dengan suara & animasi ceria.
                   1 game bisa dicoba gratis penuh tanpa perlu daftar dulu.
                 </p>
@@ -154,21 +154,21 @@ export default function GameGallery({
                 {trialGameId && (
                   <button
                     onClick={() => onPlayGame(trialGameId)}
-                    className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm bg-orange-500 hover:bg-orange-600 text-white shadow-md shadow-orange-100 hover:scale-105 transition-all cursor-pointer"
+                    className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-orange-500 hover:bg-orange-600 text-white shadow-md shadow-orange-100 hover:scale-105 transition-all cursor-pointer"
                   >
-                    <Play className="w-4 h-4 fill-current" />
+                    <Play className="w-3.5 h-3.5 fill-current" />
                     Main Trial Gratis
                   </button>
                 )}
                 <button
                   onClick={onGoToGameCatalog}
-                  className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-all cursor-pointer ${
+                  className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
                     trialGameId
                       ? "bg-slate-100 hover:bg-slate-200 text-slate-700"
                       : "bg-orange-500 hover:bg-orange-600 text-white shadow-md shadow-orange-100 hover:scale-105"
                   }`}
                 >
-                  <LayoutGrid className="w-4 h-4" />
+                  <LayoutGrid className="w-3.5 h-3.5" />
                   Buka Halaman Game
                 </button>
               </div>
@@ -176,7 +176,7 @@ export default function GameGallery({
           </div>
 
           {/* Kartu Worksheet */}
-          <div className="bg-white rounded-[32px] overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group transform-gpu">
+          <div className="bg-white rounded-2xl overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group transform-gpu">
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-emerald-50">
               <img
                 src={hubWorksheetCover}
@@ -196,10 +196,10 @@ export default function GameGallery({
                 )}
               </div>
             </div>
-            <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
-              <div className="space-y-2">
-                <h3 className="text-xl font-bold text-slate-900 leading-tight">Worksheet Cetak</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">
+            <div className="p-4 sm:p-5 space-y-3 flex-1 flex flex-col justify-between">
+              <div className="space-y-1.5">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-tight">Worksheet Cetak</h3>
+                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
                   {worksheetsForAge.length > 0
                     ? `${worksheetsForAge.length} lembar kerja siap cetak untuk melatih motorik halus & konsentrasi. Tinggal unduh, cetak di rumah, dan kerjakan bersama anak.`
                     : "Coming Soon — worksheet cetak untuk kategori usia ini sedang disiapkan tim kurikulum kami."}
@@ -207,9 +207,9 @@ export default function GameGallery({
               </div>
               <button
                 onClick={onGoToWorksheets}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-100 hover:scale-105 transition-all cursor-pointer"
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-100 hover:scale-105 transition-all cursor-pointer"
               >
-                <BookOpen className="w-4 h-4" />
+                <BookOpen className="w-3.5 h-3.5" />
                 Buka Halaman Worksheet
               </button>
             </div>
