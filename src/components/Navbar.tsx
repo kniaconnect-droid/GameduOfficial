@@ -6,7 +6,7 @@ import gameduLogo from "../assets/images/logogamedu.jpeg";
 interface NavbarProps {
   user: UserProfile;
   isLoggedIn: boolean;
-  currentPage: number;
+  showBackButton: boolean;
   onGoHome: () => void;
   onBack: () => void;
   onOpenPayment: () => void;
@@ -17,7 +17,7 @@ interface NavbarProps {
 export default function Navbar({
   user,
   isLoggedIn,
-  currentPage,
+  showBackButton,
   onGoHome,
   onBack,
   onOpenPayment,
@@ -30,7 +30,7 @@ export default function Navbar({
 
         {/* Kiri: tombol kembali (kontekstual, cuma muncul kalau bukan di Beranda) + Logo */}
         <div className="flex items-center gap-3">
-          {currentPage !== 1 && (
+          {showBackButton && (
             <button
               onClick={onBack}
               aria-label="Kembali"
