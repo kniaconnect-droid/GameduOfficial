@@ -1,6 +1,10 @@
 import React from "react";
 import { Game } from "../types";
-import { Apple, Eye, Rocket, GraduationCap, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import usia3Img from "../assets/images/usia3tahun.jpeg";
+import usia4Img from "../assets/images/usia4tahun.jpeg";
+import usia5Img from "../assets/images/usia5tahun.jpeg";
+import usia6Img from "../assets/images/usia6tahun.jpeg";
 
 interface AgeCategoryProps {
   selectedAge: number | null;
@@ -13,42 +17,34 @@ export default function AgeCategory({ selectedAge, onSelectAge, games }: AgeCate
     {
       age: 3,
       title: "Usia 3 Tahun",
-      desc: "Fokus pada pengenalan angka dasar, bentuk dasar, dan asah konsentrasi motorik halus.",
       gameCount: games.filter((g) => g.ageRange.includes("3")).length,
       bgClass: "bg-blue-50/40 border-blue-100 hover:border-blue-300 hover:bg-blue-50/80",
       accentBg: "bg-blue-600 text-white shadow-md shadow-blue-100",
-      icon: Apple,
-      tag: "Sensori & Angka"
+      image: usia3Img
     },
     {
       age: 4,
       title: "Usia 4 Tahun",
-      desc: "Melatih pengenalan ejaan huruf, anatomi tubuh dasar, serta mengasah logika pemecahan masalah.",
       gameCount: games.filter((g) => g.ageRange.includes("4")).length,
       bgClass: "bg-purple-50/40 border-purple-100 hover:border-purple-300 hover:bg-purple-50/80",
       accentBg: "bg-purple-600 text-white shadow-md shadow-purple-100",
-      icon: Eye,
-      tag: "Kata & Logika"
+      image: usia4Img
     },
     {
       age: 5,
       title: "Usia 5 Tahun",
-      desc: "Persiapan pra-sekolah (SD) dengan ejaan tingkat lanjut, operasi matematika, dan kreativitas visual.",
       gameCount: games.filter((g) => g.ageRange.includes("5")).length,
       bgClass: "bg-amber-50/40 border-amber-100 hover:border-amber-300 hover:bg-amber-50/80",
       accentBg: "bg-amber-600 text-white shadow-md shadow-amber-100",
-      icon: Rocket,
-      tag: "Persiapan Masuk SD"
+      image: usia5Img
     },
     {
       age: 6,
       title: "Usia 6-7 Tahun",
-      desc: "Lanjutan pra-sekolah dengan mengeja kata yang lebih kompleks, melatih logika, dan penguatan konsentrasi anak.",
       gameCount: games.filter((g) => g.ageRange.includes("6")).length,
       bgClass: "bg-teal-50/40 border-teal-100 hover:border-teal-300 hover:bg-teal-50/80",
       accentBg: "bg-teal-600 text-white shadow-md shadow-teal-100",
-      icon: GraduationCap,
-      tag: "Lanjutan SD"
+      image: usia6Img
     }
   ];
 
@@ -69,36 +65,28 @@ export default function AgeCategory({ selectedAge, onSelectAge, games }: AgeCate
         </div>
 
         {/* Categories Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {categories.map((cat) => (
             <div
               key={cat.age}
               onClick={() => onSelectAge(cat.age)}
-              className={`group flex flex-col justify-between border-2 rounded-[32px] p-8 cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 ${
+              className={`group flex flex-col justify-between border-2 rounded-[32px] overflow-hidden cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 ${
                 selectedAge === cat.age ? "ring-4 ring-offset-2 ring-blue-500/20 border-blue-500 bg-white" : cat.bgClass
               }`}
             >
-              <div className="space-y-4">
-                {/* Badge & Icon */}
-                <div className="flex items-center justify-between">
-                  <div className="w-10 h-10 rounded-2xl bg-white flex items-center justify-center text-slate-700 shadow-sm">
-                    <cat.icon className="w-5 h-5" />
-                  </div>
-                  <span className="text-[10px] font-black uppercase tracking-wider bg-white px-3.5 py-1.5 rounded-full text-slate-500 border border-slate-200/60 shadow-sm">
-                    {cat.tag}
-                  </span>
-                </div>
-
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                    {cat.title}
-                  </h3>
-                  <p className="text-slate-500 text-sm leading-relaxed">{cat.desc}</p>
-                </div>
+              {/* Gambar kategori usia - rasio disesuaikan dengan gambar aslinya (1:1) supaya tidak terpotong */}
+              <div className="w-full aspect-square overflow-hidden bg-white">
+                <img
+                  src={cat.image}
+                  alt={cat.title}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
               </div>
 
               {/* Game Counters & Arrow Button */}
-              <div className="flex items-center justify-between pt-8 mt-4 border-t border-slate-200/60">
+              <div className="flex items-center justify-between px-6 py-5 mt-auto border-t border-slate-200/60">
                 <span className="text-xs font-black text-slate-500">
                   {cat.gameCount > 0 ? `${cat.gameCount} Permainan Edukasi` : "Segera Hadir"}
                 </span>

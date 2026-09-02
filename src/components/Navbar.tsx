@@ -1,7 +1,7 @@
 import React from "react";
 import { Sparkles, LogIn, ArrowLeft } from "lucide-react";
 import { UserProfile } from "../types";
-import gameduLogo from "../assets/images/gamedu_logo_1783910706826.jpg";
+import gameduLogo from "../assets/images/logogamedu.jpeg";
 
 interface NavbarProps {
   user: UserProfile;

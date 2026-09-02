@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
 import { useAuth } from "../lib/useAuth";
-import gameduLogo from "../assets/images/gamedu_logo_1783910706826.jpg";
+import gameduLogo from "../assets/images/logogamedu.jpeg";
 
 interface AuthModalProps {
   onClose: () => void;

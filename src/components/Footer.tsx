@@ -1,5 +1,5 @@
 import React from "react";
-import gameduLogo from "../assets/images/gamedu_logo_1783910706826.jpg";
+import gameduLogo from "../assets/images/logogamedu.jpeg";
 
 export default function Footer() {
   return (
@@ -22,11 +22,6 @@ export default function Footer() {
           <p className="text-slate-400 text-xs leading-relaxed max-w-sm">
             GamEdu adalah platform e-learning & game edukasi interaktif terkemuka untuk menunjang perkembangan kognitif, motorik halus, asah bahasa, dan penalaran logika anak semenjak usia emas (Golden Age).
           </p>
-          <div className="text-[10px] text-slate-500 font-bold flex items-center gap-2">
-            <span>🛡️ Certified Kid-Safe & COPPA Compliant</span>
-            <span>•</span>
-            <span>🔒 SSL Sec-Encrypted Data</span>
-          </div>
         </div>
 
         {/* Links Column 1 */}

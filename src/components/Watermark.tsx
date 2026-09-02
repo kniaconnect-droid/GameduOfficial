@@ -1,5 +1,5 @@
 import React from "react";
-import gameduLogo from "../assets/images/gamedu_logo_1783910706826.jpg";
+import gameduLogo from "../assets/images/logogamedu.jpeg";
 
 interface WatermarkProps {
   className?: string;
