@@ -56,7 +56,7 @@ export default function GameCatalog({ games, age, onPlayGame, isPremiumUser, onO
 
         <div className="relative">
           <div
-            className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 ${
+            className={`grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12 sm:gap-x-10 sm:gap-y-14 lg:gap-x-12 lg:gap-y-16 ${
               !isPremiumUser ? "pointer-events-none select-none" : ""
             }`}
           >
