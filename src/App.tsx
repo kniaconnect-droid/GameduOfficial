@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Routes, Route, Navigate, useNavigate, useLocation, useParams } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Benefits from "./components/Benefits";
@@ -78,8 +79,148 @@ const GUEST_PROFILE: UserProfile = {
 // 4) User login (atau sudah otomatis login dari saat daftar) -> status
 //    premium otomatis kebaca dari server (lihat api/_lib/verifyAuth.ts),
 //    tanpa perlu langkah tambahan apapun dari user.
+// ---------------------------------------------------------------------------
+// Route wrapper components
+// ---------------------------------------------------------------------------
+// Didefinisikan di luar App() (bukan nested function) supaya identity-nya
+// stabil antar render App -- kalau didefinisikan di dalam App, komponen ini
+// akan "remount" tiap kali App re-render (misal tiap kali ada state lain yang
+// berubah), yang bikin state internal komponen anak (mis. WorksheetCatalog)
+// ke-reset terus. Data & callback yang butuh state App dikirim lewat props.
+//
+// Catatan penting: game (SecureGamePlayer) SENGAJA tidak dikasih route/URL
+// sendiri -- activeGameId cuma disimpan di state App dan dirender sebagai
+// overlay di luar <Routes>. Jadi URL browser tidak pernah berubah pas lagi
+// main game, dan member tidak bisa share link langsung ke satu game.
+
+function AgeHubRoute({
+  games,
+  isPremiumUser,
+  onPlayGame,
+  onOpenPayment,
+  setSelectedAge
+}: {
+  games: Game[];
+  isPremiumUser: boolean;
+  onPlayGame: (gameId: string) => void;
+  onOpenPayment: () => void;
+  setSelectedAge: (age: number) => void;
+}) {
+  const { age } = useParams();
+  const navigate = useNavigate();
+  const ageNum = Number(age) || 3;
+
+  useEffect(() => {
+    setSelectedAge(ageNum);
+  }, [ageNum, setSelectedAge]);
+
+  return (
+    <div className="animate-fade-in">
+      <GameGallery
+        age={ageNum}
+        games={games}
+        onPlayGame={onPlayGame}
+        onBack={() => navigate("/kategoriusia")}
+        isPremiumUser={isPremiumUser}
+        onOpenPayment={onOpenPayment}
+        onGoToGameCatalog={() => navigate(`/kategoriusia/${ageNum}/katalog-game`)}
+        onGoToWorksheets={() => navigate(`/kategoriusia/${ageNum}/worksheet`)}
+        onGoToMateri={() => navigate(`/kategoriusia/${ageNum}/materi`)}
+      />
+    </div>
+  );
+}
+
+function GameCatalogRoute({
+  games,
+  isPremiumUser,
+  onOpenPayment,
+  onPlayGame
+}: {
+  games: Game[];
+  isPremiumUser: boolean;
+  onOpenPayment: () => void;
+  onPlayGame: (gameId: string) => void;
+}) {
+  const { age } = useParams();
+  const navigate = useNavigate();
+  const ageNum = Number(age) || 3;
+
+  return (
+    <div className="animate-fade-in">
+      <GameCatalog
+        games={games}
+        age={ageNum}
+        isPremiumUser={isPremiumUser}
+        onOpenPayment={onOpenPayment}
+        onBack={() => navigate(`/kategoriusia/${ageNum}`)}
+        onPlayGame={onPlayGame}
+      />
+    </div>
+  );
+}
+
+function WorksheetRoute({
+  isPremiumUser,
+  getIdToken,
+  onOpenPayment,
+  onNeedAuth,
+  isLoggedIn
+}: {
+  isPremiumUser: boolean;
+  getIdToken: (forceRefresh?: boolean) => Promise<string | null>;
+  onOpenPayment: () => void;
+  onNeedAuth: () => void;
+  isLoggedIn: boolean;
+}) {
+  const { age } = useParams();
+  const ageNum = Number(age) || 3;
+
+  return (
+    <div className="animate-fade-in">
+      <WorksheetCatalog
+        age={ageNum}
+        isPremiumUser={isPremiumUser}
+        getIdToken={getIdToken}
+        onOpenPayment={onOpenPayment}
+        onNeedAuth={onNeedAuth}
+        isLoggedIn={isLoggedIn}
+      />
+    </div>
+  );
+}
+
+function MateriRoute({
+  isPremiumUser,
+  onOpenPayment
+}: {
+  isPremiumUser: boolean;
+  onOpenPayment: () => void;
+}) {
+  const { age } = useParams();
+  const navigate = useNavigate();
+  const ageNum = Number(age) || 3;
+
+  return (
+    <div className="animate-fade-in py-8 sm:py-12 px-6 bg-gradient-to-b from-white to-blue-50/10">
+      <div className="max-w-7xl mx-auto space-y-4">
+        <button
+          onClick={() => navigate(`/kategoriusia/${ageNum}`)}
+          className="group inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-blue-600 transition-colors cursor-pointer"
+        >
+          <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+          Kembali ke Kategori Usia
+        </button>
+        <MateriKognitif age={ageNum} isPremiumUser={isPremiumUser} onOpenPayment={onOpenPayment} />
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const { user: authUser, getIdToken, logout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [user, setUser] = useState<UserProfile>(GUEST_PROFILE);
   const [customNotes, setCustomNotes] = useState<CustomNote[]>([]);
   const [selectedAge, setSelectedAge] = useState<number | null>(null);
@@ -89,16 +230,15 @@ export default function App() {
   // Banner welcoming + reminder expired buat member Premium, muncul otomatis
   // habis login / habis profil ke-load kalau statusnya masih Premium.
   const [showPremiumBanner, setShowPremiumBanner] = useState(false);
-  const [currentPage, setCurrentPage] = useState<number>(1); // Page 1: Home, Page 2: Choose Age, Page 3: Game Gallery
 
-  // Reset posisi scroll ke paling atas tiap kali pindah halaman. Tanpa ini,
-  // posisi scroll-Y lama kebawa ke halaman baru -- jadi kalau user lagi
+  // Reset posisi scroll ke paling atas tiap kali pindah halaman/URL. Tanpa
+  // ini, posisi scroll-Y lama kebawa ke halaman baru -- jadi kalau user lagi
   // scroll ke bawah di satu halaman lalu klik tombol pindah halaman (mis.
   // "Lihat Katalog Game Lengkap"), halaman baru yang lebih pendek bisa
   // langsung kebuka nyangkut di area footer, bukan dari atas.
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [currentPage]);
+  }, [location.pathname]);
 
   // List of all games available on the server (all moved to Age 3 as requested)
   const games: Game[] = [
@@ -603,11 +743,38 @@ export default function App() {
 
   // Navigasi "Kembali" satu langkah, dipakai Navbar (menggantikan tab menu
   // lama yang sekarang dihapus supaya alur lebih simpel & linear):
-  // Beranda -> Kategori Usia -> Hub Usia -> (Materi / Katalog Game / Worksheet)
+  // Beranda -> /kategoriusia -> /kategoriusia/:age -> (/materi | /katalog-game | /worksheet)
+  // Dihitung dari jumlah segmen URL supaya tetap benar walau halaman
+  // di-refresh langsung (tidak bergantung ke riwayat browser).
+  const pathSegments = location.pathname.split("/").filter(Boolean);
+  const isHome = pathSegments.length === 0;
   const handleBack = () => {
-    if (currentPage === 2) setCurrentPage(1);
-    else if (currentPage === 3) setCurrentPage(2);
-    else if (currentPage === 4 || currentPage === 5 || currentPage === 6) setCurrentPage(3);
+    if (pathSegments.length <= 1) {
+      navigate("/");
+    } else {
+      navigate(`/${pathSegments.slice(0, pathSegments.length - 1).join("/")}`);
+    }
+  };
+
+  const handlePlayGame = (gameId: string) => {
+    const game = games.find((g) => g.id === gameId);
+    const isLocked = !!game?.premium && !user.isPremium;
+
+    // Lapis pertahanan tambahan di client: kalau game premium dan
+    // user belum premium, jangan buka SecureGamePlayer sama sekali.
+    // Arahkan langsung ke alur upgrade (daftar/login dulu kalau
+    // belum login, baru munculin PaymentModal). Proteksi utama
+    // tetap di server (api/games/[gameId].ts via verifyRequest),
+    // ini cuma bikin pengalaman usernya jelas & konsisten.
+    if (isLocked) {
+      if (!authUser) {
+        setShowAuthModal(true);
+      }
+      setShowPaymentModal(true);
+      return;
+    }
+
+    setActiveGameId(gameId);
   };
 
   return (
@@ -626,143 +793,102 @@ export default function App() {
         <Navbar
           user={user}
           isLoggedIn={!!authUser}
-          currentPage={currentPage}
-          onGoHome={() => setCurrentPage(1)}
+          showBackButton={!isHome}
+          onGoHome={() => navigate("/")}
           onBack={handleBack}
           onOpenPayment={() => setShowPaymentModal(true)}
           onOpenAuth={() => setShowAuthModal(true)}
           onLogout={logout}
         />
 
-        {/* Page 1: Home */}
-        {currentPage === 1 && (
-          <div className="animate-fade-in">
-            <Hero
-              onStartLearning={() => {
-                setSelectedAge(3);
-                setCurrentPage(2);
-              }}
-              onExploreGames={() => {
-                setSelectedAge(3);
-                setCurrentPage(3);
-              }}
-            />
-            <Benefits />
-          </div>
-        )}
+        <Routes>
+          {/* Beranda */}
+          <Route
+            path="/"
+            element={
+              <div className="animate-fade-in">
+                <Hero
+                  onStartLearning={() => {
+                    setSelectedAge(3);
+                    navigate("/kategoriusia");
+                  }}
+                  onExploreGames={() => {
+                    setSelectedAge(3);
+                    navigate("/kategoriusia/3");
+                  }}
+                />
+                <Benefits />
+              </div>
+            }
+          />
 
-        {/* Page 2: Age Category selection */}
-        {currentPage === 2 && (
-          <div className="animate-fade-in">
-            <AgeCategory
-              selectedAge={selectedAge}
-              onSelectAge={(age) => {
-                setSelectedAge(age);
-                setCurrentPage(3);
-              }}
-              games={games}
-            />
-          </div>
-        )}
+          {/* Pilih Kategori Usia */}
+          <Route
+            path="/kategoriusia"
+            element={
+              <div className="animate-fade-in">
+                <AgeCategory
+                  selectedAge={selectedAge}
+                  onSelectAge={(age) => {
+                    setSelectedAge(age);
+                    navigate(`/kategoriusia/${age}`);
+                  }}
+                  games={games}
+                />
+              </div>
+            }
+          />
 
-        {/* Page 3: Game Catalog Gallery */}
-        {currentPage === 3 && (
-          <div className="animate-fade-in">
-            <GameGallery
-              age={selectedAge !== null ? selectedAge : 3}
-              games={games}
-              onPlayGame={(gameId) => {
-                const game = games.find((g) => g.id === gameId);
-                const isLocked = !!game?.premium && !user.isPremium;
+          {/* Hub Usia (game trial + jalan pintas ke Materi/Katalog Game/Worksheet) */}
+          <Route
+            path="/kategoriusia/:age"
+            element={
+              <AgeHubRoute
+                games={games}
+                isPremiumUser={user.isPremium}
+                onPlayGame={handlePlayGame}
+                onOpenPayment={() => setShowPaymentModal(true)}
+                setSelectedAge={setSelectedAge}
+              />
+            }
+          />
 
-                // Lapis pertahanan tambahan di client: kalau game premium dan
-                // user belum premium, jangan buka SecureGamePlayer sama sekali.
-                // Arahkan langsung ke alur upgrade (daftar/login dulu kalau
-                // belum login, baru munculin PaymentModal). Proteksi utama
-                // tetap di server (api/games/[gameId].ts via verifyRequest),
-                // ini cuma bikin pengalaman usernya jelas & konsisten.
-                if (isLocked) {
-                  if (!authUser) {
-                    setShowAuthModal(true);
-                  }
-                  setShowPaymentModal(true);
-                  return;
-                }
-
-                setActiveGameId(gameId);
-              }}
-              onBack={() => {
-                setCurrentPage(2);
-              }}
-              isPremiumUser={user.isPremium}
-              onOpenPayment={() => setShowPaymentModal(true)}
-              onGoToGameCatalog={() => setCurrentPage(4)}
-              onGoToWorksheets={() => setCurrentPage(5)}
-              onGoToMateri={() => setCurrentPage(6)}
-            />
-          </div>
-        )}
-
-        {/* Page 4: Full Premium Game Catalog */}
-        {currentPage === 4 && (
-          <div className="animate-fade-in">
-            <GameCatalog
-              games={games}
-              age={selectedAge !== null ? selectedAge : 3}
-              isPremiumUser={user.isPremium}
-              onOpenPayment={() => setShowPaymentModal(true)}
-              onBack={() => setCurrentPage(3)}
-              onPlayGame={(gameId) => {
-                const game = games.find((g) => g.id === gameId);
-                const isLocked = !!game?.premium && !user.isPremium;
-
-                if (isLocked) {
-                  if (!authUser) {
-                    setShowAuthModal(true);
-                  }
-                  setShowPaymentModal(true);
-                  return;
-                }
-
-                setActiveGameId(gameId);
-              }}
-            />
-          </div>
-        )}
-
-        {/* Page 5: Downloadable Worksheet Catalog */}
-        {currentPage === 5 && (
-          <div className="animate-fade-in">
-            <WorksheetCatalog
-              age={selectedAge !== null ? selectedAge : 3}
-              isPremiumUser={user.isPremium}
-              getIdToken={getIdToken}
-              onOpenPayment={() => setShowPaymentModal(true)}
-              onNeedAuth={() => setShowAuthModal(true)}
-              isLoggedIn={!!authUser}
-            />
-          </div>
-        )}
-
-        {/* Page 6: Materi Edukasi Orang Tua (halaman penuh, sebelumnya nempel di Page 3) */}
-        {currentPage === 6 && (
-          <div className="animate-fade-in py-8 sm:py-12 px-6 bg-gradient-to-b from-white to-blue-50/10">
-            <div className="max-w-7xl mx-auto space-y-4">
-              <button
-                onClick={() => setCurrentPage(3)}
-                className="group inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-blue-600 transition-colors cursor-pointer"
-              >
-                <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
-                Kembali ke Kategori Usia
-              </button>
-              <MateriKognitif
-                age={selectedAge !== null ? selectedAge : 3}
+          {/* Katalog Game Lengkap (Premium) */}
+          <Route
+            path="/kategoriusia/:age/katalog-game"
+            element={
+              <GameCatalogRoute
+                games={games}
                 isPremiumUser={user.isPremium}
                 onOpenPayment={() => setShowPaymentModal(true)}
+                onPlayGame={handlePlayGame}
               />
-            </div>
-          </div>
-        )}
+            }
+          />
+
+          {/* Katalog Worksheet */}
+          <Route
+            path="/kategoriusia/:age/worksheet"
+            element={
+              <WorksheetRoute
+                isPremiumUser={user.isPremium}
+                getIdToken={getIdToken}
+                onOpenPayment={() => setShowPaymentModal(true)}
+                onNeedAuth={() => setShowAuthModal(true)}
+                isLoggedIn={!!authUser}
+              />
+            }
+          />
+
+          {/* Materi Edukasi Orang Tua */}
+          <Route
+            path="/kategoriusia/:age/materi"
+            element={<MateriRoute isPremiumUser={user.isPremium} onOpenPayment={() => setShowPaymentModal(true)} />}
+          />
+
+          {/* Fallback: URL tidak dikenal -> balik ke Beranda */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </div>
 
       <Footer />
