@@ -65,7 +65,7 @@ export default function AgeCategory({ selectedAge, onSelectAge, games }: AgeCate
         </div>
 
         {/* Categories Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10 sm:gap-x-10 sm:gap-y-12 max-w-4xl mx-auto">
           {categories.map((cat) => (
             <div
               key={cat.age}

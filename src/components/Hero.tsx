@@ -40,11 +40,11 @@ export default function Hero({ onStartLearning, onExploreGames }: HeroProps) {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-full px-4 py-1.5 text-xs font-bold text-blue-700 shadow-sm uppercase tracking-wider mb-2">
             <Sparkles className="w-3.5 h-3.5 fill-blue-700 animate-pulse" />
-            Platform Edukasi Anak #1 Terpercaya
+            Platform Belajar & Bermain untuk Anak
           </div>
 
           <p className="text-base sm:text-lg text-slate-500 leading-relaxed max-w-xl mx-auto lg:mx-0">
-            GamEdu menghadirkan ratusan permainan edukatif interaktif yang membantu anak belajar sesuai tahap perkembangan usia emas mereka. Teruji oleh ahli terapi, guru, dan dicintai anak-anak!
+            GamEdu menghadirkan game edukatif, worksheet interaktif, dan panduan untuk orang tua agar proses belajar anak jadi lebih seru, terarah, dan sesuai tahap perkembangannya.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
