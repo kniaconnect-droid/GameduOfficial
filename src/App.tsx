@@ -812,10 +812,6 @@ export default function App() {
                     setSelectedAge(3);
                     navigate("/kategoriusia");
                   }}
-                  onExploreGames={() => {
-                    setSelectedAge(3);
-                    navigate("/kategoriusia/3");
-                  }}
                 />
                 <Benefits />
                 <section id="tentang-kami" className="py-10 sm:py-16 px-6 bg-white scroll-mt-24">
