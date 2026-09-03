@@ -87,11 +87,11 @@ export default function Navbar({
               className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl object-contain shadow-md border border-white/60 bg-white group-hover:scale-105 transition-transform"
               referrerPolicy="no-referrer"
             />
-            <div className="hidden sm:block">
-              <span className="text-2xl font-extrabold tracking-tight text-white">
+            <div className="hidden sm:block bg-white/95 px-3 py-1.5 rounded-xl shadow-sm">
+              <span className="text-2xl font-extrabold tracking-tight text-blue-600">
                 Gam<span className="text-slate-900">Edu</span>
               </span>
-              <p className="text-[9px] text-white/80 font-bold tracking-widest uppercase">E-Learning & Atensi Anak</p>
+              <p className="text-[9px] text-slate-400 font-bold tracking-widest uppercase">E-Learning & Atensi Anak</p>
             </div>
           </div>
         </div>
