@@ -78,51 +78,11 @@ export default function GameGallery({
           </div>
         </div>
 
-        {/* 3 KARTU NAVIGASI: Materi, Game, Worksheet */}
+        {/* 3 KARTU NAVIGASI: Game, Worksheet, Materi */}
         {/* sm:grid-cols-2 dulu (bukan langsung md:grid-cols-3) supaya di lebar
             tablet (768-1024px) kartu masih cukup lega buat 2 badge pojok atas
             tanpa jadi mepet/potensi tabrakan. */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 sm:gap-x-10 sm:gap-y-12 lg:gap-x-12 lg:gap-y-14">
-          {/* Kartu Materi */}
-          <div className="bg-white rounded-2xl overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group transform-gpu">
-            <div className="relative aspect-[4/3] w-full overflow-hidden bg-indigo-50">
-              <img
-                src={hubMateriCover}
-                alt="Materi Edukasi Orang Tua"
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2">
-                <span className="flex items-center gap-1 text-[9px] sm:text-[10px] font-black uppercase tracking-wider bg-white/95 backdrop-blur-sm px-2.5 sm:px-3 py-1.5 rounded-full text-indigo-700 shadow-sm whitespace-nowrap">
-                  <FileText className="w-3 h-3 flex-shrink-0" /> Untuk Orang Tua
-                </span>
-                {!isPremiumUser && (
-                  <span className="flex items-center gap-1 text-[9px] sm:text-[10px] font-black uppercase tracking-wider bg-amber-500/90 text-white px-2.5 sm:px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap flex-shrink-0">
-                    <Lock className="w-3 h-3 flex-shrink-0" /> Premium
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="p-4 sm:p-5 space-y-3 flex-1 flex flex-col justify-between">
-              <div className="space-y-1.5">
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-tight">Materi Edukasi Orang Tua</h3>
-                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
-                  {materi
-                    ? `Panduan lengkap ${materi.kemampuan.length} kemampuan kognitif penting untuk anak usia ${age} tahun. Pahami tanda perkembangan anak, ide stimulasi sederhana di rumah, dan aktivitas GamEdu yang paling sesuai.`
-                    : "Coming Soon — materi edukasi orang tua untuk kategori usia ini sedang disiapkan tim kurikulum kami."}
-                </p>
-              </div>
-              <button
-                onClick={onGoToMateri}
-                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-100 hover:scale-105 transition-all cursor-pointer"
-              >
-                <FileText className="w-3.5 h-3.5" />
-                Buka Halaman Materi
-              </button>
-            </div>
-          </div>
-
           {/* Kartu Game */}
           <div className="bg-white rounded-2xl overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group transform-gpu">
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-orange-50">
@@ -175,6 +135,7 @@ export default function GameGallery({
             </div>
           </div>
 
+
           {/* Kartu Worksheet */}
           <div className="bg-white rounded-2xl overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group transform-gpu">
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-emerald-50">
@@ -202,7 +163,7 @@ export default function GameGallery({
                 <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
                   {worksheetsForAge.length > 0
                     ? `${worksheetsForAge.length} lembar kerja siap cetak untuk melatih motorik halus & konsentrasi. Tinggal unduh, cetak di rumah, dan kerjakan bersama anak.`
-                    : "Coming Soon — worksheet cetak untuk kategori usia ini sedang disiapkan tim kurikulum kami."}
+                    : "Coming Soon: worksheet cetak untuk kategori usia ini sedang disiapkan tim kurikulum kami."}
                 </p>
               </div>
               <button
@@ -214,6 +175,46 @@ export default function GameGallery({
               </button>
             </div>
           </div>
+          {/* Kartu Materi */}
+          <div className="bg-white rounded-2xl overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group transform-gpu">
+            <div className="relative aspect-[4/3] w-full overflow-hidden bg-indigo-50">
+              <img
+                src={hubMateriCover}
+                alt="Materi Edukasi Orang Tua"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2">
+                <span className="flex items-center gap-1 text-[9px] sm:text-[10px] font-black uppercase tracking-wider bg-white/95 backdrop-blur-sm px-2.5 sm:px-3 py-1.5 rounded-full text-indigo-700 shadow-sm whitespace-nowrap">
+                  <FileText className="w-3 h-3 flex-shrink-0" /> Untuk Orang Tua
+                </span>
+                {!isPremiumUser && (
+                  <span className="flex items-center gap-1 text-[9px] sm:text-[10px] font-black uppercase tracking-wider bg-amber-500/90 text-white px-2.5 sm:px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap flex-shrink-0">
+                    <Lock className="w-3 h-3 flex-shrink-0" /> Premium
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="p-4 sm:p-5 space-y-3 flex-1 flex flex-col justify-between">
+              <div className="space-y-1.5">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-tight">Materi Edukasi Orang Tua</h3>
+                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                  {materi
+                    ? `Panduan lengkap ${materi.kemampuan.length} kemampuan kognitif penting untuk anak usia ${age} tahun. Pahami tanda perkembangan anak, ide stimulasi sederhana di rumah, dan aktivitas GamEdu yang paling sesuai.`
+                    : "Coming Soon: materi edukasi orang tua untuk kategori usia ini sedang disiapkan tim kurikulum kami."}
+                </p>
+              </div>
+              <button
+                onClick={onGoToMateri}
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-100 hover:scale-105 transition-all cursor-pointer"
+              >
+                <FileText className="w-3.5 h-3.5" />
+                Buka Halaman Materi
+              </button>
+            </div>
+          </div>
+
         </div>
 
         {!isPremiumUser && (

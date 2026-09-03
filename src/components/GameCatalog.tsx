@@ -56,14 +56,14 @@ export default function GameCatalog({ games, age, onPlayGame, isPremiumUser, onO
 
         <div className="relative">
           <div
-            className={`grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-12 sm:gap-x-14 sm:gap-y-16 lg:gap-x-16 lg:gap-y-20 place-items-center ${
+            className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 sm:gap-x-10 sm:gap-y-14 lg:gap-x-10 lg:gap-y-16 place-items-center ${
               !isPremiumUser ? "pointer-events-none select-none" : ""
             }`}
           >
             {games_.map((game) => (
               <div
                 key={game.id}
-                className={`bg-white rounded-xl sm:rounded-2xl overflow-hidden border border-slate-200/60 shadow-sm transition-all duration-300 flex flex-col justify-between group transform-gpu w-full max-w-[240px] sm:max-w-[260px] mx-auto ${
+                className={`bg-white rounded-xl sm:rounded-2xl overflow-hidden border border-slate-200/60 shadow-sm transition-all duration-300 flex flex-col justify-between group transform-gpu w-full max-w-[280px] sm:max-w-[300px] mx-auto ${
                   !isPremiumUser ? "blur-[2px] opacity-80" : "hover:shadow-lg"
                 }`}
               >
@@ -80,17 +80,17 @@ export default function GameCatalog({ games, age, onPlayGame, isPremiumUser, onO
                   </span>
                 </div>
 
-                <div className="p-3 sm:p-4 space-y-2 sm:space-y-3 flex-1 flex flex-col justify-between">
-                  <div className="space-y-1 sm:space-y-1.5">
-                    <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-tight line-clamp-2">{game.name}</h3>
-                    <p className="text-slate-500 text-[11px] sm:text-xs leading-relaxed line-clamp-2">{game.description}</p>
+                <div className="p-4 sm:p-5 space-y-2.5 sm:space-y-3.5 flex-1 flex flex-col justify-between">
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-tight line-clamp-2">{game.name}</h3>
+                    <p className="text-slate-500 text-xs sm:text-sm leading-relaxed line-clamp-2">{game.description}</p>
                   </div>
 
                   <button
                     onClick={() => onPlayGame(game.id)}
-                    className="w-full flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg font-bold text-[11px] sm:text-xs bg-orange-500 hover:bg-orange-600 text-white shadow-md shadow-orange-100 hover:scale-105 transition-all cursor-pointer"
+                    className="w-full flex items-center justify-center gap-1.5 py-2.5 sm:py-3 rounded-lg font-bold text-xs sm:text-sm bg-orange-500 hover:bg-orange-600 text-white shadow-md shadow-orange-100 hover:scale-105 transition-all cursor-pointer"
                   >
-                    <Play className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current" />
+                    <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
                     Main
                   </button>
                 </div>
