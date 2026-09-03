@@ -6,6 +6,10 @@
     "api/games/*.ts": {
       "maxDuration": 10,
       "includeFiles": "server/games/**"
+    },
+    "api/worksheets/*.ts": {
+      "maxDuration": 10,
+      "includeFiles": "server/worksheets/**"
     }
   },
   "rewrites": [
