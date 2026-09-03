@@ -15,6 +15,12 @@ export default function Hero({ onStartLearning, onExploreGames }: HeroProps) {
         {/* Left column: Text CTA */}
         <div className="lg:col-span-6 space-y-6 text-center lg:text-left">
           
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-full px-4 py-1.5 text-xs font-bold text-blue-700 shadow-sm uppercase tracking-wider mb-2">
+            <Sparkles className="w-3.5 h-3.5 fill-blue-700 animate-pulse" />
+            Platform Belajar & Bermain untuk Anak
+          </div>
+
           {/* Logo GamEdu */}
           <div className="flex justify-center lg:justify-start">
             <img
@@ -35,12 +41,6 @@ export default function Hero({ onStartLearning, onExploreGames }: HeroProps) {
                 className="w-full h-full object-cover"
               />
             </div>
-          </div>
-
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-full px-4 py-1.5 text-xs font-bold text-blue-700 shadow-sm uppercase tracking-wider mb-2">
-            <Sparkles className="w-3.5 h-3.5 fill-blue-700 animate-pulse" />
-            Platform Belajar & Bermain untuk Anak
           </div>
 
           <p className="text-base sm:text-lg text-slate-500 leading-relaxed max-w-xl mx-auto lg:mx-0">

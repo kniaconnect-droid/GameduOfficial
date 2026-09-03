@@ -41,7 +41,7 @@ export default function Benefits() {
   ];
 
   return (
-    <section className="py-10 sm:py-16 px-6 bg-slate-50/40">
+    <section id="manfaat-gamedu" className="py-10 sm:py-16 px-6 bg-slate-50/40 scroll-mt-24">
       <div className="max-w-7xl mx-auto space-y-8 sm:space-y-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
