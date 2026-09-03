@@ -21,7 +21,7 @@ export const MATERI_KOGNITIF_3_TAHUN = {
   intro:
     "Setiap anak berkembang dengan kecepatan berbeda-beda, dan itu wajar. Daftar di bawah ini bukan untuk menilai atau memberi label anak, melainkan panduan untuk mengetahui kemampuan apa yang sedang tumbuh, sekaligus ide bermain untuk menstimulasinya di rumah.",
   penutup:
-    "Catatan: setiap anak punya kecepatannya sendiri. Kalau salah satu kemampuan di atas belum terlihat, tidak apa-apa — cukup ajak main lagi secara rutin dan penuh keceriaan. 💛",
+    "Catatan: setiap anak punya kecepatannya sendiri. Kalau salah satu kemampuan di atas belum terlihat, tidak apa-apa, cukup ajak main lagi secara rutin dan penuh keceriaan. 💛",
   kemampuan: [
     {
       id: "warna-dasar",
@@ -50,7 +50,7 @@ export const MATERI_KOGNITIF_3_TAHUN = {
       id: "puzzle",
       judul: "Menyusun Puzzle 4–6 Keping",
       deskripsi:
-        "Anak mulai bisa menyusun beberapa potongan gambar menjadi satu gambar utuh — melatih logika sekaligus koordinasi mata-tangan.",
+        "Anak mulai bisa menyusun beberapa potongan gambar menjadi satu gambar utuh, melatih logika sekaligus koordinasi mata-tangan.",
       kenapaPenting: [
         "Melatih berpikir logis dan memecahkan masalah.",
         "Mengembangkan koordinasi mata dan tangan.",
@@ -73,7 +73,7 @@ export const MATERI_KOGNITIF_3_TAHUN = {
       id: "mengelompokkan",
       judul: "Mengelompokkan Benda Berdasarkan Warna atau Bentuk",
       deskripsi:
-        "Anak mulai bisa mengenali persamaan dan perbedaan benda, lalu mengelompokkannya — dasar penting untuk belajar matematika dan sains sederhana nanti.",
+        "Anak mulai bisa mengenali persamaan dan perbedaan benda, lalu mengelompokkannya, dasar penting untuk belajar matematika dan sains sederhana nanti.",
       kenapaPenting: [
         "Melatih kemampuan mengamati dan membandingkan.",
         "Membangun cara berpikir logis dan sistematis.",

@@ -13,7 +13,7 @@ export const MATERI_KOGNITIF_4_TAHUN = {
   intro:
     "Setiap anak berkembang dengan kecepatan berbeda-beda, dan itu wajar. Daftar di bawah ini bukan untuk menilai atau memberi label anak, melainkan panduan untuk mengetahui kemampuan apa yang sedang tumbuh, sekaligus ide bermain untuk menstimulasinya di rumah.",
   penutup:
-    "Catatan: setiap anak punya kecepatannya sendiri. Kalau salah satu kemampuan di atas belum terlihat, tidak apa-apa — cukup ajak main lagi secara rutin dan penuh keceriaan.",
+    "Catatan: setiap anak punya kecepatannya sendiri. Kalau salah satu kemampuan di atas belum terlihat, tidak apa-apa, cukup ajak main lagi secara rutin dan penuh keceriaan.",
   kemampuan: [
     {
       id: "warna-4-6",
@@ -42,7 +42,7 @@ export const MATERI_KOGNITIF_4_TAHUN = {
       id: "menghitung-1-10",
       judul: "Menghitung 1–10",
       deskripsi:
-        "Anak mulai memahami hubungan angka dan jumlah benda (number sense) — bukan cuma hafal urutan 1–10, tapi juga bisa menghitung benda nyata.",
+        "Anak mulai memahami hubungan angka dan jumlah benda (number sense), bukan cuma hafal urutan 1–10, tapi juga bisa menghitung benda nyata.",
       kenapaPenting: [
         "Dasar kemampuan matematika untuk jenjang berikutnya.",
         "Melatih konsentrasi dan daya ingat.",
@@ -65,7 +65,7 @@ export const MATERI_KOGNITIF_4_TAHUN = {
       id: "mengelompokkan-benda",
       judul: "Mengelompokkan Benda",
       deskripsi:
-        "Anak mulai bisa mengamati dan mengelompokkan benda berdasarkan warna, bentuk, ukuran, jenis, atau fungsinya — lebih variatif dari sebelumnya.",
+        "Anak mulai bisa mengamati dan mengelompokkan benda berdasarkan warna, bentuk, ukuran, jenis, atau fungsinya, lebih variatif dari sebelumnya.",
       kenapaPenting: [
         "Dasar berpikir logis dan ilmiah.",
         "Melatih ketelitian dalam mengamati dan membandingkan.",

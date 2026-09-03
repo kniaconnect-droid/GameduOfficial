@@ -15,13 +15,13 @@ export const MATERI_KOGNITIF_5_TAHUN = {
   intro:
     "Setiap anak berkembang dengan kecepatan berbeda-beda, dan itu wajar. Daftar di bawah ini bukan untuk menilai atau memberi label anak, melainkan panduan untuk mengetahui kemampuan apa yang sedang tumbuh, sekaligus ide bermain untuk menstimulasinya di rumah.",
   penutup:
-    "Catatan: setiap anak punya kecepatannya sendiri. Kalau salah satu kemampuan di atas belum terlihat, tidak apa-apa — cukup ajak main lagi secara rutin dan penuh keceriaan. 💛",
+    "Catatan: setiap anak punya kecepatannya sendiri. Kalau salah satu kemampuan di atas belum terlihat, tidak apa-apa, cukup ajak main lagi secara rutin dan penuh keceriaan. 💛",
   kemampuan: [
     {
       id: "warna-8-10",
       judul: "Mengenal 8–10 Warna",
       deskripsi:
-        "Anak mulai bisa mengenali dan menyebutkan lebih banyak warna — dari merah, biru, hijau, sampai cokelat, hitam, dan putih — lalu memakainya untuk mendeskripsikan benda.",
+        "Anak mulai bisa mengenali dan menyebutkan lebih banyak warna, dari merah, biru, hijau, sampai cokelat, hitam, dan putih, lalu memakainya untuk mendeskripsikan benda.",
       kenapaPenting: [
         "Melatih kemampuan mengamati dan membedakan detail benda.",
         "Memperkaya kosakata dan mendukung kemampuan seni, membaca, serta matematika.",
@@ -81,7 +81,7 @@ export const MATERI_KOGNITIF_5_TAHUN = {
       id: "puzzle-9-12",
       judul: "Menyelesaikan Puzzle 9–12 Keping",
       deskripsi:
-        "Anak mulai bisa memakai strategi sederhana — cari bagian tepi, cocokkan gambar, perhatikan pola — untuk menyusun puzzle secara lebih mandiri.",
+        "Anak mulai bisa memakai strategi sederhana: cari bagian tepi, cocokkan gambar, perhatikan pola, untuk menyusun puzzle secara lebih mandiri.",
       kenapaPenting: [
         "Melatih berpikir logis dan strategi pemecahan masalah.",
         "Meningkatkan fokus, koordinasi mata-tangan, dan rasa percaya diri.",
