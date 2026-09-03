@@ -439,7 +439,7 @@ export default function App() {
       name: "Aku Istimewa - Ayo Kenali Alat Indera di Wajahmu!",
       ageRange: "5 Tahun",
       premium: true,
-      description: "Latihan lengkap 4 level: sentuh anggota wajah, tebak yang ditunjuk, cocokkan nama alat indera, dan kenali fungsinya — persiapan matang sebelum masuk SD.",
+      description: "Latihan lengkap 4 level: sentuh anggota wajah, tebak yang ditunjuk, cocokkan nama alat indera, dan kenali fungsinya, persiapan matang sebelum masuk SD.",
       coverImage: akuIstimewaAdvanceCover
     },
     {
@@ -818,6 +818,19 @@ export default function App() {
                   }}
                 />
                 <Benefits />
+                <section id="tentang-kami" className="py-10 sm:py-16 px-6 bg-white scroll-mt-24">
+                  <div className="max-w-4xl mx-auto text-center space-y-4">
+                    <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                      Tentang <span className="text-orange-500">GamEdu</span>
+                    </h2>
+                    <p className="text-slate-500 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+                      GamEdu adalah platform belajar sambil bermain untuk anak usia dini, menghadirkan game edukatif,
+                      worksheet cetak, dan materi panduan orang tua yang dirancang khusus sesuai tahap perkembangan
+                      anak usia 3, 4, dan 5 tahun. Kami percaya setiap anak bisa belajar dengan gembira, tanpa
+                      paksaan, dan tetap terarah.
+                    </p>
+                  </div>
+                </section>
               </div>
             }
           />
