@@ -61,7 +61,7 @@ export default function WorksheetCatalog({
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `${item.id}.pdf`;
+      a.download = `${item.id}.png`;
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -153,7 +153,7 @@ export default function WorksheetCatalog({
                           </div>
                         )}
                         <span className="absolute top-3 left-3 text-[9px] font-black uppercase tracking-wider bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full text-slate-800 shadow-sm">
-                          PDF · A4
+                          PNG · Siap Cetak
                         </span>
                       </div>
 
@@ -188,7 +188,7 @@ export default function WorksheetCatalog({
                             </>
                           ) : (
                             <>
-                              <Download className="w-3.5 h-3.5" /> Download PDF
+                              <Download className="w-3.5 h-3.5" /> Download Gambar
                             </>
                           )}
                         </button>
