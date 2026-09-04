@@ -36,6 +36,13 @@
   .status.info { background: #eff6ff; color: #1e40af; }
   .hidden { display: none; }
   .lookup-box { font-size: 13px; color: #475569; background: #f8fafc; border: 1px dashed #cbd5e1; padding: 12px 14px; border-radius: 12px; margin-bottom: 16px; }
+  .card.wide { max-width: 640px; }
+  .log-item { border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; font-size: 12px; }
+  .log-item.success { border-color: #86efac; background: #f0fdf4; }
+  .log-item.failed, .log-item.error, .log-item.invalid_signature { border-color: #fca5a5; background: #fef2f2; }
+  .log-item pre { white-space: pre-wrap; word-break: break-all; background: #0f172a; color: #e2e8f0; padding: 10px; border-radius: 8px; margin: 8px 0 0; max-height: 180px; overflow: auto; }
+  .log-item summary { cursor: pointer; font-weight: 700; }
+  .link-btn { background: none; border: none; color: #2563eb; font-weight: 700; font-size: 12px; cursor: pointer; padding: 0; margin-top: 8px; }
 </style>
 </head>
 <body>
@@ -52,20 +59,23 @@
 
   <div id="panelView" class="hidden">
     <h1>🎮 Aktivasi Langganan</h1>
-    <p class="sub">Isi email user yang sudah bayar, lalu pilih durasinya.</p>
+    <p class="sub">Normalnya akun Member VIP aktif OTOMATIS lewat webhook Lynk.id. Form ini cuma buat fallback manual (perpanjangan, atau kalau ada transaksi yang gagal diproses otomatis -- cek di bagian "Log Webhook Lynk" di bawah).</p>
 
     <label>Email User</label>
     <input type="email" id="emailInput" placeholder="user@email.com" oninput="resetLookup()" onblur="checkStatus()">
 
     <div id="lookupBox" class="lookup-box hidden"></div>
 
+    <label>Password <span style="font-weight:400;color:#94a3b8;">(cuma dipakai kalau akunnya BELUM ada; min. 6 karakter, contoh: vip4321)</span></label>
+    <input type="text" id="passwordInput" placeholder="Kosongkan kalau akun sudah ada">
+
     <label>Durasi Langganan</label>
     <select id="monthsInput">
       <option value="1">1 Bulan</option>
       <option value="2">2 Bulan</option>
       <option value="3">3 Bulan</option>
-      <option value="6">6 Bulan</option>
-      <option value="12">12 Bulan</option>
+      <option value="6" selected>6 Bulan</option>
+      <option value="12">12 Bulan (1 Tahun)</option>
     </select>
 
     <label>No. WhatsApp Pembeli <span style="font-weight:400;color:#94a3b8;">(opsional, buat notifikasi otomatis)</span></label>
@@ -75,8 +85,17 @@
 
     <button class="btn-primary" id="activateBtn" onclick="activate()">Aktifkan Langganan</button>
     <button class="btn-secondary" id="sendWaBtn" onclick="sendWaManually()" style="display:none;">📲 Kirim Ulang Notif WA ke Pembeli</button>
+    <button class="link-btn" onclick="toggleLogs()">🧾 Lihat Log Webhook Lynk Terakhir</button>
     <button class="btn-secondary" onclick="lockAdmin()">Keluar</button>
   </div>
+</div>
+
+<div class="card wide hidden" id="logsCard">
+  <h1>🧾 Log Webhook Lynk.id</h1>
+  <p class="sub">20 transaksi terakhir yang masuk dari Lynk.id. Kalau ada yang berhasil ("success"), berarti sistemnya sudah jalan. Kalau ada yang gagal, buka detail JSON-nya buat lihat data mentah dari Lynk & sesuaikan pembacaan field di <code>api/lynk-webhook.ts</code> kalau perlu.</p>
+  <div id="logsList"></div>
+  <button class="btn-secondary" onclick="loadLogs()">🔄 Muat Ulang</button>
+  <button class="btn-secondary" onclick="toggleLogs()">Tutup</button>
 </div>
 
 <script>
@@ -162,6 +181,7 @@
 
   async function activate() {
     const email = document.getElementById("emailInput").value.trim();
+    const password = document.getElementById("passwordInput").value.trim();
     const months = document.getElementById("monthsInput").value;
     const buyerWa = document.getElementById("buyerWaInput").value.trim();
     const statusEl = document.getElementById("activateStatus");
@@ -179,7 +199,7 @@
       const res = await fetch("/api/admin-upgrade", {
         method: "POST",
         headers: { "Content-Type": "application/json", "X-Admin-Secret": adminSecret },
-        body: JSON.stringify({ email, months: Number(months) })
+        body: JSON.stringify({ email, months: Number(months), password: password || undefined })
       });
       const data = await res.json();
 
@@ -211,6 +231,53 @@
       btn.disabled = false;
       btn.textContent = "Aktifkan Langganan";
     }
+  }
+
+  let logsLoaded = false;
+  function toggleLogs() {
+    const card = document.getElementById("logsCard");
+    card.classList.toggle("hidden");
+    if (!card.classList.contains("hidden") && !logsLoaded) loadLogs();
+  }
+
+  async function loadLogs() {
+    const list = document.getElementById("logsList");
+    list.innerHTML = "Memuat...";
+    try {
+      const res = await fetch("/api/admin-webhook-logs", { headers: { "X-Admin-Secret": adminSecret } });
+      const data = await res.json();
+      if (!res.ok) {
+        if (res.status === 401) { alert("Password admin salah. Silakan masuk ulang."); lockAdmin(); return; }
+        list.innerHTML = "⚠️ " + (data.error || "Gagal memuat log.");
+        return;
+      }
+      logsLoaded = true;
+      if (!data.logs || data.logs.length === 0) {
+        list.innerHTML = "<p style=\"font-size:13px;color:#64748b;\">Belum ada transaksi Lynk yang masuk.</p>";
+        return;
+      }
+      list.innerHTML = data.logs.map(function (log) {
+        const when = log.receivedAt ? new Date(log.receivedAt).toLocaleString("id-ID") : "-";
+        const status = log.status || "unknown";
+        const emailInfo = log.email || (log.fields && log.fields.email) || "(email tidak terbaca)";
+        const planInfo = log.plan ? (" · Paket: " + log.plan) : "";
+        const reasonInfo = log.reason ? ("<div>Alasan: " + escapeHtml(log.reason) + "</div>") : "";
+        return "<div class=\"log-item " + status + "\">" +
+          "<div><strong>" + status.toUpperCase() + "</strong> · " + when + "</div>" +
+          "<div>" + escapeHtml(emailInfo) + planInfo + "</div>" +
+          reasonInfo +
+          "<details><summary>Lihat JSON mentah</summary><pre>" + escapeHtml(JSON.stringify(log, null, 2)) + "</pre></details>" +
+          "</div>";
+      }).join("");
+    } catch (e) {
+      list.innerHTML = "Gagal menghubungi server. Coba lagi.";
+    }
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[c];
+    });
   }
 </script>
 
