@@ -1,13 +1,16 @@
 // src/lib/useAuth.ts
 //
-// Login email + password sederhana. Dipilih supaya admin (Nia) bisa nyari
-// user berdasarkan email pas mau aktifin langganannya secara manual dari
-// admin panel -- gak bisa dilakuin kalau usernya cuma sesi anonim.
+// Login email + password sederhana. TIDAK ADA lagi pendaftaran gratis dari
+// sisi client (lihat AuthModal.tsx) -- akun cuma dibuat lewat 2 jalur:
+//   1. Otomatis oleh api/lynk-webhook.ts begitu pembayaran Member VIP sukses.
+//   2. Manual oleh admin lewat admin.html (fallback kalau webhook gagal
+//      memproses, misal format payload Lynk berubah).
+// createUserWithEmailAndPassword sengaja TIDAK dipakai di sini lagi supaya
+// gak ada jalur "daftar sendiri, gratis" dari UI manapun di app ini.
 
 import { useEffect, useState } from "react";
 import {
   onAuthStateChanged,
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
   type User
@@ -32,10 +35,6 @@ export function useAuth() {
     return unsubscribe;
   }, []);
 
-  async function register(email: string, password: string) {
-    await createUserWithEmailAndPassword(auth, normalizeEmail(email), password);
-  }
-
   async function login(email: string, password: string) {
     await signInWithEmailAndPassword(auth, normalizeEmail(email), password);
   }
@@ -52,5 +51,5 @@ export function useAuth() {
     return auth.currentUser.getIdToken(forceRefresh);
   }
 
-  return { user, loading, register, login, logout, getIdToken };
+  return { user, loading, login, logout, getIdToken };
 }
