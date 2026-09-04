@@ -915,26 +915,26 @@ export default function App() {
         />
       )}
 
-      {/* UPGRADE / PREMIUM CHECKOUT POPUP */}
+      {/* DAFTAR MEMBER VIP (checkout Lynk.id, akun aktif otomatis lewat webhook) */}
       {showPaymentModal && (
         <PaymentModal
           onClose={() => setShowPaymentModal(false)}
-          userEmail={authUser?.email}
-          onNeedAuth={() => setShowAuthModal(true)}
+          onOpenLogin={() => {
+            setShowPaymentModal(false);
+            setShowAuthModal(true);
+          }}
         />
       )}
 
-      {/* LOGIN / DAFTAR (cuma muncul saat dibutuhkan: mau lanjut Premium, atau
-          klik "Masuk" di navbar buat member lama yang mau masuk lagi) */}
+      {/* LOGIN (cuma muncul saat dibutuhkan: mau lanjut Premium, atau klik
+          "Masuk" di navbar buat member VIP yang mau masuk lagi) */}
       {showAuthModal && (
         <AuthModal
           onClose={() => setShowAuthModal(false)}
-          contextMessage={
-            showPaymentModal
-              ? "Daftar/masuk dulu supaya admin bisa aktifin Premium ke email ini"
-              : undefined
-          }
-          initialMode={showPaymentModal ? "register" : "login"}
+          onWantVip={() => {
+            setShowAuthModal(false);
+            setShowPaymentModal(true);
+          }}
         />
       )}
     </div>
