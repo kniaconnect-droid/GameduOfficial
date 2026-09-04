@@ -1,25 +1,25 @@
 import React, { useState } from "react";
-import { X } from "lucide-react";
+import { X, Crown } from "lucide-react";
 import { useAuth } from "../lib/useAuth";
+import { LYNK_PASSWORD_PREFIX } from "../lib/constants";
 import gameduLogo from "../assets/images/logogamedu.jpeg";
 
 interface AuthModalProps {
   onClose: () => void;
   // Dipakai buat kasih tau kenapa modal ini muncul, misal habis klik "Premium".
   contextMessage?: string;
-  initialMode?: "login" | "register";
+  // Dipanggil kalau user belum punya akun & klik "Daftar Member VIP" --
+  // App.tsx yang nentuin ini artinya buka PaymentModal.
+  onWantVip: () => void;
 }
 
-// Modal login/daftar. BEDA dari AuthGate versi lama: ini nggak nge-block
-// seluruh halaman. Homepage, pilih usia, dan game trial tetap bisa diakses
-// tanpa modal ini muncul sama sekali. Modal ini cuma dipanggil pas user
-// beneran butuh akun: mau lanjut ke Premium, atau klik "Masuk" di navbar
-// (misalnya member lama yang sudah diaktifin admin, mau login lagi).
-export default function AuthModal({ onClose, contextMessage, initialMode = "register" }: AuthModalProps) {
-  const { register, login, getIdToken } = useAuth();
-  const [mode, setMode] = useState<"login" | "register">(initialMode);
-  const [name, setName] = useState("");
-  const [whatsapp, setWhatsapp] = useState("");
+// Modal LOGIN SAJA. Pendaftaran gratis sudah dihapus total dari app ini --
+// satu-satunya cara punya akun adalah checkout paket Member VIP di Lynk.id,
+// yang otomatis bikin akun & aktifin Premium lewat api/lynk-webhook.ts.
+// Modal ini cuma dipanggil pas user beneran butuh login: mau lanjut ke
+// Premium, atau klik "Masuk" di navbar buat member VIP yang mau login lagi.
+export default function AuthModal({ onClose, contextMessage, onWantVip }: AuthModalProps) {
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -30,28 +30,7 @@ export default function AuthModal({ onClose, contextMessage, initialMode = "regi
     setError(null);
     setSubmitting(true);
     try {
-      if (mode === "register") {
-        await register(email, password);
-        // Simpan nama & nomor WhatsApp ke profil user begitu akun dibuat.
-        // Nama dipakai di teks welcoming (PremiumStatusBanner), nomor
-        // WhatsApp dipakai admin buat auto-notif pas aktifin langganan
-        // (lihat api/admin-lookup.ts & public/admin.html).
-        try {
-          const token = await getIdToken();
-          if (token) {
-            await fetch("/api/user-profile", {
-              method: "POST",
-              headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-              body: JSON.stringify({ name, whatsapp })
-            });
-          }
-        } catch {
-          // Kalau gagal simpan nama/WA, biarin aja -- akun tetap kebuat,
-          // user masih bisa login normal. Nama/WA bisa dilengkapi lagi nanti.
-        }
-      } else {
-        await login(email, password);
-      }
+      await login(email, password);
       onClose();
     } catch (err: unknown) {
       setError(translateAuthError(err));
@@ -78,41 +57,10 @@ export default function AuthModal({ onClose, contextMessage, initialMode = "regi
             referrerPolicy="no-referrer"
           />
           <h1 className="text-xl font-black text-slate-900">GamEdu</h1>
-          <p className="text-sm text-slate-500 mt-1">
-            {contextMessage || (mode === "login" ? "Masuk ke akun Anda" : "Buat akun baru, gratis")}
-          </p>
+          <p className="text-sm text-slate-500 mt-1">{contextMessage || "Masuk ke akun Member VIP kamu"}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-3">
-          {mode === "register" && (
-            <>
-              <div>
-                <label className="text-xs font-bold text-slate-600 block mb-1">Nama</label>
-                <input
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  placeholder="Nama Anda"
-                />
-              </div>
-              <div>
-                <label className="text-xs font-bold text-slate-600 block mb-1">No. WhatsApp</label>
-                <input
-                  type="tel"
-                  required
-                  value={whatsapp}
-                  onChange={(e) => setWhatsapp(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  placeholder="Contoh: 6281234567890"
-                />
-                <p className="text-[10px] text-slate-400 mt-1">
-                  Dipakai admin buat notifikasi WhatsApp otomatis pas paket Premium diaktifkan.
-                </p>
-              </div>
-            </>
-          )}
           <div>
             <label className="text-xs font-bold text-slate-600 block mb-1">Email</label>
             <input
@@ -121,7 +69,7 @@ export default function AuthModal({ onClose, contextMessage, initialMode = "regi
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="nama@email.com"
+              placeholder="Email yang dipakai saat checkout"
             />
           </div>
           <div>
@@ -129,12 +77,15 @@ export default function AuthModal({ onClose, contextMessage, initialMode = "regi
             <input
               type="password"
               required
-              minLength={6}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Minimal 6 karakter"
+              placeholder={`${LYNK_PASSWORD_PREFIX} + 4 digit terakhir No. HP`}
             />
+            <p className="text-[10px] text-slate-400 mt-1">
+              Contoh: kalau No. HP kamu waktu checkout berakhiran <strong>4321</strong>, passwordnya{" "}
+              <strong>{LYNK_PASSWORD_PREFIX}4321</strong>.
+            </p>
           </div>
 
           {error && <p className="text-xs font-bold text-red-500">{error}</p>}
@@ -144,18 +95,16 @@ export default function AuthModal({ onClose, contextMessage, initialMode = "regi
             disabled={submitting}
             className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-bold rounded-xl text-sm transition-colors cursor-pointer"
           >
-            {submitting ? "Memproses..." : mode === "login" ? "Masuk" : "Daftar"}
+            {submitting ? "Memproses..." : "Masuk"}
           </button>
         </form>
 
         <button
-          onClick={() => {
-            setError(null);
-            setMode(mode === "login" ? "register" : "login");
-          }}
-          className="w-full text-center text-xs text-blue-600 font-bold mt-4 cursor-pointer"
+          onClick={onWantVip}
+          className="w-full flex items-center justify-center gap-1.5 text-center text-xs text-orange-600 font-bold mt-4 cursor-pointer"
         >
-          {mode === "login" ? "Belum punya akun? Daftar di sini" : "Sudah punya akun? Masuk"}
+          <Crown className="w-3.5 h-3.5 fill-orange-100" />
+          Belum punya akun? Daftar Member VIP
         </button>
       </div>
     </div>
@@ -165,16 +114,12 @@ export default function AuthModal({ onClose, contextMessage, initialMode = "regi
 function translateAuthError(err: unknown): string {
   const code = (err as { code?: string })?.code || "";
   switch (code) {
-    case "auth/email-already-in-use":
-      return "Email ini sudah terdaftar. Coba masuk (login) saja.";
     case "auth/invalid-email":
       return "Format email tidak valid.";
-    case "auth/weak-password":
-      return "Kata sandi terlalu pendek, minimal 6 karakter.";
     case "auth/user-not-found":
     case "auth/wrong-password":
     case "auth/invalid-credential":
-      return "Email atau kata sandi salah.";
+      return "Email atau kata sandi salah, atau akun belum aktif. Sudah checkout Member VIP?";
     default:
       return "Terjadi kesalahan. Coba lagi.";
   }

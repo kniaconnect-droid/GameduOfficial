@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Sparkles, X, Clock } from "lucide-react";
 import { ADMIN_WHATSAPP_NUMBER } from "../lib/constants";
 
@@ -11,15 +11,40 @@ interface PremiumStatusBannerProps {
 
 // Muncul otomatis pas member Premium habis login (App.tsx yang nentuin
 // kapan ditampilkan). Isinya:
-// - Teks welcoming + tanggal expired paket.
+// - Teks welcoming + tanggal & jam expired paket (live countdown, update
+//   tiap detik: sisa X hari Y jam Z menit W detik).
 // - Kalau sisa waktu <= 7 hari, ganti jadi mode "reminder" warna kuning
 //   dengan tombol cepat buat perpanjang lewat WhatsApp admin.
 const DAY_MS = 24 * 60 * 60 * 1000;
+const HOUR_MS = 60 * 60 * 1000;
+const MINUTE_MS = 60 * 1000;
 const REMINDER_THRESHOLD_DAYS = 7;
 
+function pad2(n: number): string {
+  return n.toString().padStart(2, "0");
+}
+
+function formatCountdown(msLeft: number): string {
+  if (msLeft <= 0) return "sudah habis";
+  const days = Math.floor(msLeft / DAY_MS);
+  const hours = Math.floor((msLeft % DAY_MS) / HOUR_MS);
+  const minutes = Math.floor((msLeft % HOUR_MS) / MINUTE_MS);
+  const seconds = Math.floor((msLeft % MINUTE_MS) / 1000);
+  if (days > 0) return `${days} hari ${pad2(hours)}:${pad2(minutes)}:${pad2(seconds)}`;
+  return `${pad2(hours)}:${pad2(minutes)}:${pad2(seconds)}`;
+}
+
 export default function PremiumStatusBanner({ name, premiumUntil, userEmail, onClose }: PremiumStatusBannerProps) {
-  const now = Date.now();
-  const daysLeft = Math.max(0, Math.ceil((premiumUntil - now) / DAY_MS));
+  const [now, setNow] = useState(() => Date.now());
+
+  // Update tiap detik supaya countdown-nya jalan live, bukan cuma tanggal statis.
+  useEffect(() => {
+    const interval = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const msLeft = premiumUntil - now;
+  const daysLeft = Math.max(0, Math.ceil(msLeft / DAY_MS));
   const isExpiringSoon = daysLeft <= REMINDER_THRESHOLD_DAYS;
 
   const dateLabel = new Date(premiumUntil).toLocaleDateString("id-ID", {
@@ -27,6 +52,12 @@ export default function PremiumStatusBanner({ name, premiumUntil, userEmail, onC
     month: "long",
     year: "numeric"
   });
+  const timeLabel = new Date(premiumUntil).toLocaleTimeString("id-ID", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZoneName: "short"
+  });
+  const countdownLabel = formatCountdown(msLeft);
 
   const renewWaLink = `https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${encodeURIComponent(
     `Halo Admin GamEdu, saya mau perpanjang paket premium saya sebelum habis.\nEmail akun saya: ${userEmail || "-"}`
@@ -42,14 +73,13 @@ export default function PremiumStatusBanner({ name, premiumUntil, userEmail, onC
 
       {isExpiringSoon ? (
         <span>
-          ⏰ Paket Premium <strong>{name}</strong> akan habis dalam{" "}
-          <strong>{daysLeft === 0 ? "hari ini" : `${daysLeft} hari`}</strong> (sampai {dateLabel}). Yuk perpanjang biar
-          akses game premium nggak kepotong!
+          ⏰ Paket Premium <strong>{name}</strong> akan habis dalam <strong>{countdownLabel}</strong> (sampai{" "}
+          {dateLabel} pukul {timeLabel}). Yuk perpanjang biar akses game premium nggak kepotong!
         </span>
       ) : (
         <span>
-          🎉 Selamat datang kembali, <strong>{name}</strong>! Paket Premium kamu aktif sampai{" "}
-          <strong>{dateLabel}</strong>.
+          🎉 Selamat datang kembali, <strong>{name}</strong>! Paket Premium kamu aktif sampai <strong>{dateLabel}</strong>{" "}
+          pukul <strong>{timeLabel}</strong> (sisa <strong>{countdownLabel}</strong>).
         </span>
       )}
 
