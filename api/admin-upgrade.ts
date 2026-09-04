@@ -10,11 +10,17 @@
 // kata biasa) dan disimpan di Vercel Environment Variables. Jangan pernah
 // commit ke git atau taruh di kode.
 //
-// Body: { email: string, months: number }
+// Body: { email: string, months: number, password?: string }
 // Efek: users/{uid}.premiumUntil di Firestore di-set ke (sekarang atau tanggal
 // expired lama, mana yang lebih akhir) + (months x 30 hari). Kalau user sudah
 // premium dan belum expired, otomatis DITAMBAH (bukan ditimpa) -- jadi aman
 // dipanggil berkali-kali buat perpanjangan.
+//
+// FALLBACK MANUAL: karena pendaftaran gratis sudah dihapus (akun normalnya
+// dibuat otomatis oleh api/lynk-webhook.ts), kalau email belum terdaftar
+// endpoint ini sekarang BOLEH bikin akunnya langsung asal field "password"
+// diisi (dipakai buat kasus webhook Lynk gagal memproses transaksi -- lihat
+// koleksi Firestore "webhookLogs" buat cek transaksi yang gagal otomatis).
 
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { adminAuth, db } from "./_lib/firebaseAdmin.js";
@@ -32,18 +38,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(401).json({ error: "Password admin salah atau belum diset di server." });
   }
 
-  const { email, months } = req.body || {};
+  const { email, months, password } = req.body || {};
   if (!email || !months || Number(months) <= 0) {
     return res.status(400).json({ error: "Email dan jumlah bulan wajib diisi." });
   }
 
+  const normalizedEmail = String(email).trim().toLowerCase();
   let targetUser;
   try {
-    targetUser = await adminAuth.getUserByEmail(String(email).trim().toLowerCase());
+    targetUser = await adminAuth.getUserByEmail(normalizedEmail);
   } catch {
-    return res.status(404).json({
-      error: "Email ini belum terdaftar di GamEdu. User harus daftar/login di app dulu (sekali saja), baru bisa diaktifin."
-    });
+    if (!password || String(password).length < 6) {
+      return res.status(404).json({
+        error:
+          "Email ini belum terdaftar di GamEdu. Isi field Password (minimal 6 karakter) buat sekalian bikinin akunnya, baru klik Aktifkan lagi."
+      });
+    }
+    try {
+      targetUser = await adminAuth.createUser({ email: normalizedEmail, password: String(password), emailVerified: true });
+    } catch (err) {
+      return res.status(400).json({
+        error: err instanceof Error ? `Gagal bikin akun: ${err.message}` : "Gagal bikin akun."
+      });
+    }
   }
 
   const userRef = db.collection("users").doc(targetUser.uid);
