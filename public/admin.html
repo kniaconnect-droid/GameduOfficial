@@ -49,7 +49,7 @@
 
 <div class="card">
   <div id="loginView">
-    <h1>🔐 Admin GamEdu</h1>
+    <h1>Admin GamEdu</h1>
     <p class="sub">Masukkan password admin buat lanjut.</p>
     <label>Password Admin</label>
     <input type="password" id="adminSecretInput" placeholder="Password admin">
@@ -58,7 +58,7 @@
   </div>
 
   <div id="panelView" class="hidden">
-    <h1>🎮 Aktivasi Langganan</h1>
+    <h1>Aktivasi Langganan</h1>
     <p class="sub">Normalnya akun Member VIP aktif OTOMATIS lewat webhook Lynk.id. Form ini cuma buat fallback manual (perpanjangan, atau kalau ada transaksi yang gagal diproses otomatis -- cek di bagian "Log Webhook Lynk" di bawah).</p>
 
     <label>Email User</label>
@@ -84,17 +84,17 @@
     <div id="activateStatus" class="status"></div>
 
     <button class="btn-primary" id="activateBtn" onclick="activate()">Aktifkan Langganan</button>
-    <button class="btn-secondary" id="sendWaBtn" onclick="sendWaManually()" style="display:none;">📲 Kirim Ulang Notif WA ke Pembeli</button>
-    <button class="link-btn" onclick="toggleLogs()">🧾 Lihat Log Webhook Lynk Terakhir</button>
+    <button class="btn-secondary" id="sendWaBtn" onclick="sendWaManually()" style="display:none;">Kirim Ulang Notif WA ke Pembeli</button>
+    <button class="link-btn" onclick="toggleLogs()">Lihat Log Webhook Lynk Terakhir</button>
     <button class="btn-secondary" onclick="lockAdmin()">Keluar</button>
   </div>
 </div>
 
 <div class="card wide hidden" id="logsCard">
-  <h1>🧾 Log Webhook Lynk.id</h1>
+  <h1>Log Webhook Lynk.id</h1>
   <p class="sub">20 transaksi terakhir yang masuk dari Lynk.id. Kalau ada yang berhasil ("success"), berarti sistemnya sudah jalan. Kalau ada yang gagal, buka detail JSON-nya buat lihat data mentah dari Lynk & sesuaikan pembacaan field di <code>api/lynk-webhook.ts</code> kalau perlu.</p>
   <div id="logsList"></div>
-  <button class="btn-secondary" onclick="loadLogs()">🔄 Muat Ulang</button>
+  <button class="btn-secondary" onclick="loadLogs()">Muat Ulang</button>
   <button class="btn-secondary" onclick="toggleLogs()">Tutup</button>
 </div>
 
@@ -137,14 +137,14 @@
 
       if (!res.ok) {
         if (res.status === 401) { alert("Password admin salah. Silakan masuk ulang."); lockAdmin(); return; }
-        box.textContent = "⚠️ " + (data.error || "User belum terdaftar.");
+        box.textContent = "Perhatian: " + (data.error || "User belum terdaftar.");
         return;
       }
 
       const namaLabel = data.name ? data.name : "(nama belum diisi)";
       const waLabel = data.whatsapp ? data.whatsapp : "(WA belum diisi)";
       box.textContent = namaLabel + " · WA: " + waLabel + " — " + (data.isPremiumNow
-        ? "✅ Sudah Premium sampai " + data.premiumUntilLabel + " (aktivasi baru akan ditambahkan ke tanggal ini)"
+        ? "Sudah Premium sampai " + data.premiumUntilLabel + " (aktivasi baru akan ditambahkan ke tanggal ini)"
         : "ℹ️ Belum Premium / sudah expired.");
 
       // Auto-isi nomor WA pembeli dari akun yang terdaftar, biar admin gak
@@ -170,7 +170,7 @@
 
   function buildBuyerWaLink(waNumber, monthsLabel, premiumUntilLabel) {
     const cleanNumber = waNumber.replace(/[^0-9]/g, "");
-    const msg = "Halo ka, Paket " + monthsLabel + " sudah aktif. Berlaku sampai " + premiumUntilLabel + ". Selamat belajar bareng GamEdu ya! 🎓✨";
+    const msg = "Halo ka, Paket " + monthsLabel + " sudah aktif. Berlaku sampai " + premiumUntilLabel + ". Selamat belajar bareng GamEdu ya!";
     return "https://wa.me/" + cleanNumber + "?text=" + encodeURIComponent(msg);
   }
 
@@ -205,12 +205,12 @@
 
       if (!res.ok) {
         if (res.status === 401) { alert("Password admin salah. Silakan masuk ulang."); lockAdmin(); return; }
-        statusEl.textContent = "❌ " + (data.error || "Gagal mengaktifkan.");
+        statusEl.textContent = "Gagal: " + (data.error || "Gagal mengaktifkan.");
         statusEl.className = "status err show";
         return;
       }
 
-      statusEl.textContent = "✅ Berhasil! " + data.email + " premium sampai " + data.premiumUntilLabel;
+      statusEl.textContent = "Berhasil! " + data.email + " premium sampai " + data.premiumUntilLabel;
       statusEl.className = "status ok show";
 
       // Otomatis arahkan ke WhatsApp pembeli kalau nomornya diisi.
@@ -248,7 +248,7 @@
       const data = await res.json();
       if (!res.ok) {
         if (res.status === 401) { alert("Password admin salah. Silakan masuk ulang."); lockAdmin(); return; }
-        list.innerHTML = "⚠️ " + (data.error || "Gagal memuat log.");
+        list.innerHTML = "Perhatian: " + (data.error || "Gagal memuat log.");
         return;
       }
       logsLoaded = true;
