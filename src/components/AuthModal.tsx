@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { X, Crown } from "lucide-react";
+import { X, Crown, Mail, KeyRound, MessageCircle } from "lucide-react";
 import { useAuth } from "../lib/useAuth";
-import { LYNK_PASSWORD_PREFIX } from "../lib/constants";
+import { LYNK_PASSWORD_PREFIX, ADMIN_WHATSAPP_NUMBER } from "../lib/constants";
 import gameduLogo from "../assets/images/logogamedu.jpeg";
 
 interface AuthModalProps {
@@ -58,6 +58,34 @@ export default function AuthModal({ onClose, contextMessage, onWantVip }: AuthMo
           />
           <h1 className="font-display text-xl font-semibold text-navy">GamEdu</h1>
           <p className="text-sm text-navy/50 mt-1">{contextMessage || "Masuk ke akun Member VIP kamu"}</p>
+        </div>
+
+        {/* Info cara login, biar user gak bingung nyari kombinasi email/password
+            hasil aktivasi otomatis dari checkout Lynk.id. */}
+        <div className="bg-cream border border-navy/10 rounded-2xl p-3.5 mb-5 space-y-2">
+          <div className="flex items-start gap-2">
+            <Mail className="w-3.5 h-3.5 text-gamedu-blue mt-0.5 shrink-0" />
+            <p className="text-[11px] leading-relaxed text-navy/70">
+              <strong>Email:</strong> masukkan email yang sama saat checkout.
+            </p>
+          </div>
+          <div className="flex items-start gap-2">
+            <KeyRound className="w-3.5 h-3.5 text-gamedu-blue mt-0.5 shrink-0" />
+            <p className="text-[11px] leading-relaxed text-navy/70">
+              <strong>Password:</strong> {LYNK_PASSWORD_PREFIX} + 4 digit terakhir No. HP saat checkout.
+            </p>
+          </div>
+          <a
+            href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${encodeURIComponent(
+              "Halo Admin GamEdu, saya ada kendala waktu mau login ke akun Member VIP."
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 pt-1 text-[11px] font-bold text-emerald-600 hover:text-emerald-700 transition-colors"
+          >
+            <MessageCircle className="w-3.5 h-3.5 shrink-0" />
+            Ada kendala? Chat Admin via WhatsApp
+          </a>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-3">

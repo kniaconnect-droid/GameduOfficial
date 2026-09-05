@@ -14,7 +14,6 @@ interface NavbarProps {
   onOpenAuth: () => void;
   onLogout: () => void;
 }
-
 // Menu utama disusun per kategori (Game, Worksheet, Edukasi Ortu), dan
 // masing-masing kategori punya dropdown usia (3, 4, 5 tahun) ke halaman yang
 // sesuai.
@@ -182,12 +181,19 @@ export default function Navbar({
             </button>
           )}
           {isLoggedIn ? (
-            <button
-              onClick={onLogout}
-              className="hidden sm:block text-[11px] font-bold text-navy/40 hover:text-navy px-2 py-2 transition-colors cursor-pointer"
-            >
-              Keluar
-            </button>
+            <div className="hidden sm:flex items-center gap-2">
+              {user.name && (
+                <span className="text-[11px] font-bold text-navy/50 max-w-[140px] truncate">
+                  Ayah/Bunda {user.name}
+                </span>
+              )}
+              <button
+                onClick={onLogout}
+                className="text-[11px] font-bold text-navy/40 hover:text-navy px-2 py-2 transition-colors cursor-pointer"
+              >
+                Keluar
+              </button>
+            </div>
           ) : (
             <button
               onClick={onOpenAuth}
@@ -238,31 +244,36 @@ export default function Navbar({
             Tentang Kami
           </button>
 
-          <div className="border-t border-navy/10 mt-1 pt-2 flex items-center gap-2">
-            {!user.isPremium && (
-              <button
-                onClick={() => { setMobileMenuOpen(false); onOpenPayment(); }}
-                className="flex-1 flex items-center justify-center gap-1.5 bg-coral hover:bg-coral/90 text-white px-4 py-2.5 rounded-full text-xs font-bold cursor-pointer"
-              >
-                Join VIP
-              </button>
+          <div className="border-t border-navy/10 mt-1 pt-2 flex flex-col gap-2">
+            {isLoggedIn && user.name && (
+              <p className="px-1 text-xs font-bold text-navy/50">Ayah/Bunda {user.name}</p>
             )}
-            {isLoggedIn ? (
-              <button
-                onClick={() => { setMobileMenuOpen(false); onLogout(); }}
-                className="text-xs font-bold text-navy/40 hover:text-navy px-3 py-2.5 cursor-pointer"
-              >
-                Keluar
-              </button>
-            ) : (
-              <button
-                onClick={() => { setMobileMenuOpen(false); onOpenAuth(); }}
-                className="flex-1 flex items-center justify-center gap-1.5 text-xs font-bold text-gamedu-blue hover:bg-cream px-3 py-2.5 rounded-full border border-gamedu-blue/30 cursor-pointer"
-              >
-                <LogIn className="w-3.5 h-3.5" />
-                Masuk
-              </button>
-            )}
+            <div className="flex items-center gap-2">
+              {!user.isPremium && (
+                <button
+                  onClick={() => { setMobileMenuOpen(false); onOpenPayment(); }}
+                  className="flex-1 flex items-center justify-center gap-1.5 bg-coral hover:bg-coral/90 text-white px-4 py-2.5 rounded-full text-xs font-bold cursor-pointer"
+                >
+                  Join VIP
+                </button>
+              )}
+              {isLoggedIn ? (
+                <button
+                  onClick={() => { setMobileMenuOpen(false); onLogout(); }}
+                  className="text-xs font-bold text-navy/40 hover:text-navy px-3 py-2.5 cursor-pointer"
+                >
+                  Keluar
+                </button>
+              ) : (
+                <button
+                  onClick={() => { setMobileMenuOpen(false); onOpenAuth(); }}
+                  className="flex-1 flex items-center justify-center gap-1.5 text-xs font-bold text-gamedu-blue hover:bg-cream px-3 py-2.5 rounded-full border border-gamedu-blue/30 cursor-pointer"
+                >
+                  <LogIn className="w-3.5 h-3.5" />
+                  Masuk
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}

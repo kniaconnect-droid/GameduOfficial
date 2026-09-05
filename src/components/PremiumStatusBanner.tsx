@@ -73,12 +73,12 @@ export default function PremiumStatusBanner({ name, premiumUntil, userEmail, onC
 
       {isExpiringSoon ? (
         <span>
-          Paket VIP <strong>{name}</strong> akan habis dalam <strong>{countdownLabel}</strong> (sampai{" "}
+          Paket VIP <strong>Ayah/Bunda {name}</strong> akan habis dalam <strong>{countdownLabel}</strong> (sampai{" "}
           {dateLabel} pukul {timeLabel}). Yuk perpanjang biar akses game VIP nggak kepotong!
         </span>
       ) : (
         <span>
-          Selamat datang kembali, <strong>{name}</strong>! Paket VIP kamu aktif sampai <strong>{dateLabel}</strong>{" "}
+          Selamat datang kembali, <strong>Ayah/Bunda {name}</strong>! Paket VIP kamu aktif sampai <strong>{dateLabel}</strong>{" "}
           pukul <strong>{timeLabel}</strong> (sisa <strong>{countdownLabel}</strong>).
         </span>
       )}
