@@ -277,7 +277,7 @@ export default function App() {
       id: "berhitung_ceria",
       name: "Berhitung Ceria",
       ageRange: "3 Tahun",
-      premium: false,
+      premium: true,
       description: "Cocokkan angka 1–5 dengan jumlah benda pada gambar asli yang ceria. Melatih pengenalan angka awal dan konsentrasi anak lewat 5 soal interaktif.",
       coverImage: berhitungCeriaCover
     },
@@ -346,14 +346,6 @@ export default function App() {
       coverImage: mencocokkanAlatInderaCover
     },
     {
-      id: "berburu_angka_1_10",
-      name: "Berburu Angka 1-10",
-      ageRange: "4 Tahun",
-      premium: false,
-      description: "Tangkap buah terbang sesuai angka target dari 1 sampai 10. Melatih pengenalan angka, urutan berhitung, dan konsentrasi motorik anak usia 4 tahun.",
-      coverImage: berburuAngka1_10Cover
-    },
-    {
       id: "berburu_angka_6_10",
       name: "Berburu Angka 6-10",
       ageRange: "4 Tahun",
@@ -362,19 +354,27 @@ export default function App() {
       coverImage: berburuAngka6_10Cover
     },
     {
-      id: "mengenal_3warna_merah_kuning_biru_2gambar",
-      name: "Mengenal 3 Warna (Merah, Kuning, Biru) - 2 Gambar",
+      id: "berburu_angka_1_10",
+      name: "Berburu Angka 1-10",
       ageRange: "4 Tahun",
       premium: true,
+      description: "Tangkap buah terbang sesuai angka target dari 1 sampai 10. Melatih pengenalan angka, urutan berhitung, dan konsentrasi motorik anak usia 4 tahun.",
+      coverImage: berburuAngka1_10Cover
+    },
+    {
+      id: "mengenal_3warna_merah_kuning_biru_2gambar",
+      name: "Mengenal 3 Warna (Merah, Kuning, Biru) - 2 Gambar",
+      ageRange: "3 Tahun",
+      premium: false,
       description: "Dengarkan suara lalu sentuh warna yang benar dari 2 pilihan gambar. Melatih pengenalan warna merah, kuning, dan biru lewat instruksi suara yang interaktif.",
       coverImage: mengenal3WarnaCover
     },
     {
       id: "mengenal_3warna_merah_kuning_biru_3gambar",
       name: "Mengenal 3 Warna (Merah, Kuning, Biru) - 3 Gambar",
-      ageRange: "4 Tahun",
+      ageRange: "3 Tahun",
       premium: true,
-      description: "Dengarkan suara lalu sentuh warna yang benar dari 3 pilihan gambar. Level lanjutan dengan lebih banyak pilihan untuk mengasah pengenalan warna merah, kuning, dan biru serta konsentrasi anak usia 4 tahun.",
+      description: "Dengarkan suara lalu sentuh warna yang benar dari 3 pilihan gambar. Level lanjutan dengan lebih banyak pilihan untuk mengasah pengenalan warna merah, kuning, dan biru serta konsentrasi anak usia 3 tahun.",
       coverImage: mengenal3Warna3GambarCover
     },
     {
@@ -413,7 +413,7 @@ export default function App() {
       id: "tarik_garis_angka_1_5",
       name: "Tarik Garis Angka 1-5",
       ageRange: "4 Tahun",
-      premium: true,
+      premium: false,
       description: "Tarik garis dari angka ke gambar dengan jumlah benda yang sesuai. Melatih koordinasi motorik halus dan pengenalan angka 1 sampai 5 lewat 5 ronde interaktif.",
       coverImage: tarikGarisAngka1_5Cover
     },
@@ -453,7 +453,7 @@ export default function App() {
       id: "aku_istimewa_advance",
       name: "Aku Istimewa - Ayo Kenali Alat Indera di Wajahmu!",
       ageRange: "5 Tahun",
-      premium: false,
+      premium: true,
       description: "Latihan lengkap 4 level: sentuh anggota wajah, tebak yang ditunjuk, cocokkan nama alat indera, dan kenali fungsinya, persiapan matang sebelum masuk SD.",
       coverImage: akuIstimewaAdvanceCover
     },
@@ -461,7 +461,7 @@ export default function App() {
       id: "tunjuk_angka_1_5_3gambar",
       name: "Tunjuk sesuai angka (3 gambar)",
       ageRange: "5 Tahun",
-      premium: true,
+      premium: false,
       description: "Dengarkan suara angka lalu sentuh gambar angka yang benar di antara 3 pilihan. Melatih pengenalan angka 1–5 dan konsentrasi mendengarkan anak.",
       coverImage: tunjukAngka1_5_3GambarCover
     },
