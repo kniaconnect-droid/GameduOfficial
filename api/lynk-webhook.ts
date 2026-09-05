@@ -81,11 +81,39 @@ function pick(obj: unknown, paths: string[]): unknown {
 }
 
 function extractLynkFields(body: Record<string, unknown>): ExtractedFields {
-  const refId = pick(body, ["refId", "ref_id", "data.refId", "data.ref_id"]);
-  const amount = pick(body, ["grandTotal", "grand_total", "amount", "data.grandTotal", "data.amount", "total"]);
-  const messageId = pick(body, ["message_id", "messageId", "data.message_id", "data.messageId", "id"]);
+  // Struktur ASLI dari transaksi sungguhan (dicek langsung dari webhookLogs,
+  // 5 Sep 2026): { event, data: { message_id, message_data: { refId, customer:
+  // { email, name, phone }, items: [{ title, price, qty }], totals:
+  // { grandTotal, totalPrice, ... } } } }. Kandidat lama dipertahankan di
+  // bawah sebagai fallback kalau Lynk pernah ngirim bentuk lain buat event
+  // selain "payment.received".
+  const refId = pick(body, [
+    "data.message_data.refId",
+    "refId",
+    "ref_id",
+    "data.refId",
+    "data.ref_id"
+  ]);
+  const amount = pick(body, [
+    "data.message_data.totals.grandTotal",
+    "data.message_data.totals.totalPrice",
+    "grandTotal",
+    "grand_total",
+    "amount",
+    "data.grandTotal",
+    "data.amount",
+    "total"
+  ]);
+  const messageId = pick(body, [
+    "data.message_id",
+    "message_id",
+    "messageId",
+    "data.messageId",
+    "id"
+  ]);
 
   const email = pick(body, [
+    "data.message_data.customer.email",
     "buyer.email",
     "buyer_email",
     "email",
@@ -96,6 +124,7 @@ function extractLynkFields(body: Record<string, unknown>): ExtractedFields {
   ]);
 
   const phone = pick(body, [
+    "data.message_data.customer.phone",
     "buyer.phone",
     "buyer.no_hp",
     "buyer.whatsapp",
@@ -110,6 +139,7 @@ function extractLynkFields(body: Record<string, unknown>): ExtractedFields {
   ]);
 
   const productTitle = pick(body, [
+    "data.message_data.items.0.title",
     "product.name",
     "product.title",
     "product_name",
@@ -123,7 +153,14 @@ function extractLynkFields(body: Record<string, unknown>): ExtractedFields {
     "data.product_name"
   ]);
 
-  const buyerName = pick(body, ["buyer.name", "buyer_name", "customer.name", "customer_name", "data.buyer.name"]);
+  const buyerName = pick(body, [
+    "data.message_data.customer.name",
+    "buyer.name",
+    "buyer_name",
+    "customer.name",
+    "customer_name",
+    "data.buyer.name"
+  ]);
 
   return {
     refId: refId != null ? String(refId) : null,
