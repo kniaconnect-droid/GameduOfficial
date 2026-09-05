@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, Crown, Mail, KeyRound, MessageCircle } from "lucide-react";
+import { X, Crown, Mail, KeyRound, MessageCircle, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../lib/useAuth";
 import { LYNK_PASSWORD_PREFIX, ADMIN_WHATSAPP_NUMBER } from "../lib/constants";
 import gameduLogo from "../assets/images/logogamedu.jpeg";
@@ -22,6 +22,7 @@ export default function AuthModal({ onClose, contextMessage, onWantVip }: AuthMo
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -72,7 +73,8 @@ export default function AuthModal({ onClose, contextMessage, onWantVip }: AuthMo
           <div className="flex items-start gap-2">
             <KeyRound className="w-3.5 h-3.5 text-gamedu-blue mt-0.5 shrink-0" />
             <p className="text-[11px] leading-relaxed text-navy/70">
-              <strong>Password:</strong> {LYNK_PASSWORD_PREFIX} + 4 digit terakhir No. HP saat checkout.
+              <strong>Password:</strong> {LYNK_PASSWORD_PREFIX} + 4 digit terakhir No. HP saat checkout (contoh:{" "}
+              <strong>{LYNK_PASSWORD_PREFIX}1234</strong>).
             </p>
           </div>
           <a
@@ -102,14 +104,24 @@ export default function AuthModal({ onClose, contextMessage, onWantVip }: AuthMo
           </div>
           <div>
             <label className="text-xs font-bold text-navy/60 block mb-1">Kata Sandi</label>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-navy/15 text-sm focus:outline-none focus:ring-2 focus:ring-gamedu-blue/40"
-              placeholder={`${LYNK_PASSWORD_PREFIX} + 4 digit terakhir No. HP`}
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-3 pr-11 rounded-xl border border-navy/15 text-sm focus:outline-none focus:ring-2 focus:ring-gamedu-blue/40"
+                placeholder={`${LYNK_PASSWORD_PREFIX} + 4 digit terakhir No. HP`}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? "Sembunyikan kata sandi" : "Lihat kata sandi"}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-navy/40 hover:text-navy transition-colors cursor-pointer"
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
             <p className="text-[10px] text-navy/40 mt-1">
               Contoh: kalau No. HP kamu waktu checkout berakhiran <strong>4321</strong>, passwordnya{" "}
               <strong>{LYNK_PASSWORD_PREFIX}4321</strong>.
