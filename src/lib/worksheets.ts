@@ -94,7 +94,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg3thnCocokkanPotonganGambar,
     ageRange: "3",
-    premium: false,
+    premium: true,
   },
   {
     id: "usia3_kenali_kendaraan",
@@ -103,7 +103,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "pengetahuan-umum",
     thumbnail: wsImg3thnKenaliKendaraan,
     ageRange: "3",
-    premium: false,
+    premium: true,
   },
   {
     id: "usia3_susun_roket",
@@ -175,7 +175,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg3thnManaYangBerbeda,
     ageRange: "3",
-    premium: true,
+    premium: false,
   },
   {
     id: "usia3_mengenal_diriku",
@@ -211,7 +211,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg3thnPersepsiVisual,
     ageRange: "3",
-    premium: true,
+    premium: false,
   },
   {
     id: "usia3_puzzle_gambar",
@@ -228,7 +228,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     description: "Lembar aktivitas \"Aktivitas Gunting Tempel Urutan Sebelum Makan Anak Laki-laki\" untuk melatih kemampuan anak usia 4-5 tahun.",
     category: "kemandirian",
     thumbnail: wsImg45thnAktivitasGuntingTempelUrutanSebelumMakanAnakLakiLaki,
-    ageRange: "4,5",
+    ageRange: "5",
     premium: false,
   },
   {
@@ -238,7 +238,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kemandirian",
     thumbnail: wsImg45thnAktivitasGuntingTempelUrutanSebelumMakanAnakPerempuan,
     ageRange: "4,5",
-    premium: false,
+    premium: true,
   },
   {
     id: "usia4_5_urutan_sebelum_makan_anak_laki_laki",
@@ -327,8 +327,8 @@ export const WORKSHEETS: WorksheetItem[] = [
     description: "Lembar aktivitas \"Cocokkan Bentuknya\" untuk melatih kemampuan anak usia 4-6 tahun.",
     category: "kognitif",
     thumbnail: wsImg46thnCocokKanBentuknya,
-    ageRange: "4,5,6",
-    premium: true,
+    ageRange: "5",
+    premium: false,
   },
   {
     id: "usia4_6_cari_pasangannya",
@@ -391,7 +391,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg4thnCariPerbedaan,
     ageRange: "4",
-    premium: true,
+    premium: false,
   },
   {
     id: "usia4_latihan_fokus",
@@ -436,7 +436,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg4thnTemukanPolaYangSama,
     ageRange: "4",
-    premium: true,
+    premium: false,
   },
   {
     id: "usia5_6_cocok_kan_gambar_yang_sama",
