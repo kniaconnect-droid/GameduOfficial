@@ -234,6 +234,18 @@ export default function App() {
   // habis login / habis profil ke-load kalau statusnya masih Premium.
   const [showPremiumBanner, setShowPremiumBanner] = useState(false);
 
+  // Habis checkout sukses di Lynk.id, redirect URL diarahkan ke
+  // "https://gameduofficial.vercel.app/?masuk=1" -- begitu balik ke web,
+  // form login langsung kebuka otomatis (gak perlu klik menu "Masuk" lagi).
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get("masuk") === "1") {
+      setShowAuthModal(true);
+      navigate(location.pathname, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Reset posisi scroll ke paling atas tiap kali pindah halaman/URL. Tanpa
   // ini, posisi scroll-Y lama kebawa ke halaman baru -- jadi kalau user lagi
   // scroll ke bawah di satu halaman lalu klik tombol pindah halaman (mis.
