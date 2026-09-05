@@ -262,7 +262,7 @@ export default function App() {
       id: "berhitung_ceria",
       name: "Berhitung Ceria",
       ageRange: "3 Tahun",
-      premium: true,
+      premium: false,
       description: "Cocokkan angka 1–5 dengan jumlah benda pada gambar asli yang ceria. Melatih pengenalan angka awal dan konsentrasi anak lewat 5 soal interaktif.",
       coverImage: berhitungCeriaCover
     },
@@ -334,7 +334,7 @@ export default function App() {
       id: "berburu_angka_1_10",
       name: "Berburu Angka 1-10",
       ageRange: "4 Tahun",
-      premium: true,
+      premium: false,
       description: "Tangkap buah terbang sesuai angka target dari 1 sampai 10. Melatih pengenalan angka, urutan berhitung, dan konsentrasi motorik anak usia 4 tahun.",
       coverImage: berburuAngka1_10Cover
     },
@@ -438,7 +438,7 @@ export default function App() {
       id: "aku_istimewa_advance",
       name: "Aku Istimewa - Ayo Kenali Alat Indera di Wajahmu!",
       ageRange: "5 Tahun",
-      premium: true,
+      premium: false,
       description: "Latihan lengkap 4 level: sentuh anggota wajah, tebak yang ditunjuk, cocokkan nama alat indera, dan kenali fungsinya, persiapan matang sebelum masuk SD.",
       coverImage: akuIstimewaAdvanceCover
     },
