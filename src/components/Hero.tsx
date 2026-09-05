@@ -31,7 +31,7 @@ export default function Hero({ onStartLearning }: HeroProps) {
             </div>
           </div>
 
-          <p className="text-base sm:text-lg text-slate-500 leading-relaxed max-w-xl mx-auto lg:mx-0">
+          <p className="text-xl sm:text-2xl font-bold leading-snug max-w-xl mx-auto lg:mx-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
             GamEdu menghadirkan game edukatif, worksheet interaktif, dan panduan untuk orang tua agar proses belajar anak jadi lebih seru, terarah, dan sesuai tahap perkembangannya.
           </p>
 

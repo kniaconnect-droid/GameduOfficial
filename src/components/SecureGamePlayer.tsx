@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { X, Play, RefreshCw, Star, Trophy, Sparkles } from "lucide-react";
+import { X, Play, RefreshCw, Star, Trophy, Sparkles, Gamepad2, CheckCircle2 } from "lucide-react";
 import Watermark from "./Watermark";
 
 interface SecureGamePlayerProps {
@@ -149,7 +149,7 @@ export default function SecureGamePlayer({
         {/* Iframe Top Header bar */}
         <div className="bg-slate-900 px-6 py-4 flex items-center justify-between border-b border-slate-800 text-white select-none">
           <div className="flex items-center gap-3">
-            <span className="text-xl">🎮</span>
+            <Gamepad2 className="w-5 h-5" />
             <div>
               <h3 className="font-bold text-sm tracking-tight">{gameName}</h3>
               <p className="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
@@ -186,7 +186,7 @@ export default function SecureGamePlayer({
             <div className="absolute inset-0 z-40 flex flex-col items-center justify-center bg-slate-950 text-white space-y-4">
               <div className="relative w-16 h-16 flex items-center justify-center">
                 <div className="absolute inset-0 border-4 border-t-blue-500 border-r-transparent border-l-transparent border-b-transparent rounded-full animate-spin"></div>
-                <span className="text-2xl animate-pulse">🎮</span>
+                <Gamepad2 className="w-6 h-6 animate-pulse" />
               </div>
               <div className="text-center space-y-1">
                 <p className="text-sm font-bold">Memuat Game Edukasi Aman...</p>
@@ -226,8 +226,8 @@ export default function SecureGamePlayer({
           {completedStats && (
             <div className="absolute inset-0 z-30 bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-6 text-center select-none animate-fade-in">
               <div className="max-w-md w-full bg-white rounded-[32px] p-8 space-y-6 shadow-2xl border border-slate-200/80 text-slate-900">
-                <div className="w-16 h-16 rounded-2xl bg-amber-100 flex items-center justify-center text-amber-500 text-3xl mx-auto animate-bounce shadow-md">
-                  🏆
+                <div className="w-16 h-16 rounded-2xl bg-amber-100 flex items-center justify-center text-amber-500 mx-auto animate-bounce shadow-md">
+                  <Trophy className="w-8 h-8" />
                 </div>
                 
                 <div className="space-y-2">
@@ -258,15 +258,17 @@ export default function SecureGamePlayer({
                       setCompletedStats(null);
                       restartGame();
                     }}
-                    className="flex-1 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-2xl text-xs transition-colors cursor-pointer"
+                    className="flex-1 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-2xl text-xs transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                   >
-                    Main Lagi 🔄
+                    <RefreshCw className="w-3.5 h-3.5" />
+                    Main Lagi
                   </button>
                   <button
                     onClick={onClose}
-                    className="flex-1 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl text-xs shadow-lg shadow-blue-500/20 transition-all hover:scale-105 cursor-pointer"
+                    className="flex-1 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl text-xs shadow-lg shadow-blue-500/20 transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-1.5"
                   >
-                    Tutup & Simpan 📊
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    Tutup & Simpan
                   </button>
                 </div>
               </div>

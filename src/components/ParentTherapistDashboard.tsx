@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { UserProfile, CustomNote } from "../types";
-import { X, Calendar, Activity, BookOpen, PenTool, CheckCircle, FileDown, PlusCircle } from "lucide-react";
+import { X, Calendar, Activity, BookOpen, PenTool, CheckCircle, FileDown, PlusCircle, Target, TrendingUp, Lightbulb, FileText, Package } from "lucide-react";
 
 interface ParentTherapistDashboardProps {
   user: UserProfile;
@@ -64,7 +64,7 @@ export default function ParentTherapistDashboard({
         {/* Header */}
         <div className="bg-slate-900 p-6 flex items-center justify-between text-white border-b border-slate-200/10">
           <div className="flex items-center gap-3">
-            <span className="text-2xl">📊</span>
+            <Activity className="w-6 h-6" />
             <div>
               <h2 className="text-xl font-bold tracking-tight">
                 Dashboard {user.role === "parent" ? "Orang Tua" : user.role === "teacher" ? "Sekolah & Guru" : "Klinik Terapis"}
@@ -86,8 +86,8 @@ export default function ParentTherapistDashboard({
           {/* STATS OVERVIEW CARDS */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 text-xl font-bold">
-                🎯
+              <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+                <Target className="w-6 h-6" />
               </div>
               <div>
                 <span className="text-[10px] uppercase font-bold text-slate-400 block">Total Skor Dafa</span>
@@ -96,8 +96,8 @@ export default function ParentTherapistDashboard({
             </div>
 
             <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 text-xl font-bold">
-                📈
+              <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+                <TrendingUp className="w-6 h-6" />
               </div>
               <div>
                 <span className="text-[10px] uppercase font-bold text-slate-400 block">Aktivitas Bermain</span>
@@ -106,8 +106,8 @@ export default function ParentTherapistDashboard({
             </div>
 
             <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 text-xl font-bold">
-                💡
+              <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
+                <Lightbulb className="w-6 h-6" />
               </div>
               <div>
                 <span className="text-[10px] uppercase font-bold text-slate-400 block">Skor Kesalahan Rata-rata</span>
@@ -253,9 +253,9 @@ export default function ParentTherapistDashboard({
                       <div>
                         <h4 className="text-xs font-bold text-slate-800 leading-tight">{ws.name}</h4>
                         <div className="flex items-center gap-2 text-[10px] text-slate-400 font-bold mt-1">
-                          <span>📄 {ws.pages} Halaman</span>
+                          <span className="flex items-center gap-1"><FileText className="w-3 h-3" /> {ws.pages} Halaman</span>
                           <span>•</span>
-                          <span>📦 {ws.size}</span>
+                          <span className="flex items-center gap-1"><Package className="w-3 h-3" /> {ws.size}</span>
                         </div>
                       </div>
 

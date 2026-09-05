@@ -2,6 +2,16 @@ import React, { useState } from "react";
 import { Download, Lock, Sparkles, Loader2, CheckCircle2, Clock } from "lucide-react";
 import { WORKSHEETS, WORKSHEET_CATEGORIES, WorksheetItem } from "../lib/worksheets";
 
+// 2 worksheet pertama tiap kategori usia bisa didownload gratis tanpa VIP.
+// ID ini HARUS sinkron dengan flag `premium: false` di
+// api/_lib/worksheetsCatalog.ts (sumber kebenaran proteksi di server).
+const FREE_WORKSHEET_IDS = new Set([
+  "usia3_cocokkan_potongan_gambar",
+  "usia3_kenali_kendaraan",
+  "usia4_5_aktivitas_gunting_tempel_urutan_sebelum_makan_anak_laki_laki",
+  "usia4_5_aktivitas_gunting_tempel_urutan_sebelum_makan_anak_perempuan"
+]);
+
 interface WorksheetCatalogProps {
   age: number;
   isPremiumUser: boolean;
@@ -32,7 +42,7 @@ export default function WorksheetCatalog({
     // Lapis pertahanan client: kalau belum premium, arahkan ke alur upgrade
     // dulu (sama pola kayak game premium). Proteksi utama tetap di server
     // (api/worksheets/[worksheetId].ts).
-    if (!isPremiumUser) {
+    if (!isPremiumUser && !FREE_WORKSHEET_IDS.has(item.id)) {
       if (!isLoggedIn) {
         onNeedAuth();
       }
@@ -97,7 +107,7 @@ export default function WorksheetCatalog({
               className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg shadow-orange-100 hover:scale-105 transition-all cursor-pointer self-start sm:self-center"
             >
               <Sparkles className="w-4 h-4 fill-current" />
-              Coba Premium untuk Download
+              Join VIP untuk Download
             </button>
           )}
         </div>
@@ -126,7 +136,7 @@ export default function WorksheetCatalog({
                 <h3 className="text-lg font-bold text-slate-800">{meta.label}</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {items.map((item) => {
-                  const isLocked = !isPremiumUser;
+                  const isLocked = !isPremiumUser && !FREE_WORKSHEET_IDS.has(item.id);
                   const isDownloading = downloadingId === item.id;
                   const isDone = doneId === item.id;
 
@@ -155,6 +165,11 @@ export default function WorksheetCatalog({
                         <span className="absolute top-3 left-3 text-[9px] font-black uppercase tracking-wider bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full text-slate-800 shadow-sm">
                           PNG · Siap Cetak
                         </span>
+                        {!isLocked && !isPremiumUser && (
+                          <span className="absolute top-3 right-3 text-[9px] font-black uppercase tracking-wider bg-emerald-500 px-2.5 py-1 rounded-full text-white shadow-sm">
+                            Gratis
+                          </span>
+                        )}
                       </div>
 
                       <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">

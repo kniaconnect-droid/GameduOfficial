@@ -15,16 +15,31 @@ interface NavbarProps {
   onLogout: () => void;
 }
 
-// Menu usia: setiap usia punya dropdown ke Game - Worksheet - Materi
-// (urutan disamakan dengan urutan kartu di halaman Kategori Usia).
-const AGE_MENU = [3, 4, 5].map((age) => ({
-  age,
-  label: `Usia ${age} Tahun`,
-  items: [
-    { label: "Game", path: `/kategoriusia/${age}/katalog-game` },
-    { label: "Worksheet", path: `/kategoriusia/${age}/worksheet` },
-    { label: "Materi", path: `/kategoriusia/${age}/materi` }
-  ]
+// Menu utama disusun per kategori (Game, Worksheet, Edukasi Ortu), dan
+// masing-masing kategori punya dropdown usia (3, 4, 5 tahun) ke halaman yang
+// sesuai.
+const CATEGORY_MENU = [
+  {
+    key: "game",
+    label: "Game",
+    pathSuffix: "katalog-game"
+  },
+  {
+    key: "worksheet",
+    label: "Worksheet",
+    pathSuffix: "worksheet"
+  },
+  {
+    key: "edukasi-ortu",
+    label: "Edukasi Ortu",
+    pathSuffix: "materi"
+  }
+].map((cat) => ({
+  ...cat,
+  items: [3, 4, 5].map((age) => ({
+    label: `Usia ${age} Tahun`,
+    path: `/kategoriusia/${age}/${cat.pathSuffix}`
+  }))
 }));
 
 export default function Navbar({
@@ -38,7 +53,7 @@ export default function Navbar({
   onLogout
 }: NavbarProps) {
   const navigate = useNavigate();
-  const [openAgeMenu, setOpenAgeMenu] = useState<number | null>(null);
+  const [openCategoryMenu, setOpenCategoryMenu] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Navigasi ke anchor section di Beranda. Kalau lagi bukan di Beranda,
@@ -57,7 +72,7 @@ export default function Navbar({
 
   const goTo = (path: string) => {
     setMobileMenuOpen(false);
-    setOpenAgeMenu(null);
+    setOpenCategoryMenu(null);
     navigate(path);
   };
 
@@ -104,35 +119,22 @@ export default function Navbar({
           >
             Beranda
           </button>
-          <button
-            onClick={() => goToSection("manfaat-gamedu")}
-            className="px-3 py-2 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 transition-colors cursor-pointer"
-          >
-            Why Gamedu
-          </button>
-          <button
-            onClick={() => goToSection("tentang-kami")}
-            className="px-3 py-2 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 transition-colors cursor-pointer"
-          >
-            Tentang Kami
-          </button>
-
-          {AGE_MENU.map(({ age, label, items }) => (
+          {CATEGORY_MENU.map(({ key, label, items }) => (
             <div
-              key={age}
+              key={key}
               className="relative"
-              onMouseEnter={() => setOpenAgeMenu(age)}
-              onMouseLeave={() => setOpenAgeMenu((cur) => (cur === age ? null : cur))}
+              onMouseEnter={() => setOpenCategoryMenu(key)}
+              onMouseLeave={() => setOpenCategoryMenu((cur) => (cur === key ? null : cur))}
             >
               <button
-                onClick={() => setOpenAgeMenu((cur) => (cur === age ? null : age))}
+                onClick={() => setOpenCategoryMenu((cur) => (cur === key ? null : key))}
                 className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 transition-colors cursor-pointer"
               >
                 {label}
                 <ChevronDown className="w-3.5 h-3.5" />
               </button>
 
-              {openAgeMenu === age && (
+              {openCategoryMenu === key && (
                 <div className="absolute top-full left-0 pt-2 min-w-[160px]">
                   <div className="bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-blue-100 overflow-hidden py-1">
                     {items.map((item) => (
@@ -149,6 +151,19 @@ export default function Navbar({
               )}
             </div>
           ))}
+
+          <button
+            onClick={() => goToSection("manfaat-gamedu")}
+            className="px-3 py-2 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 transition-colors cursor-pointer"
+          >
+            Why Gamedu
+          </button>
+          <button
+            onClick={() => goToSection("tentang-kami")}
+            className="px-3 py-2 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 transition-colors cursor-pointer"
+          >
+            Tentang Kami
+          </button>
         </div>
 
         {/* Kanan: Premium Status / Upgrade + Login + Hamburger (mobile) */}
@@ -164,7 +179,7 @@ export default function Navbar({
               className="hidden sm:flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-orange-100 hover:shadow-orange-200 transition-all hover:scale-105 cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5 fill-white text-white" />
-              Coba Premium
+              Join VIP
             </button>
           )}
           {isLoggedIn ? (
@@ -201,15 +216,9 @@ export default function Navbar({
           <button onClick={() => goTo("/")} className="text-left px-3 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer">
             Beranda
           </button>
-          <button onClick={() => goToSection("manfaat-gamedu")} className="text-left px-3 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer">
-            Why Gamedu
-          </button>
-          <button onClick={() => goToSection("tentang-kami")} className="text-left px-3 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer">
-            Tentang Kami
-          </button>
 
-          {AGE_MENU.map(({ age, label, items }) => (
-            <div key={age} className="border-t border-blue-100/70 pt-1">
+          {CATEGORY_MENU.map(({ key, label, items }) => (
+            <div key={key} className="border-t border-blue-100/70 pt-1">
               <p className="px-3 py-1.5 text-xs font-black text-slate-400 uppercase tracking-wider">{label}</p>
               {items.map((item) => (
                 <button
@@ -223,6 +232,13 @@ export default function Navbar({
             </div>
           ))}
 
+          <button onClick={() => goToSection("manfaat-gamedu")} className="text-left px-3 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer border-t border-blue-100/70 mt-1">
+            Why Gamedu
+          </button>
+          <button onClick={() => goToSection("tentang-kami")} className="text-left px-3 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer">
+            Tentang Kami
+          </button>
+
           <div className="border-t border-blue-100/70 mt-1 pt-2 flex items-center gap-2">
             {!user.isPremium && (
               <button
@@ -230,7 +246,7 @@ export default function Navbar({
                 className="flex-1 flex items-center justify-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold cursor-pointer"
               >
                 <Sparkles className="w-3.5 h-3.5 fill-white text-white" />
-                Coba Premium
+                Join VIP
               </button>
             )}
             {isLoggedIn ? (
