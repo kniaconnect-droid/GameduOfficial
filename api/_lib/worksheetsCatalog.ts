@@ -26,14 +26,14 @@ export const WORKSHEETS_CATALOG: WorksheetCatalogEntry[] = [
     id: "usia3_cocokkan_potongan_gambar",
     title: "Cocokkan Potongan Gambar",
     category: "kognitif",
-    premium: true,
+    premium: false,
     fileName: "usia3_cocokkan_potongan_gambar.png",
   },
   {
     id: "usia3_kenali_kendaraan",
     title: "Kenali Kendaraan",
     category: "pengetahuan-umum",
-    premium: true,
+    premium: false,
     fileName: "usia3_kenali_kendaraan.png",
   },
   {
@@ -132,14 +132,14 @@ export const WORKSHEETS_CATALOG: WorksheetCatalogEntry[] = [
     id: "usia4_5_aktivitas_gunting_tempel_urutan_sebelum_makan_anak_laki_laki",
     title: "Aktivitas Gunting Tempel Urutan Sebelum Makan Anak Laki-laki",
     category: "kemandirian",
-    premium: true,
+    premium: false,
     fileName: "usia4_5_aktivitas_gunting_tempel_urutan_sebelum_makan_anak_laki_laki.png",
   },
   {
     id: "usia4_5_aktivitas_gunting_tempel_urutan_sebelum_makan_anak_perempuan",
     title: "Aktivitas Gunting Tempel Urutan Sebelum Makan Anak Perempuan",
     category: "kemandirian",
-    premium: true,
+    premium: false,
     fileName: "usia4_5_aktivitas_gunting_tempel_urutan_sebelum_makan_anak_perempuan.png",
   },
   {

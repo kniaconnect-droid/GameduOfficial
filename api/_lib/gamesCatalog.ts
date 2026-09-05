@@ -32,7 +32,7 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     id: "berhitung_ceria",
     name: "Berhitung Ceria",
     ageRange: "3 Tahun",
-    premium: true,
+    premium: false,
   },
   {
     id: "susun_huruf_anggota_tubuh",
@@ -86,7 +86,7 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     id: "berburu_angka_1_10",
     name: "Berburu Angka 1-10",
     ageRange: "4 Tahun",
-    premium: true,
+    premium: false,
   },
   {
     id: "berburu_angka_6_10",
@@ -158,7 +158,7 @@ export const GAMES_CATALOG: GameCatalogEntry[] = [
     id: "aku_istimewa_advance",
     name: "Aku Istimewa - Ayo Kenali Alat Indera di Wajahmu!",
     ageRange: "5 Tahun",
-    premium: true,
+    premium: false,
   },
   {
     id: "tunjuk_angka_1_5_3gambar",
