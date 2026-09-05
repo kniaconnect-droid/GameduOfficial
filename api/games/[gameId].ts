@@ -98,7 +98,8 @@ function renderLockScreen(game: { name: string; ageRange: string }): string {
           border-radius: 28px; border: 2px solid rgba(255, 224, 130, 0.35);
           box-shadow: 0 20px 50px rgba(0,0,0,0.5); backdrop-filter: blur(8px);
         }
-        .icon { font-size: 5rem; margin-bottom: 20px; animation: bounce 2s infinite; }
+        .icon { display: flex; justify-content: center; color: #ffe066; margin-bottom: 20px; animation: bounce 2s infinite; }
+        .icon svg { width: 4.5rem; height: 4.5rem; }
         h2 { color: #ffe066; margin: 0 0 12px; font-size: 1.8rem; }
         p { font-size: 1rem; color: #cbd5e1; margin-bottom: 30px; line-height: 1.5; }
         button {
@@ -113,7 +114,7 @@ function renderLockScreen(game: { name: string; ageRange: string }): string {
     </head>
     <body>
       <div class="lock-card">
-        <div class="icon">🔒</div>
+        <div class="icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
         <h2>Game Premium GamEdu</h2>
         <p><strong>"${game.name}"</strong> adalah game eksklusif premium untuk merangsang kognitif anak usia ${game.ageRange}. Hubungi orang tua atau guru untuk mengaktifkan paket Premium!</p>
         <button onclick="window.parent.postMessage({type: 'TRIGGER_PAYMENT'}, '*')">Aktivasi GamEdu Premium</button>
@@ -133,7 +134,7 @@ function renderWatermark(ageRange: string): string {
   return `
     <!-- GamEdu Watermark -->
     <div style="position: fixed; top: 10px; right: 10px; z-index: 9999; display: flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.75); padding: 5px 10px; border-radius: 50px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 10px; font-weight: 800; color: #2B2250; box-shadow: 0 4px 12px rgba(43,34,80,0.15); border: 1.5px solid #FFA857; pointer-events: none; opacity: 0.55; max-width: 46vw;">
-      <span style="font-size: 12px;">🎮</span>
+      <span style="display:inline-flex;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2B2250" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"></line><line x1="8" y1="10" x2="8" y2="14"></line><circle cx="16" cy="10" r="1"></circle><circle cx="18" cy="13" r="1"></circle><rect x="2" y="6" width="20" height="12" rx="6"></rect></svg></span>
       <span style="white-space: nowrap;">GamEdu <span style="font-size: 8px; color: #FFFFFF; background: #FF6FA0; padding: 1px 6px; border-radius: 20px; font-weight: bold; margin-left: 3px;">Usia ${ageRange}</span></span>
     </div>
   `;
