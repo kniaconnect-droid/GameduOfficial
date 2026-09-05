@@ -71,6 +71,10 @@ export interface WorksheetItem {
   category: "alat-indera" | "matematika" | "kognitif" | "warna" | "kemandirian" | "pengetahuan-umum";
   thumbnail: string;
   ageRange: string;
+  // Sinkron manual dengan status premium di api/_lib/worksheetsCatalog.ts --
+  // dipakai buat nampilin badge/lock di UI. Proteksi download SELALU tetap
+  // dicek ulang di server, field ini cuma buat tampilan.
+  premium: boolean;
 }
 
 export const WORKSHEET_CATEGORIES: Record<string, { label: string }> = {
@@ -90,6 +94,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg3thnCocokkanPotonganGambar,
     ageRange: "3",
+    premium: false,
   },
   {
     id: "usia3_kenali_kendaraan",
@@ -98,6 +103,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "pengetahuan-umum",
     thumbnail: wsImg3thnKenaliKendaraan,
     ageRange: "3",
+    premium: false,
   },
   {
     id: "usia3_susun_roket",
@@ -106,6 +112,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg3thnSusunRoket,
     ageRange: "3",
+    premium: true,
   },
   {
     id: "usia3_urutan_sebelum_makan_anak_laki_laki",
@@ -114,6 +121,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kemandirian",
     thumbnail: wsImg3thnUrutanSebelumMakanAnakLakiLaki,
     ageRange: "3",
+    premium: true,
   },
   {
     id: "usia3_urutan_sebelum_makan_anak_perempuan",
@@ -122,6 +130,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kemandirian",
     thumbnail: wsImg3thnUrutanSebelumMakanAnakPerempuan,
     ageRange: "3",
+    premium: true,
   },
   {
     id: "usia3_urutan_sebelum_tidur_anak_laki_laki",
@@ -130,6 +139,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kemandirian",
     thumbnail: wsImg3thnUrutanSebelumTidurAnakLakiLaki,
     ageRange: "3",
+    premium: true,
   },
   {
     id: "usia3_urutan_sebelum_tidur_anak_perempuan",
@@ -138,6 +148,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kemandirian",
     thumbnail: wsImg3thnUrutanSebelumTidurAnakPerempuan,
     ageRange: "3",
+    premium: true,
   },
   {
     id: "usia3_cari_bentuk_yang_sama",
@@ -146,6 +157,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg3thnCariBentukYangSama,
     ageRange: "3",
+    premium: true,
   },
   {
     id: "usia3_latihan_fokus",
@@ -154,6 +166,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg3thnLatihanFokus,
     ageRange: "3",
+    premium: true,
   },
   {
     id: "usia3_mana_yang_berbeda",
@@ -162,6 +175,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg3thnManaYangBerbeda,
     ageRange: "3",
+    premium: true,
   },
   {
     id: "usia3_mengenal_diriku",
@@ -170,6 +184,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "alat-indera",
     thumbnail: wsImg3thnMengenalDiriku,
     ageRange: "3",
+    premium: true,
   },
   {
     id: "usia3_mengenal_wajahku",
@@ -178,6 +193,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "alat-indera",
     thumbnail: wsImg3thnMengenalWajahku,
     ageRange: "3",
+    premium: true,
   },
   {
     id: "usia3_pasangan_gambar_yang_sama",
@@ -186,6 +202,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg3thnPasanganGambarYangSama,
     ageRange: "3",
+    premium: true,
   },
   {
     id: "usia3_persepsi_visual",
@@ -194,6 +211,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg3thnPersepsiVisual,
     ageRange: "3",
+    premium: true,
   },
   {
     id: "usia3_puzzle_gambar",
@@ -202,6 +220,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg3thnPuzzleGambar,
     ageRange: "3",
+    premium: true,
   },
   {
     id: "usia4_5_aktivitas_gunting_tempel_urutan_sebelum_makan_anak_laki_laki",
@@ -210,6 +229,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kemandirian",
     thumbnail: wsImg45thnAktivitasGuntingTempelUrutanSebelumMakanAnakLakiLaki,
     ageRange: "4,5",
+    premium: false,
   },
   {
     id: "usia4_5_aktivitas_gunting_tempel_urutan_sebelum_makan_anak_perempuan",
@@ -218,6 +238,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kemandirian",
     thumbnail: wsImg45thnAktivitasGuntingTempelUrutanSebelumMakanAnakPerempuan,
     ageRange: "4,5",
+    premium: false,
   },
   {
     id: "usia4_5_urutan_sebelum_makan_anak_laki_laki",
@@ -226,6 +247,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kemandirian",
     thumbnail: wsImg45thnUrutanSebelumMakanAnakLakiLaki,
     ageRange: "4,5",
+    premium: true,
   },
   {
     id: "usia4_5_urutan_sebelum_makan_anak_perempuan",
@@ -234,6 +256,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kemandirian",
     thumbnail: wsImg45thnUrutanSebelumMakanAnakPerempuan,
     ageRange: "4,5",
+    premium: true,
   },
   {
     id: "usia4_5_urutan_sebelum_tidur_anak_laki_laki",
@@ -242,6 +265,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kemandirian",
     thumbnail: wsImg45thnUrutanSebelumTidurAnakLakiLaki,
     ageRange: "4,5",
+    premium: true,
   },
   {
     id: "usia4_5_urutan_sebelum_tidur_anak_perempuan",
@@ -250,6 +274,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kemandirian",
     thumbnail: wsImg45thnUrutanSebelumTidurAnakPerempuan,
     ageRange: "4,5",
+    premium: true,
   },
   {
     id: "usia4_5_berhitung",
@@ -258,6 +283,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "matematika",
     thumbnail: wsImg45thnBerhitung,
     ageRange: "4,5",
+    premium: true,
   },
   {
     id: "usia4_5_mengenal_angka_1_5_menebalkan_angka",
@@ -266,6 +292,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "matematika",
     thumbnail: wsImg45thnMengenalAngka15MenebalkanAngka,
     ageRange: "4,5",
+    premium: true,
   },
   {
     id: "usia4_5_mengenal_angka_1_5",
@@ -274,6 +301,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "matematika",
     thumbnail: wsImg45thnMengenalAngka15,
     ageRange: "4,5",
+    premium: true,
   },
   {
     id: "usia4_5_yang_beda_yang_mana",
@@ -282,6 +310,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg45thnYangBedaYangMana,
     ageRange: "4,5",
+    premium: true,
   },
   {
     id: "usia4_5_yang_berbeda_yang_mana",
@@ -290,6 +319,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg45thnYangBerbedaYangMana,
     ageRange: "4,5",
+    premium: true,
   },
   {
     id: "usia4_6_cocok_kan_bentuknya",
@@ -298,6 +328,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg46thnCocokKanBentuknya,
     ageRange: "4,5,6",
+    premium: true,
   },
   {
     id: "usia4_6_cari_pasangannya",
@@ -306,6 +337,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg46thnCariPasangannya,
     ageRange: "4,5,6",
+    premium: true,
   },
   {
     id: "usia4_6_cari_perbedaannya",
@@ -314,6 +346,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg46thnCariPerbedaannya,
     ageRange: "4,5,6",
+    premium: true,
   },
   {
     id: "usia4_cocokkan_bayangannya",
@@ -322,6 +355,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg4thnCocokkanBayangannya,
     ageRange: "4",
+    premium: true,
   },
   {
     id: "usia4_cocokkan_gambar_kendaraan",
@@ -330,6 +364,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "pengetahuan-umum",
     thumbnail: wsImg4thnCocokkanGambarKendaraan,
     ageRange: "4",
+    premium: true,
   },
   {
     id: "usia4_hewan_tinggal_dimana",
@@ -338,6 +373,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "pengetahuan-umum",
     thumbnail: wsImg4thnHewanTinggalDimana,
     ageRange: "4",
+    premium: true,
   },
   {
     id: "usia4_mengenal_angka_1_5_dan_menarik_garis",
@@ -346,6 +382,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "matematika",
     thumbnail: wsImg4thnMengenalAngka15DanMenarikGaris,
     ageRange: "4",
+    premium: true,
   },
   {
     id: "usia4_cari_perbedaan",
@@ -354,6 +391,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg4thnCariPerbedaan,
     ageRange: "4",
+    premium: true,
   },
   {
     id: "usia4_latihan_fokus",
@@ -362,6 +400,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg4thnLatihanFokus,
     ageRange: "4",
+    premium: true,
   },
   {
     id: "usia4_persepsi_visual",
@@ -370,6 +409,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg4thnPersepsiVisual,
     ageRange: "4",
+    premium: true,
   },
   {
     id: "usia4_puzzle_gambar",
@@ -378,6 +418,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg4thnPuzzleGambar,
     ageRange: "4",
+    premium: true,
   },
   {
     id: "usia4_susun_buaya",
@@ -386,6 +427,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg4thnSusunBuaya,
     ageRange: "4",
+    premium: true,
   },
   {
     id: "usia4_temukan_pola_yang_sama",
@@ -394,6 +436,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg4thnTemukanPolaYangSama,
     ageRange: "4",
+    premium: true,
   },
   {
     id: "usia5_6_cocok_kan_gambar_yang_sama",
@@ -402,6 +445,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg56thnCocokKanGambarYangSama,
     ageRange: "5,6",
+    premium: true,
   },
   {
     id: "usia5_6_cari_pasangan_yang_sama",
@@ -410,6 +454,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg56thnCariPasanganYangSama,
     ageRange: "5,6",
+    premium: true,
   },
   {
     id: "usia5_cari_perbedaannya",
@@ -418,6 +463,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg5thnCariPerbedaannya,
     ageRange: "5",
+    premium: true,
   },
   {
     id: "usia5_cocokkan_bayangannya",
@@ -426,6 +472,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg5thnCocokkanBayangannya,
     ageRange: "5",
+    premium: true,
   },
   {
     id: "usia5_cocokkan_gambar",
@@ -434,6 +481,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg5thnCocokkanGambar,
     ageRange: "5",
+    premium: true,
   },
   {
     id: "usia5_cocokkan_polanya",
@@ -442,6 +490,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg5thnCocokkanPolanya,
     ageRange: "5",
+    premium: true,
   },
   {
     id: "usia5_latihan_fokus",
@@ -450,6 +499,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg5thnLatihanFokus,
     ageRange: "5",
+    premium: true,
   },
   {
     id: "usia5_mengenal_warna_dengan_mewarnai_gambar",
@@ -458,6 +508,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "warna",
     thumbnail: wsImg5thnMengenalWarnaDenganMewarnaiGambar,
     ageRange: "5",
+    premium: true,
   },
   {
     id: "usia5_mengenal_warna_tarik_garis",
@@ -466,6 +517,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "warna",
     thumbnail: wsImg5thnMengenalWarnaTarikGaris,
     ageRange: "5",
+    premium: true,
   },
   {
     id: "usia5_persepsi_visual",
@@ -474,6 +526,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg5thnPersepsiVisual,
     ageRange: "5",
+    premium: true,
   },
   {
     id: "usia5_puzzle_gambar",
@@ -482,6 +535,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg5thnPuzzleGambar,
     ageRange: "5",
+    premium: true,
   },
   {
     id: "usia5_susun_buaya",
@@ -490,6 +544,7 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "kognitif",
     thumbnail: wsImg5thnSusunBuaya,
     ageRange: "5",
+    premium: true,
   },
   {
     id: "usia5_urutan_1_10",
@@ -498,5 +553,6 @@ export const WORKSHEETS: WorksheetItem[] = [
     category: "matematika",
     thumbnail: wsImg5thnUrutan110,
     ageRange: "5",
+    premium: true,
   },
 ];
