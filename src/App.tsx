@@ -155,6 +155,7 @@ function GameCatalogRoute({
         onOpenPayment={onOpenPayment}
         onBack={() => navigate(`/kategoriusia/${ageNum}`)}
         onPlayGame={onPlayGame}
+        onGoToWorksheets={() => navigate(`/kategoriusia/${ageNum}/worksheet`)}
       />
     </div>
   );
@@ -174,6 +175,7 @@ function WorksheetRoute({
   isLoggedIn: boolean;
 }) {
   const { age } = useParams();
+  const navigate = useNavigate();
   const ageNum = Number(age) || 3;
 
   return (
@@ -185,6 +187,7 @@ function WorksheetRoute({
         onOpenPayment={onOpenPayment}
         onNeedAuth={onNeedAuth}
         isLoggedIn={isLoggedIn}
+        onGoToGameCatalog={() => navigate(`/kategoriusia/${ageNum}/katalog-game`)}
       />
     </div>
   );
@@ -778,7 +781,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white font-sans text-slate-900 antialiased selection:bg-blue-100 selection:text-blue-900 flex flex-col justify-between">
+    <div className="min-h-screen bg-cream font-sans text-navy antialiased selection:bg-sunny/40 selection:text-navy flex flex-col justify-between">
       <div>
         {/* WELCOME + REMINDER EXPIRED BUAT MEMBER PREMIUM (muncul saat login) */}
         {showPremiumBanner && user.isPremium && user.premiumUntil && (
@@ -816,10 +819,10 @@ export default function App() {
                 <Benefits />
                 <section id="tentang-kami" className="py-10 sm:py-16 px-6 bg-white scroll-mt-24">
                   <div className="max-w-4xl mx-auto text-center space-y-4">
-                    <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                      Tentang <span className="text-orange-500">GamEdu</span>
+                    <h2 className="font-display text-2xl sm:text-3xl font-semibold text-navy tracking-tight">
+                      Tentang <span className="text-coral">GamEdu</span>
                     </h2>
-                    <p className="text-slate-500 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+                    <p className="text-navy/50 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
                       GamEdu adalah platform belajar sambil bermain untuk anak usia dini, menghadirkan game edukatif,
                       worksheet cetak, dan materi panduan orang tua yang dirancang khusus sesuai tahap perkembangan
                       anak usia 3, 4, dan 5 tahun. Kami percaya setiap anak bisa belajar dengan gembira, tanpa

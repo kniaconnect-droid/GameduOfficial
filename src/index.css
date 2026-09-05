@@ -1,13 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=DM+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Nunito", system-ui, sans-serif;
-  --font-display: "Baloo 2", cursive;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-display: "Fredoka", system-ui, sans-serif;
+
+  /* MODERN PLAYFUL STORYBOOK — warm editorial palette */
+  --color-cream: #FFF9EF;
+  --color-navy: #18324A;
+  --color-gamedu-blue: #246BCE;
+  --color-sunny: #FFD447;
+  --color-coral: #FF7657;
+  --color-mint: #72D6B3;
+  --color-lavender: #B8A7F2;
+}
+
+body {
+  background-color: var(--color-cream);
 }
 
 /* Sembunyikan scrollbar untuk elemen yang di-scroll horizontal (mis. tab
-   navigasi di Navbar saat layar HP sempit), tapi tetap bisa discroll/swipe */
+   navigasi di Navbar saat layar HP sempit, atau rak game horizontal),
+   tapi tetap bisa discroll/swipe */
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
