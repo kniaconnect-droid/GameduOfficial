@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Download, Lock, Crown, Loader2, CheckCircle2, Clock } from "lucide-react";
+import { Download, Crown, Loader2, CheckCircle2, Clock } from "lucide-react";
 import { WORKSHEETS, WORKSHEET_CATEGORIES, WorksheetItem } from "../lib/worksheets";
 
 interface WorksheetCatalogProps {
@@ -25,7 +25,14 @@ export default function WorksheetCatalog({
   const [doneId, setDoneId] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const worksheetsForAge = WORKSHEETS.filter((w) => w.ageRange.includes(String(age)));
+  // Member gratis cuma bisa lihat worksheet yang memang gratis -- worksheet
+  // premium di-filter habis dari daftar (bukan cuma diblur/dikunci) supaya
+  // member gratis benar-benar terpisah dan gak tahu worksheet premium apa saja.
+  const worksheetsForAge = WORKSHEETS.filter(
+    (w) => w.ageRange.includes(String(age)) && (isPremiumUser || !w.premium)
+  );
+  const totalWorksheetsForAge = WORKSHEETS.filter((w) => w.ageRange.includes(String(age))).length;
+  const hiddenPremiumCount = totalWorksheetsForAge - worksheetsForAge.length;
   const categories = Object.keys(WORKSHEET_CATEGORIES) as Array<keyof typeof WORKSHEET_CATEGORIES>;
 
   async function handleDownload(item: WorksheetItem) {
@@ -135,7 +142,6 @@ export default function WorksheetCatalog({
                   {items.map((item) => {
                   const isDownloading = downloadingId === item.id;
                   const isDone = doneId === item.id;
-                  const isLocked = item.premium && !isPremiumUser;
 
                   return (
                     <div
@@ -148,19 +154,11 @@ export default function WorksheetCatalog({
                           alt={item.title}
                           loading="lazy"
                           decoding="async"
-                          className={`w-full h-full object-cover transition-transform duration-500 sm:group-hover:scale-105 ${
-                            isLocked ? "opacity-50 blur-[2px]" : ""
-                          }`}
+                          className="w-full h-full object-cover transition-transform duration-500 sm:group-hover:scale-105"
                         />
-                        {isLocked ? (
-                          <span className="absolute top-3 left-3 flex items-center gap-1 text-[9px] font-black uppercase tracking-wider bg-sunny text-navy px-2.5 py-1 rounded-full shadow-sm">
-                            <Lock className="w-3 h-3" /> VIP
-                          </span>
-                        ) : (
-                          <span className="absolute top-3 left-3 flex items-center gap-1 text-[9px] font-black uppercase tracking-wider bg-emerald-500/90 text-white px-2.5 py-1 rounded-full shadow-sm">
-                            Gratis
-                          </span>
-                        )}
+                        <span className="absolute top-3 left-3 flex items-center gap-1 text-[9px] font-black uppercase tracking-wider bg-emerald-500/90 text-white px-2.5 py-1 rounded-full shadow-sm">
+                          Gratis
+                        </span>
                       </div>
 
                       <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
@@ -169,38 +167,29 @@ export default function WorksheetCatalog({
                           <p className="text-navy/50 text-[11px] leading-relaxed line-clamp-2">{item.description}</p>
                         </div>
 
-                        {isLocked ? (
-                          <button
-                            onClick={onOpenPayment}
-                            className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer bg-sunny/20 border border-sunny/60 text-navy hover:bg-sunny/30"
-                          >
-                            <Crown className="w-3.5 h-3.5" /> Buka dengan VIP
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => handleDownload(item)}
-                            disabled={isDownloading}
-                            className={`w-full flex items-center justify-center gap-1.5 py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer disabled:opacity-70 disabled:cursor-wait ${
-                              isDone
-                                ? "bg-emerald-500 text-white"
-                                : "bg-gamedu-blue hover:bg-gamedu-blue/90 text-white shadow-sm"
-                            }`}
-                          >
-                            {isDownloading ? (
-                              <>
-                                <Loader2 className="w-3.5 h-3.5 animate-spin" /> Mengunduh...
-                              </>
-                            ) : isDone ? (
-                              <>
-                                <CheckCircle2 className="w-3.5 h-3.5" /> Terunduh
-                              </>
-                            ) : (
-                              <>
-                                <Download className="w-3.5 h-3.5" /> Download Gambar
-                              </>
-                            )}
-                          </button>
-                        )}
+                        <button
+                          onClick={() => handleDownload(item)}
+                          disabled={isDownloading}
+                          className={`w-full flex items-center justify-center gap-1.5 py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer disabled:opacity-70 disabled:cursor-wait ${
+                            isDone
+                              ? "bg-emerald-500 text-white"
+                              : "bg-gamedu-blue hover:bg-gamedu-blue/90 text-white shadow-sm"
+                          }`}
+                        >
+                          {isDownloading ? (
+                            <>
+                              <Loader2 className="w-3.5 h-3.5 animate-spin" /> Mengunduh...
+                            </>
+                          ) : isDone ? (
+                            <>
+                              <CheckCircle2 className="w-3.5 h-3.5" /> Terunduh
+                            </>
+                          ) : (
+                            <>
+                              <Download className="w-3.5 h-3.5" /> Download Gambar
+                            </>
+                          )}
+                        </button>
                       </div>
                     </div>
                 );
@@ -214,8 +203,8 @@ export default function WorksheetCatalog({
         {!isPremiumUser && (
           <div className="bg-white border-2 border-navy/5 rounded-[28px] p-6 sm:p-8 text-center space-y-4">
             <p className="text-navy/60 text-sm">
-              Member gratis bisa akses 2 worksheet pilihan tiap kategori usia. Upgrade ke VIP untuk buka semua
-              worksheet tanpa batas.
+              Member gratis bisa akses {worksheetsForAge.length} worksheet pilihan di kategori usia ini. Upgrade ke
+              VIP untuk buka {hiddenPremiumCount > 0 ? `${hiddenPremiumCount} worksheet premium lainnya` : "semua worksheet premium"} tanpa batas.
             </p>
             <div className="flex flex-col sm:flex-row items-stretch justify-center gap-3 max-w-lg mx-auto">
               <button

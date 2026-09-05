@@ -1,6 +1,6 @@
 import React from "react";
 import { Game } from "../types";
-import { Lock, Play, Crown, Baby, ArrowLeft } from "lucide-react";
+import { Play, Crown, Baby, ArrowLeft } from "lucide-react";
 
 interface GameCatalogProps {
   games: Game[];
@@ -17,7 +17,14 @@ export default function GameCatalog({ games, age, onPlayGame, isPremiumUser, onO
   // sebelumnya katalog ini nampilin SEMUA game dari semua usia tercampur,
   // padahal user masuk ke sini dari alur "pilih usia" jadi harusnya cuma
   // lihat game yang relevan buat anaknya.
-  const games_ = games.filter((g) => g.ageRange.includes(String(age)));
+  // Member gratis cuma bisa lihat game yang memang gratis -- game premium
+  // di-filter habis dari daftar (bukan cuma diblur/dikunci) supaya member
+  // gratis benar-benar terpisah dan gak tahu game premium apa saja yang ada.
+  const games_ = games.filter(
+    (g) => g.ageRange.includes(String(age)) && (isPremiumUser || !g.premium)
+  );
+  const totalGamesForAge = games.filter((g) => g.ageRange.includes(String(age))).length;
+  const hiddenPremiumCount = totalGamesForAge - games_.length;
 
   return (
     <section className="py-8 sm:py-12 px-6 bg-cream scroll-mt-20">
@@ -36,7 +43,9 @@ export default function GameCatalog({ games, age, onPlayGame, isPremiumUser, onO
               Katalog <span className="text-coral">Game Usia {age} Tahun</span>
             </h2>
             <p className="text-navy/50 text-sm">
-              Semua {games_.length} game edukasi GamEdu untuk usia {age} tahun, terkurasi sesuai kebutuhan kognitifnya.
+              {isPremiumUser
+                ? `Semua ${games_.length} game edukasi GamEdu untuk usia ${age} tahun, terkurasi sesuai kebutuhan kognitifnya.`
+                : `${games_.length} game gratis untuk usia ${age} tahun. Upgrade ke VIP untuk buka ${hiddenPremiumCount} game premium lainnya.`}
             </p>
           </div>
 
@@ -57,7 +66,6 @@ export default function GameCatalog({ games, age, onPlayGame, isPremiumUser, onO
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 sm:gap-x-10 sm:gap-y-14 lg:gap-x-10 lg:gap-y-16 place-items-center">
           {games_.map((game) => {
-            const isLocked = game.premium && !isPremiumUser;
             return (
               <div
                 key={game.id}
@@ -69,16 +77,14 @@ export default function GameCatalog({ games, age, onPlayGame, isPremiumUser, onO
                     alt={game.name}
                     loading="lazy"
                     decoding="async"
-                    className={`w-full h-full object-cover transition-transform duration-500 sm:group-hover:scale-105 ${
-                      isLocked ? "opacity-50 blur-[2px]" : ""
-                    }`}
+                    className="w-full h-full object-cover transition-transform duration-500 sm:group-hover:scale-105"
                   />
                   <span className="absolute top-2 left-2 sm:top-3 sm:left-3 flex items-center gap-1 text-[8px] sm:text-[9px] font-black uppercase tracking-wider bg-white px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-navy shadow-sm">
                     <Baby className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> {game.ageRange}
                   </span>
-                  {isLocked ? (
+                  {game.premium ? (
                     <span className="absolute top-2 right-2 sm:top-3 sm:right-3 flex items-center gap-1 text-[8px] sm:text-[9px] font-black uppercase tracking-wider bg-sunny text-navy px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow-sm">
-                      <Lock className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> VIP
+                      <Crown className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> VIP
                     </span>
                   ) : (
                     <span className="absolute top-2 right-2 sm:top-3 sm:right-3 flex items-center gap-1 text-[8px] sm:text-[9px] font-black uppercase tracking-wider bg-emerald-500/90 text-white px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow-sm">
@@ -93,23 +99,13 @@ export default function GameCatalog({ games, age, onPlayGame, isPremiumUser, onO
                     <p className="text-navy/50 text-xs sm:text-sm leading-relaxed line-clamp-2">{game.description}</p>
                   </div>
 
-                  {isLocked ? (
-                    <button
-                      onClick={onOpenPayment}
-                      className="w-full flex items-center justify-center gap-1.5 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm transition-all cursor-pointer bg-sunny/20 border border-sunny/60 text-navy hover:bg-sunny/30"
-                    >
-                      <Crown className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                      Buka dengan VIP
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => onPlayGame(game.id)}
-                      className="w-full flex items-center justify-center gap-1.5 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm shadow-sm hover:scale-105 transition-all cursor-pointer bg-coral hover:bg-coral/90 text-white"
-                    >
-                      <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
-                      Main
-                    </button>
-                  )}
+                  <button
+                    onClick={() => onPlayGame(game.id)}
+                    className="w-full flex items-center justify-center gap-1.5 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm shadow-sm hover:scale-105 transition-all cursor-pointer bg-coral hover:bg-coral/90 text-white"
+                  >
+                    <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
+                    Main
+                  </button>
                 </div>
               </div>
             );
@@ -119,8 +115,8 @@ export default function GameCatalog({ games, age, onPlayGame, isPremiumUser, onO
         {!isPremiumUser && (
           <div className="bg-white border-2 border-navy/5 rounded-[28px] p-6 sm:p-8 text-center space-y-4">
             <p className="text-navy/60 text-sm">
-              Member gratis bisa main 2 game pilihan tiap kategori usia. Upgrade ke VIP untuk buka semua game
-              tanpa batas.
+              Member gratis bisa main {games_.length} game pilihan di kategori usia ini. Upgrade ke VIP untuk buka
+              {hiddenPremiumCount > 0 ? ` ${hiddenPremiumCount} game premium lainnya` : " semua game premium"} tanpa batas.
             </p>
             <div className="flex flex-col sm:flex-row items-stretch justify-center gap-3 max-w-lg mx-auto">
               <button

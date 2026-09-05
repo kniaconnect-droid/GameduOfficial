@@ -98,17 +98,33 @@ export default function Navbar({
             <img
               src={gameduLogo}
               alt="GamEdu Logo"
-              className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl object-contain border border-navy/10 bg-white group-hover:scale-105 transition-transform"
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-contain border border-navy/10 bg-white group-hover:scale-105 transition-transform"
               referrerPolicy="no-referrer"
             />
             <div className="hidden sm:block">
               <span className="font-display text-2xl font-semibold tracking-tight text-navy">
                 Gam<span className="text-gamedu-blue">Edu</span>
               </span>
-              <p className="text-[9px] text-navy/40 font-bold tracking-widest uppercase -mt-1">E-Learning & Atensi Anak</p>
             </div>
           </div>
         </div>
+
+        {/* Join VIP: ditaruh di deretan logo (bukan di menu breadcrumb/hamburger)
+            supaya tampil di HP & tablet. Di desktop (lg+), tombolnya tetap di
+            klaster kanan seperti semula. */}
+        {user.isPremium ? (
+          <div className="flex lg:hidden items-center gap-1.5 bg-sunny/20 border border-sunny/60 text-navy px-2.5 py-1.5 rounded-full text-[11px] font-bold flex-shrink-0">
+            <Crown className="w-3.5 h-3.5 text-navy" />
+            <span className="hidden xs:inline">GAMEDU </span>VIP
+          </div>
+        ) : (
+          <button
+            onClick={onOpenPayment}
+            className="flex lg:hidden items-center gap-1.5 bg-coral hover:bg-coral/90 text-white px-3 py-1.5 rounded-full text-[11px] font-bold shadow-sm transition-colors cursor-pointer flex-shrink-0"
+          >
+            Join VIP
+          </button>
+        )}
 
         {/* Tengah: menu navigasi utama (desktop) */}
         <div className="hidden lg:flex items-center gap-1">
@@ -165,17 +181,17 @@ export default function Navbar({
           </button>
         </div>
 
-        {/* Kanan: Status VIP / Upgrade + Login + Hamburger (mobile) */}
+        {/* Kanan: Status VIP / Upgrade (desktop only, lg+) + Login + Hamburger (mobile) */}
         <div className="flex items-center gap-2 sm:gap-3">
           {user.isPremium ? (
-            <div className="hidden sm:flex items-center gap-1.5 bg-sunny/20 border border-sunny/60 text-navy px-3.5 py-2 rounded-full text-xs font-bold">
+            <div className="hidden lg:flex items-center gap-1.5 bg-sunny/20 border border-sunny/60 text-navy px-3.5 py-2 rounded-full text-xs font-bold">
               <Crown className="w-3.5 h-3.5 text-navy" />
               <span className="hidden xs:inline">GAMEDU </span>VIP
             </div>
           ) : (
             <button
               onClick={onOpenPayment}
-              className="hidden sm:flex items-center gap-1.5 bg-coral hover:bg-coral/90 text-white px-4 py-2 rounded-full text-xs font-bold shadow-sm transition-colors cursor-pointer"
+              className="hidden lg:flex items-center gap-1.5 bg-coral hover:bg-coral/90 text-white px-4 py-2 rounded-full text-xs font-bold shadow-sm transition-colors cursor-pointer"
             >
               Join VIP
             </button>
@@ -249,14 +265,6 @@ export default function Navbar({
               <p className="px-1 text-xs font-bold text-navy/50">Ayah/Bunda {user.name}</p>
             )}
             <div className="flex items-center gap-2">
-              {!user.isPremium && (
-                <button
-                  onClick={() => { setMobileMenuOpen(false); onOpenPayment(); }}
-                  className="flex-1 flex items-center justify-center gap-1.5 bg-coral hover:bg-coral/90 text-white px-4 py-2.5 rounded-full text-xs font-bold cursor-pointer"
-                >
-                  Join VIP
-                </button>
-              )}
               {isLoggedIn ? (
                 <button
                   onClick={() => { setMobileMenuOpen(false); onLogout(); }}
