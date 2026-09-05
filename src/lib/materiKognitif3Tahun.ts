@@ -21,7 +21,7 @@ export const MATERI_KOGNITIF_3_TAHUN = {
   intro:
     "Setiap anak berkembang dengan kecepatan berbeda-beda, dan itu wajar. Daftar di bawah ini bukan untuk menilai atau memberi label anak, melainkan panduan untuk mengetahui kemampuan apa yang sedang tumbuh, sekaligus ide bermain untuk menstimulasinya di rumah.",
   penutup:
-    "Catatan: setiap anak punya kecepatannya sendiri. Kalau salah satu kemampuan di atas belum terlihat, tidak apa-apa, cukup ajak main lagi secara rutin dan penuh keceriaan. 💛",
+    "Catatan: setiap anak punya kecepatannya sendiri. Kalau salah satu kemampuan di atas belum terlihat, tidak apa-apa, cukup ajak main lagi secara rutin dan penuh keceriaan.",
   kemampuan: [
     {
       id: "warna-dasar",

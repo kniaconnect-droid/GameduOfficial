@@ -73,13 +73,13 @@ export interface WorksheetItem {
   ageRange: string;
 }
 
-export const WORKSHEET_CATEGORIES: Record<string, { label: string; emoji: string }> = {
-  "alat-indera": { label: "Alat Indera (Tema Diriku)", emoji: "🙂" },
-  matematika: { label: "Matematika (Mengenal Angka)", emoji: "🔢" },
-  kognitif: { label: "Kognitif (Fokus & Persepsi Visual)", emoji: "🧩" },
-  warna: { label: "Mengenal Warna", emoji: "🎨" },
-  kemandirian: { label: "Kemandirian (Urutan Aktivitas Harian)", emoji: "🧦" },
-  "pengetahuan-umum": { label: "Pengetahuan Umum", emoji: "🚗" },
+export const WORKSHEET_CATEGORIES: Record<string, { label: string }> = {
+  "alat-indera": { label: "Alat Indera (Tema Diriku)" },
+  matematika: { label: "Matematika (Mengenal Angka)" },
+  kognitif: { label: "Kognitif (Fokus & Persepsi Visual)" },
+  warna: { label: "Mengenal Warna" },
+  kemandirian: { label: "Kemandirian (Urutan Aktivitas Harian)" },
+  "pengetahuan-umum": { label: "Pengetahuan Umum" },
 };
 
 export const WORKSHEETS: WorksheetItem[] = [
