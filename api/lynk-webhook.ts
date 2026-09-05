@@ -180,13 +180,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).send("Method Not Allowed");
   }
 
+  const body = (req.body || {}) as Record<string, unknown>;
+
+  // Tombol "Test Webhook" di dashboard Lynk.id ngirim payload dummy tanpa
+  // data transaksi apapun (cuma { message, timestamp, event: "Test_event" }),
+  // jadi mustahil lolos validasi signature di bawah. Ini BUKAN transaksi
+  // asli, cuma cek konektivitas -- balas 200 langsung tanpa masuk alur
+  // signature/aktivasi, supaya di dashboard Lynk keliatan "berhasil
+  // terhubung" alih-alih 401. Transaksi asli TETAP wajib lolos validasi
+  // signature seperti biasa di bawah.
+  const eventName = typeof body.event === "string" ? body.event : "";
+  if (/test/i.test(eventName)) {
+    await logWebhookEvent({ status: "test_ping", rawBody: body });
+    return res.status(200).json({ success: true, note: "Test webhook diterima." });
+  }
+
   const merchantKey = process.env.LYNK_MERCHANT_KEY;
   if (!merchantKey) {
     console.error("[lynk-webhook] LYNK_MERCHANT_KEY belum di-set di Environment Variables.");
     return res.status(500).json({ error: "Server belum dikonfigurasi (LYNK_MERCHANT_KEY kosong)." });
   }
 
-  const body = (req.body || {}) as Record<string, unknown>;
   const fields = extractLynkFields(body);
   const signatureHeader = (req.headers["x-lynk-signature"] as string | undefined) || undefined;
 
