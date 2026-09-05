@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Sparkles, LogIn, ArrowLeft, ChevronDown, Menu, X } from "lucide-react";
+import { LogIn, ArrowLeft, ChevronDown, Menu, X, Crown } from "lucide-react";
 import { UserProfile } from "../types";
 import gameduLogo from "../assets/images/logogamedu.jpeg";
 
@@ -77,7 +77,7 @@ export default function Navbar({
   };
 
   return (
-    <nav className="sticky top-0 z-40 bg-white/60 backdrop-blur-xl border-b border-blue-100/70 shadow-[0_4px_24px_-4px_rgba(37,99,235,0.15)] px-4 sm:px-6 py-3 select-none">
+    <nav className="sticky top-0 z-40 bg-white border-b border-navy/10 px-4 sm:px-6 py-2.5 select-none">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
 
         {/* Kiri: tombol kembali (kontekstual, cuma muncul kalau bukan di Beranda) + Logo */}
@@ -86,7 +86,7 @@ export default function Navbar({
             <button
               onClick={onBack}
               aria-label="Kembali"
-              className="flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-xl border border-blue-100 text-blue-500 hover:text-blue-700 hover:bg-blue-50 transition-colors cursor-pointer"
+              className="flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-full border border-navy/10 text-navy/60 hover:text-gamedu-blue hover:bg-cream transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4" />
             </button>
@@ -94,19 +94,19 @@ export default function Navbar({
 
           <div
             onClick={onGoHome}
-            className="flex items-center gap-3 cursor-pointer group"
+            className="flex items-center gap-2.5 cursor-pointer group"
           >
             <img
               src={gameduLogo}
               alt="GamEdu Logo"
-              className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl object-contain shadow-sm border border-blue-100/70 bg-white group-hover:scale-105 transition-transform"
+              className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl object-contain border border-navy/10 bg-white group-hover:scale-105 transition-transform"
               referrerPolicy="no-referrer"
             />
             <div className="hidden sm:block">
-              <span className="text-2xl font-extrabold tracking-tight text-blue-600">
-                Gam<span className="text-slate-900">Edu</span>
+              <span className="font-display text-2xl font-semibold tracking-tight text-navy">
+                Gam<span className="text-gamedu-blue">Edu</span>
               </span>
-              <p className="text-[9px] text-slate-400 font-bold tracking-widest uppercase">E-Learning & Atensi Anak</p>
+              <p className="text-[9px] text-navy/40 font-bold tracking-widest uppercase -mt-1">E-Learning & Atensi Anak</p>
             </div>
           </div>
         </div>
@@ -115,7 +115,7 @@ export default function Navbar({
         <div className="hidden lg:flex items-center gap-1">
           <button
             onClick={() => goTo("/")}
-            className="px-3 py-2 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 transition-colors cursor-pointer"
+            className="px-3 py-2 rounded-lg text-sm font-bold text-navy/60 hover:text-gamedu-blue hover:bg-cream transition-colors cursor-pointer"
           >
             Beranda
           </button>
@@ -128,7 +128,7 @@ export default function Navbar({
             >
               <button
                 onClick={() => setOpenCategoryMenu((cur) => (cur === key ? null : key))}
-                className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 transition-colors cursor-pointer"
+                className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-bold text-navy/60 hover:text-gamedu-blue hover:bg-cream transition-colors cursor-pointer"
               >
                 {label}
                 <ChevronDown className="w-3.5 h-3.5" />
@@ -136,12 +136,12 @@ export default function Navbar({
 
               {openCategoryMenu === key && (
                 <div className="absolute top-full left-0 pt-2 min-w-[160px]">
-                  <div className="bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-blue-100 overflow-hidden py-1">
+                  <div className="bg-white rounded-xl shadow-lg border border-navy/10 overflow-hidden py-1">
                     {items.map((item) => (
                       <button
                         key={item.path}
                         onClick={() => goTo(item.path)}
-                        className="w-full text-left px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors cursor-pointer"
+                        className="w-full text-left px-4 py-2.5 text-sm font-semibold text-navy/70 hover:bg-cream hover:text-gamedu-blue transition-colors cursor-pointer"
                       >
                         {item.label}
                       </button>
@@ -154,45 +154,44 @@ export default function Navbar({
 
           <button
             onClick={() => goToSection("manfaat-gamedu")}
-            className="px-3 py-2 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 transition-colors cursor-pointer"
+            className="px-3 py-2 rounded-lg text-sm font-bold text-navy/60 hover:text-gamedu-blue hover:bg-cream transition-colors cursor-pointer"
           >
             Why Gamedu
           </button>
           <button
             onClick={() => goToSection("tentang-kami")}
-            className="px-3 py-2 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 transition-colors cursor-pointer"
+            className="px-3 py-2 rounded-lg text-sm font-bold text-navy/60 hover:text-gamedu-blue hover:bg-cream transition-colors cursor-pointer"
           >
             Tentang Kami
           </button>
         </div>
 
-        {/* Kanan: Premium Status / Upgrade + Login + Hamburger (mobile) */}
+        {/* Kanan: Status VIP / Upgrade + Login + Hamburger (mobile) */}
         <div className="flex items-center gap-2 sm:gap-3">
           {user.isPremium ? (
-            <div className="hidden sm:flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-700 px-3.5 py-2 rounded-xl text-xs font-bold shadow-inner">
-              <Sparkles className="w-3.5 h-3.5 text-amber-500 fill-amber-500 animate-pulse" />
-              <span className="hidden xs:inline">GAMEDU </span>PREMIUM
+            <div className="hidden sm:flex items-center gap-1.5 bg-sunny/20 border border-sunny/60 text-navy px-3.5 py-2 rounded-full text-xs font-bold">
+              <Crown className="w-3.5 h-3.5 text-navy" />
+              <span className="hidden xs:inline">GAMEDU </span>VIP
             </div>
           ) : (
             <button
               onClick={onOpenPayment}
-              className="hidden sm:flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-orange-100 hover:shadow-orange-200 transition-all hover:scale-105 cursor-pointer"
+              className="hidden sm:flex items-center gap-1.5 bg-coral hover:bg-coral/90 text-white px-4 py-2 rounded-full text-xs font-bold shadow-sm transition-colors cursor-pointer"
             >
-              <Sparkles className="w-3.5 h-3.5 fill-white text-white" />
               Join VIP
             </button>
           )}
           {isLoggedIn ? (
             <button
               onClick={onLogout}
-              className="hidden sm:block text-[11px] font-bold text-slate-400 hover:text-slate-700 px-2 py-2 transition-colors cursor-pointer"
+              className="hidden sm:block text-[11px] font-bold text-navy/40 hover:text-navy px-2 py-2 transition-colors cursor-pointer"
             >
               Keluar
             </button>
           ) : (
             <button
               onClick={onOpenAuth}
-              className="hidden sm:flex items-center gap-1.5 text-[11px] font-bold text-blue-700 hover:bg-blue-50 px-3 py-2 rounded-xl border border-blue-200 transition-colors cursor-pointer"
+              className="hidden sm:flex items-center gap-1.5 text-[11px] font-bold text-gamedu-blue hover:bg-cream px-3 py-2 rounded-full border border-gamedu-blue/30 transition-colors cursor-pointer"
             >
               <LogIn className="w-3.5 h-3.5" />
               Masuk
@@ -202,7 +201,7 @@ export default function Navbar({
           <button
             onClick={() => setMobileMenuOpen((v) => !v)}
             aria-label="Menu"
-            className="lg:hidden flex items-center justify-center w-9 h-9 rounded-xl border border-blue-100 text-blue-600 hover:bg-blue-50 transition-colors cursor-pointer"
+            className="lg:hidden flex items-center justify-center w-9 h-9 rounded-full border border-navy/10 text-gamedu-blue hover:bg-cream transition-colors cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -212,19 +211,19 @@ export default function Navbar({
 
       {/* Menu mobile */}
       {mobileMenuOpen && (
-        <div className="lg:hidden max-w-7xl mx-auto mt-3 pb-1 flex flex-col gap-1 bg-white/70 backdrop-blur-xl rounded-2xl border border-blue-100/70 p-2">
-          <button onClick={() => goTo("/")} className="text-left px-3 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer">
+        <div className="lg:hidden max-w-7xl mx-auto mt-3 pb-1 flex flex-col gap-1 bg-white rounded-2xl border border-navy/10 shadow-lg p-2">
+          <button onClick={() => goTo("/")} className="text-left px-3 py-2.5 rounded-lg text-sm font-bold text-navy/60 hover:text-gamedu-blue hover:bg-cream cursor-pointer">
             Beranda
           </button>
 
           {CATEGORY_MENU.map(({ key, label, items }) => (
-            <div key={key} className="border-t border-blue-100/70 pt-1">
-              <p className="px-3 py-1.5 text-xs font-black text-slate-400 uppercase tracking-wider">{label}</p>
+            <div key={key} className="border-t border-navy/10 pt-1">
+              <p className="px-3 py-1.5 text-xs font-black text-navy/30 uppercase tracking-wider">{label}</p>
               {items.map((item) => (
                 <button
                   key={item.path}
                   onClick={() => goTo(item.path)}
-                  className="w-full text-left pl-6 pr-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer"
+                  className="w-full text-left pl-6 pr-3 py-2 rounded-lg text-sm font-semibold text-navy/60 hover:text-gamedu-blue hover:bg-cream cursor-pointer"
                 >
                   {item.label}
                 </button>
@@ -232,34 +231,33 @@ export default function Navbar({
             </div>
           ))}
 
-          <button onClick={() => goToSection("manfaat-gamedu")} className="text-left px-3 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer border-t border-blue-100/70 mt-1">
+          <button onClick={() => goToSection("manfaat-gamedu")} className="text-left px-3 py-2.5 rounded-lg text-sm font-bold text-navy/60 hover:text-gamedu-blue hover:bg-cream cursor-pointer border-t border-navy/10 mt-1">
             Why Gamedu
           </button>
-          <button onClick={() => goToSection("tentang-kami")} className="text-left px-3 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer">
+          <button onClick={() => goToSection("tentang-kami")} className="text-left px-3 py-2.5 rounded-lg text-sm font-bold text-navy/60 hover:text-gamedu-blue hover:bg-cream cursor-pointer">
             Tentang Kami
           </button>
 
-          <div className="border-t border-blue-100/70 mt-1 pt-2 flex items-center gap-2">
+          <div className="border-t border-navy/10 mt-1 pt-2 flex items-center gap-2">
             {!user.isPremium && (
               <button
                 onClick={() => { setMobileMenuOpen(false); onOpenPayment(); }}
-                className="flex-1 flex items-center justify-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold cursor-pointer"
+                className="flex-1 flex items-center justify-center gap-1.5 bg-coral hover:bg-coral/90 text-white px-4 py-2.5 rounded-full text-xs font-bold cursor-pointer"
               >
-                <Sparkles className="w-3.5 h-3.5 fill-white text-white" />
                 Join VIP
               </button>
             )}
             {isLoggedIn ? (
               <button
                 onClick={() => { setMobileMenuOpen(false); onLogout(); }}
-                className="text-xs font-bold text-slate-400 hover:text-slate-700 px-3 py-2.5 cursor-pointer"
+                className="text-xs font-bold text-navy/40 hover:text-navy px-3 py-2.5 cursor-pointer"
               >
                 Keluar
               </button>
             ) : (
               <button
                 onClick={() => { setMobileMenuOpen(false); onOpenAuth(); }}
-                className="flex items-center gap-1.5 text-xs font-bold text-blue-700 border border-blue-200 px-3 py-2.5 rounded-xl cursor-pointer"
+                className="flex-1 flex items-center justify-center gap-1.5 text-xs font-bold text-gamedu-blue hover:bg-cream px-3 py-2.5 rounded-full border border-gamedu-blue/30 cursor-pointer"
               >
                 <LogIn className="w-3.5 h-3.5" />
                 Masuk

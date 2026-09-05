@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { X, Play, RefreshCw, Star, Trophy, Sparkles, Gamepad2, CheckCircle2 } from "lucide-react";
+import { X, Play, RefreshCw, Star, Trophy, Gamepad2, CheckCircle2 } from "lucide-react";
 import Watermark from "./Watermark";
 
 interface SecureGamePlayerProps {
@@ -225,28 +225,28 @@ export default function SecureGamePlayer({
           {/* Congratulations overlay when message is received from iframe */}
           {completedStats && (
             <div className="absolute inset-0 z-30 bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-6 text-center select-none animate-fade-in">
-              <div className="max-w-md w-full bg-white rounded-[32px] p-8 space-y-6 shadow-2xl border border-slate-200/80 text-slate-900">
-                <div className="w-16 h-16 rounded-2xl bg-amber-100 flex items-center justify-center text-amber-500 mx-auto animate-bounce shadow-md">
+              <div className="max-w-md w-full bg-white rounded-[32px] p-8 space-y-6 shadow-2xl border border-navy/10 text-navy">
+                <div className="w-16 h-16 rounded-2xl bg-sunny/25 border border-sunny/60 flex items-center justify-center text-navy mx-auto animate-bounce">
                   <Trophy className="w-8 h-8" />
                 </div>
                 
                 <div className="space-y-2">
-                  <h3 className="text-2xl font-bold text-slate-900">Bagus Sekali, Hebat!</h3>
-                  <p className="text-sm text-slate-500 leading-relaxed">
+                  <h3 className="font-display text-2xl font-semibold text-navy">Bagus Sekali, Hebat!</h3>
+                  <p className="text-sm text-navy/50 leading-relaxed">
                     Aktivitas bermain telah diselesaikan dengan hasil sangat mengesankan!
                   </p>
                 </div>
 
                 {/* Score panel */}
-                <div className="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200/60">
+                <div className="grid grid-cols-2 gap-4 bg-cream p-4 rounded-2xl border border-navy/10">
                   <div className="text-center">
-                    <span className="text-[10px] uppercase font-bold text-slate-400">Skor Diperoleh</span>
-                    <p className="text-2xl font-bold text-blue-600">{completedStats.score} Poin</p>
+                    <span className="text-[10px] uppercase font-bold text-navy/40">Skor Diperoleh</span>
+                    <p className="text-2xl font-bold text-gamedu-blue">{completedStats.score} Poin</p>
                   </div>
                   <div className="text-center">
-                    <span className="text-[10px] uppercase font-bold text-slate-400">Target Belajar</span>
+                    <span className="text-[10px] uppercase font-bold text-navy/40">Target Belajar</span>
                     <p className="text-xs font-bold text-emerald-600 mt-1 flex items-center justify-center gap-1">
-                      <Sparkles className="w-3.5 h-3.5" />
+                      <Star className="w-3.5 h-3.5 fill-sunny text-sunny" />
                       {completedStats.cognitiveGain}
                     </p>
                   </div>
@@ -258,14 +258,14 @@ export default function SecureGamePlayer({
                       setCompletedStats(null);
                       restartGame();
                     }}
-                    className="flex-1 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-2xl text-xs transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                    className="flex-1 py-3.5 bg-cream hover:bg-navy/10 text-navy font-bold rounded-2xl text-xs transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
                     Main Lagi
                   </button>
                   <button
                     onClick={onClose}
-                    className="flex-1 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl text-xs shadow-lg shadow-blue-500/20 transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-1.5"
+                    className="flex-1 py-3.5 bg-gamedu-blue hover:bg-gamedu-blue/90 text-white font-bold rounded-2xl text-xs shadow-md transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-1.5"
                   >
                     <CheckCircle2 className="w-3.5 h-3.5" />
                     Tutup & Simpan

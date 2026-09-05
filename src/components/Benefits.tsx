@@ -41,17 +41,17 @@ export default function Benefits() {
   ];
 
   return (
-    <section id="manfaat-gamedu" className="py-10 sm:py-16 px-6 bg-slate-50/40 scroll-mt-24">
+    <section id="manfaat-gamedu" className="py-10 sm:py-16 px-6 bg-white scroll-mt-24">
       <div className="max-w-7xl mx-auto space-y-8 sm:space-y-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <span className="text-[10px] font-black uppercase tracking-widest text-blue-700 bg-blue-50 border border-blue-100/60 px-3 py-1.5 rounded-full inline-block">
+          <span className="text-[10px] font-black uppercase tracking-widest text-gamedu-blue bg-gamedu-blue/10 border border-gamedu-blue/20 px-3 py-1.5 rounded-full inline-block">
             Fitur Unggulan
           </span>
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+          <h2 className="font-display text-3xl sm:text-4xl font-semibold text-navy tracking-tight">
             Manfaat Istimewa GamEdu
           </h2>
-          <p className="text-slate-500 text-base leading-relaxed">
+          <p className="text-navy/50 text-base leading-relaxed">
             Disusun oleh guru, terapis okupasi, dan terapis behavior dengan mempertimbangkan kebutuhan belajar dan perkembangan anak.
           </p>
         </div>
@@ -61,9 +61,9 @@ export default function Benefits() {
           {benefits.map((b, idx) => (
             <div
               key={idx}
-              className="bg-white border border-slate-200/60 rounded-3xl overflow-hidden shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 group"
+              className="bg-white border-2 border-navy/5 rounded-3xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 group"
             >
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
+              <div className="relative aspect-[16/10] w-full overflow-hidden bg-cream">
                 <img
                   src={b.image}
                   alt={b.title}
@@ -73,10 +73,10 @@ export default function Benefits() {
                 />
               </div>
               <div className="p-7">
-                <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
+                <h3 className="text-lg font-bold text-navy mb-2 group-hover:text-coral transition-colors">
                   {b.title}
                 </h3>
-                <p className="text-slate-500 text-sm leading-relaxed">{b.desc}</p>
+                <p className="text-navy/50 text-sm leading-relaxed">{b.desc}</p>
               </div>
             </div>
           ))}

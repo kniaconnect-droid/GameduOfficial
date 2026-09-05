@@ -18,32 +18,32 @@ export default function AgeCategory({ selectedAge, onSelectAge, games }: AgeCate
       age: 3,
       title: "Usia 3 Tahun",
       gameCount: games.filter((g) => g.ageRange.includes("3")).length,
-      bgClass: "bg-blue-50/40 border-blue-100 hover:border-blue-300 hover:bg-blue-50/80",
-      accentBg: "bg-blue-600 text-white shadow-md shadow-blue-100",
+      bgClass: "bg-white border-navy/10 hover:border-gamedu-blue/60",
+      accentBg: "bg-gamedu-blue text-white shadow-sm",
       image: usia3Img
     },
     {
       age: 4,
       title: "Usia 4 Tahun",
       gameCount: games.filter((g) => g.ageRange.includes("4")).length,
-      bgClass: "bg-purple-50/40 border-purple-100 hover:border-purple-300 hover:bg-purple-50/80",
-      accentBg: "bg-purple-600 text-white shadow-md shadow-purple-100",
+      bgClass: "bg-white border-navy/10 hover:border-lavender",
+      accentBg: "bg-lavender text-navy shadow-sm",
       image: usia4Img
     },
     {
       age: 5,
       title: "Usia 5 Tahun",
       gameCount: games.filter((g) => g.ageRange.includes("5")).length,
-      bgClass: "bg-amber-50/40 border-amber-100 hover:border-amber-300 hover:bg-amber-50/80",
-      accentBg: "bg-amber-600 text-white shadow-md shadow-amber-100",
+      bgClass: "bg-white border-navy/10 hover:border-sunny",
+      accentBg: "bg-sunny text-navy shadow-sm",
       image: usia5Img
     },
     {
       age: 6,
       title: "Usia 6-7 Tahun",
       gameCount: games.filter((g) => g.ageRange.includes("6")).length,
-      bgClass: "bg-teal-50/40 border-teal-100 hover:border-teal-300 hover:bg-teal-50/80",
-      accentBg: "bg-teal-600 text-white shadow-md shadow-teal-100",
+      bgClass: "bg-white border-navy/10 hover:border-mint",
+      accentBg: "bg-mint text-navy shadow-sm",
       image: usia6Img
     }
   ];
@@ -53,13 +53,13 @@ export default function AgeCategory({ selectedAge, onSelectAge, games }: AgeCate
       <div className="max-w-7xl mx-auto space-y-8 sm:space-y-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <span className="text-[10px] font-black uppercase tracking-widest text-purple-700 bg-purple-50 border border-purple-100/60 px-3 py-1.5 rounded-full inline-block">
+          <span className="text-[10px] font-black uppercase tracking-widest text-[#6B5CA5] bg-lavender/20 border border-lavender/40 px-3 py-1.5 rounded-full inline-block">
             Kurikulum Usia
           </span>
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+          <h2 className="font-display text-3xl sm:text-4xl font-semibold text-navy tracking-tight">
             Kategori Berdasarkan Usia
           </h2>
-          <p className="text-slate-500 text-base leading-relaxed">
+          <p className="text-navy/50 text-base leading-relaxed">
             Pilihlah kelompok usia buah hati Anda untuk menemukan game interaktif yang dirancang khusus menyesuaikan tahap tumbuh kembangnya.
           </p>
         </div>
@@ -71,7 +71,7 @@ export default function AgeCategory({ selectedAge, onSelectAge, games }: AgeCate
               key={cat.age}
               onClick={() => onSelectAge(cat.age)}
               className={`group flex flex-col justify-between border-2 rounded-[32px] overflow-hidden cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 ${
-                selectedAge === cat.age ? "ring-4 ring-offset-2 ring-blue-500/20 border-blue-500 bg-white" : cat.bgClass
+                selectedAge === cat.age ? "ring-4 ring-offset-2 ring-gamedu-blue/20 border-gamedu-blue bg-white" : cat.bgClass
               }`}
             >
               {/* Gambar kategori usia - rasio disesuaikan dengan gambar aslinya (1:1) supaya tidak terpotong */}
@@ -86,8 +86,8 @@ export default function AgeCategory({ selectedAge, onSelectAge, games }: AgeCate
               </div>
 
               {/* Game Counters & Arrow Button */}
-              <div className="flex items-center justify-between px-6 py-5 mt-auto border-t border-slate-200/60">
-                <span className="text-xs font-black text-slate-500">
+              <div className="flex items-center justify-between px-6 py-5 mt-auto border-t border-navy/10">
+                <span className="text-xs font-black text-navy/50">
                   {cat.gameCount > 0 ? `${cat.gameCount} Permainan Edukasi` : "Segera Hadir"}
                 </span>
                 <span className={`w-10 h-10 rounded-full flex items-center justify-center shadow-sm ${cat.accentBg} group-hover:scale-110 transition-all`}>

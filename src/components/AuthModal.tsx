@@ -40,11 +40,11 @@ export default function AuthModal({ onClose, contextMessage, onWantVip }: AuthMo
   };
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/60 backdrop-blur-md px-4 animate-fade-in">
-      <div className="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl p-8 border border-slate-100">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-navy/60 backdrop-blur-md px-4 animate-fade-in">
+      <div className="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl p-8 border border-navy/10">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+          className="absolute top-4 right-4 p-1.5 rounded-full text-navy/40 hover:text-navy hover:bg-cream transition-colors cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
@@ -53,36 +53,36 @@ export default function AuthModal({ onClose, contextMessage, onWantVip }: AuthMo
           <img
             src={gameduLogo}
             alt="GamEdu Logo"
-            className="w-16 h-16 rounded-2xl object-contain shadow-md border border-slate-100 mx-auto mb-3"
+            className="w-16 h-16 rounded-2xl object-contain shadow-md border border-navy/10 mx-auto mb-3"
             referrerPolicy="no-referrer"
           />
-          <h1 className="text-xl font-black text-slate-900">GamEdu</h1>
-          <p className="text-sm text-slate-500 mt-1">{contextMessage || "Masuk ke akun Member VIP kamu"}</p>
+          <h1 className="font-display text-xl font-semibold text-navy">GamEdu</h1>
+          <p className="text-sm text-navy/50 mt-1">{contextMessage || "Masuk ke akun Member VIP kamu"}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-3">
           <div>
-            <label className="text-xs font-bold text-slate-600 block mb-1">Email</label>
+            <label className="text-xs font-bold text-navy/60 block mb-1">Email</label>
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full px-4 py-3 rounded-xl border border-navy/15 text-sm focus:outline-none focus:ring-2 focus:ring-gamedu-blue/40"
               placeholder="Email yang dipakai saat checkout"
             />
           </div>
           <div>
-            <label className="text-xs font-bold text-slate-600 block mb-1">Kata Sandi</label>
+            <label className="text-xs font-bold text-navy/60 block mb-1">Kata Sandi</label>
             <input
               type="password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full px-4 py-3 rounded-xl border border-navy/15 text-sm focus:outline-none focus:ring-2 focus:ring-gamedu-blue/40"
               placeholder={`${LYNK_PASSWORD_PREFIX} + 4 digit terakhir No. HP`}
             />
-            <p className="text-[10px] text-slate-400 mt-1">
+            <p className="text-[10px] text-navy/40 mt-1">
               Contoh: kalau No. HP kamu waktu checkout berakhiran <strong>4321</strong>, passwordnya{" "}
               <strong>{LYNK_PASSWORD_PREFIX}4321</strong>.
             </p>
@@ -93,7 +93,7 @@ export default function AuthModal({ onClose, contextMessage, onWantVip }: AuthMo
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-bold rounded-xl text-sm transition-colors cursor-pointer"
+            className="w-full py-3 bg-gamedu-blue hover:bg-gamedu-blue/90 disabled:opacity-60 text-white font-bold rounded-xl text-sm transition-colors cursor-pointer"
           >
             {submitting ? "Memproses..." : "Masuk"}
           </button>
@@ -101,9 +101,9 @@ export default function AuthModal({ onClose, contextMessage, onWantVip }: AuthMo
 
         <button
           onClick={onWantVip}
-          className="w-full flex items-center justify-center gap-1.5 text-center text-xs text-orange-600 font-bold mt-4 cursor-pointer"
+          className="w-full flex items-center justify-center gap-1.5 text-center text-xs text-coral font-bold mt-4 cursor-pointer"
         >
-          <Crown className="w-3.5 h-3.5 fill-orange-100" />
+          <Crown className="w-3.5 h-3.5" />
           Belum punya akun? Daftar Member VIP
         </button>
       </div>

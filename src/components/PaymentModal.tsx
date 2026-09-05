@@ -37,20 +37,20 @@ export default function PaymentModal({ onClose, onOpenLogin }: PaymentModalProps
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-md p-4 animate-fade-in select-none">
-      <div className="relative w-full max-w-lg bg-white rounded-[32px] shadow-2xl overflow-hidden flex flex-col border border-slate-200/80">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy/60 backdrop-blur-md p-4 animate-fade-in select-none">
+      <div className="relative w-full max-w-lg bg-white rounded-[32px] shadow-2xl overflow-hidden flex flex-col border border-navy/10">
 
-        <div className="bg-slate-900 p-6 flex items-center justify-between text-white border-b border-slate-200/10">
+        <div className="bg-navy p-6 flex items-center justify-between text-white border-b border-white/10">
           <div className="flex items-center gap-3">
-            <Crown className="w-5 h-5 text-amber-400" />
+            <Crown className="w-5 h-5 text-sunny" />
             <div>
-              <h2 className="text-lg font-bold tracking-tight">Daftar Member VIP GamEdu</h2>
-              <p className="text-[11px] text-slate-400">Bayar sekali, akun langsung aktif otomatis</p>
+              <h2 className="font-display text-lg font-semibold tracking-tight">Daftar Member VIP GamEdu</h2>
+              <p className="text-[11px] text-white/50">Bayar sekali, akun langsung aktif otomatis</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-slate-800 rounded-xl transition-colors cursor-pointer text-slate-400 hover:text-white"
+            className="p-2 hover:bg-white/10 rounded-xl transition-colors cursor-pointer text-white/50 hover:text-white"
           >
             <X className="w-5 h-5" />
           </button>
@@ -62,21 +62,21 @@ export default function PaymentModal({ onClose, onOpenLogin }: PaymentModalProps
               <div
                 key={plan.key}
                 className={`relative p-5 rounded-2xl border-2 bg-white ${
-                  plan.highlight ? "border-orange-400 bg-orange-50/40" : "border-slate-200/60"
+                  plan.highlight ? "border-coral bg-coral/5" : "border-navy/10"
                 }`}
               >
                 {plan.highlight && (
-                  <span className="absolute -top-3 right-4 bg-orange-500 text-white text-[9px] font-bold uppercase px-2 py-1 rounded-full shadow-sm">
+                  <span className="absolute -top-3 right-4 bg-coral text-white text-[9px] font-bold uppercase px-2 py-1 rounded-full shadow-sm">
                     Hemat
                   </span>
                 )}
-                <h4 className="text-xs font-bold text-slate-700">{plan.name}</h4>
-                <p className="text-xs text-slate-500 mt-2">{plan.period}</p>
+                <h4 className="text-xs font-bold text-navy">{plan.name}</h4>
+                <p className="text-xs text-navy/50 mt-2">{plan.period}</p>
                 <a
                   href={plan.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 flex items-center justify-center gap-2 py-3 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold rounded-xl transition-colors"
+                  className="mt-4 flex items-center justify-center gap-2 py-3 bg-coral hover:bg-coral/90 text-white text-xs font-bold rounded-xl transition-colors"
                 >
                   <Crown className="w-4 h-4" /> Daftar Member VIP
                 </a>
@@ -84,19 +84,19 @@ export default function PaymentModal({ onClose, onOpenLogin }: PaymentModalProps
             ))}
           </div>
 
-          <div className="space-y-2.5 bg-slate-50 p-4 rounded-2xl border border-slate-200/60 text-xs">
-            <span className="font-bold text-slate-700 block mb-1">Akses Member VIP Termasuk:</span>
-            <div className="flex items-center gap-2 text-slate-600 font-bold">
+          <div className="space-y-2.5 bg-cream p-4 rounded-2xl border border-navy/10 text-xs">
+            <span className="font-bold text-navy block mb-1">Akses Member VIP Termasuk:</span>
+            <div className="flex items-center gap-2 text-navy/70 font-bold">
               <CheckCircle className="w-4 h-4 text-emerald-500 fill-emerald-100" />
               <span>Akses penuh semua game asah otak & motorik</span>
             </div>
-            <div className="flex items-center gap-2 text-slate-600 font-bold">
+            <div className="flex items-center gap-2 text-navy/70 font-bold">
               <CheckCircle className="w-4 h-4 text-emerald-500 fill-emerald-100" />
               <span>Unduh tak terbatas materi worksheet siap cetak</span>
             </div>
           </div>
 
-          <div className="text-[11px] text-slate-500 bg-blue-50 border border-blue-100 rounded-xl p-3 leading-relaxed space-y-1">
+          <div className="text-[11px] text-navy/60 bg-gamedu-blue/5 border border-gamedu-blue/15 rounded-xl p-3 leading-relaxed space-y-1">
             <p>
               <strong>Cara aktivasi:</strong> pilih paket di atas, selesaikan pembayaran di Lynk, lalu isi{" "}
               <strong>email</strong> dan <strong>No. HP aktif</strong> dengan benar saat checkout.
@@ -110,12 +110,12 @@ export default function PaymentModal({ onClose, onOpenLogin }: PaymentModalProps
 
           <button
             onClick={onOpenLogin}
-            className="w-full flex items-center justify-center gap-1.5 py-3 text-blue-700 hover:bg-blue-50 text-xs font-bold rounded-xl border border-blue-200 transition-colors cursor-pointer"
+            className="w-full flex items-center justify-center gap-1.5 py-3 text-gamedu-blue hover:bg-cream text-xs font-bold rounded-xl border border-gamedu-blue/30 transition-colors cursor-pointer"
           >
             <LogIn className="w-4 h-4" /> Sudah bayar? Masuk ke akun VIP
           </button>
 
-          <div className="flex items-center justify-center gap-1.5 text-[10px] text-slate-400 font-bold">
+          <div className="flex items-center justify-center gap-1.5 text-[10px] text-navy/40 font-bold">
             <ShieldCheck className="w-4 h-4 text-emerald-500" />
             <span>Pembayaran aman lewat Lynk.id, aktivasi otomatis oleh sistem GamEdu</span>
           </div>

@@ -1,16 +1,7 @@
 import React, { useState } from "react";
-import { Download, Lock, Sparkles, Loader2, CheckCircle2, Clock } from "lucide-react";
+import { Download, Lock, Crown, Loader2, CheckCircle2, Clock } from "lucide-react";
 import { WORKSHEETS, WORKSHEET_CATEGORIES, WorksheetItem } from "../lib/worksheets";
-
-// 2 worksheet pertama tiap kategori usia bisa didownload gratis tanpa VIP.
-// ID ini HARUS sinkron dengan flag `premium: false` di
-// api/_lib/worksheetsCatalog.ts (sumber kebenaran proteksi di server).
-const FREE_WORKSHEET_IDS = new Set([
-  "usia3_cocokkan_potongan_gambar",
-  "usia3_kenali_kendaraan",
-  "usia4_5_aktivitas_gunting_tempel_urutan_sebelum_makan_anak_laki_laki",
-  "usia4_5_aktivitas_gunting_tempel_urutan_sebelum_makan_anak_perempuan"
-]);
+import { FreeAccessGate } from "./GameCatalog";
 
 interface WorksheetCatalogProps {
   age: number;
@@ -19,6 +10,7 @@ interface WorksheetCatalogProps {
   onOpenPayment: () => void;
   onNeedAuth: () => void;
   isLoggedIn: boolean;
+  onGoToGameCatalog: () => void;
 }
 
 export default function WorksheetCatalog({
@@ -27,7 +19,8 @@ export default function WorksheetCatalog({
   getIdToken,
   onOpenPayment,
   onNeedAuth,
-  isLoggedIn
+  isLoggedIn,
+  onGoToGameCatalog
 }: WorksheetCatalogProps) {
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const [doneId, setDoneId] = useState<string | null>(null);
@@ -39,10 +32,10 @@ export default function WorksheetCatalog({
   async function handleDownload(item: WorksheetItem) {
     setErrorMsg(null);
 
-    // Lapis pertahanan client: kalau belum premium, arahkan ke alur upgrade
-    // dulu (sama pola kayak game premium). Proteksi utama tetap di server
+    // Lapis pertahanan client: kalau belum VIP, arahkan ke alur upgrade
+    // dulu (sama pola kayak game VIP). Proteksi utama tetap di server
     // (api/worksheets/[worksheetId].ts).
-    if (!isPremiumUser && !FREE_WORKSHEET_IDS.has(item.id)) {
+    if (!isPremiumUser) {
       if (!isLoggedIn) {
         onNeedAuth();
       }
@@ -88,15 +81,15 @@ export default function WorksheetCatalog({
   }
 
   return (
-    <section className="py-8 sm:py-12 px-6 bg-gradient-to-b from-white to-blue-50/10 scroll-mt-20">
+    <section className="py-8 sm:py-12 px-6 bg-cream scroll-mt-20">
       <div className="max-w-7xl mx-auto space-y-6 sm:space-y-10">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-200/60">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-navy/10">
           <div className="space-y-1">
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              Katalog <span className="text-blue-600">Worksheet (LKPD)</span>
+            <h2 className="font-display text-2xl sm:text-3xl font-semibold text-navy tracking-tight">
+              Katalog <span className="text-emerald-600">Worksheet (LKPD)</span>
             </h2>
-            <p className="text-slate-500 text-sm">
+            <p className="text-navy/50 text-sm">
               Lembar kerja siap cetak untuk melengkapi aktivitas bermain anak di rumah.
             </p>
           </div>
@@ -104,9 +97,9 @@ export default function WorksheetCatalog({
           {!isPremiumUser && (
             <button
               onClick={onOpenPayment}
-              className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg shadow-orange-100 hover:scale-105 transition-all cursor-pointer self-start sm:self-center"
+              className="flex items-center gap-2 bg-coral hover:bg-coral/90 text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-sm hover:scale-105 transition-all cursor-pointer self-start sm:self-center"
             >
-              <Sparkles className="w-4 h-4 fill-current" />
+              <Crown className="w-4 h-4" />
               Join VIP untuk Download
             </button>
           )}
@@ -116,11 +109,13 @@ export default function WorksheetCatalog({
           <div className="bg-red-50 border border-red-100 text-red-700 text-sm rounded-2xl p-4">{errorMsg}</div>
         )}
 
-        {worksheetsForAge.length === 0 ? (
-          <div className="bg-slate-50/70 border border-slate-200/60 rounded-3xl p-12 text-center max-w-xl mx-auto space-y-4">
-            <Clock className="w-10 h-10 mx-auto text-slate-400" />
-            <h3 className="text-lg font-bold text-slate-800">Coming Soon</h3>
-            <p className="text-slate-500 text-sm leading-relaxed">
+        {!isPremiumUser ? (
+          <FreeAccessGate kind="worksheet" onOpenPayment={onOpenPayment} onGoToGames={onGoToGameCatalog} />
+        ) : worksheetsForAge.length === 0 ? (
+          <div className="bg-white border border-navy/10 rounded-3xl p-12 text-center max-w-xl mx-auto space-y-4">
+            <Clock className="w-10 h-10 mx-auto text-navy/30" />
+            <h3 className="text-lg font-bold text-navy">Coming Soon</h3>
+            <p className="text-navy/50 text-sm leading-relaxed">
               Worksheet untuk kategori Usia {age} Tahun sedang disiapkan tim kurikulum kami. Nantikan update
               selanjutnya, ya!
             </p>
@@ -133,60 +128,43 @@ export default function WorksheetCatalog({
 
             return (
               <div key={cat} className="space-y-5">
-                <h3 className="text-lg font-bold text-slate-800">{meta.label}</h3>
+                <h3 className="text-lg font-bold text-navy">{meta.label}</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {items.map((item) => {
-                  const isLocked = !isPremiumUser && !FREE_WORKSHEET_IDS.has(item.id);
                   const isDownloading = downloadingId === item.id;
                   const isDone = doneId === item.id;
 
                   return (
                     <div
                       key={item.id}
-                      className="bg-white rounded-[28px] overflow-hidden border border-slate-200/60 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group transform-gpu"
+                      className="bg-white rounded-2xl overflow-hidden border border-navy/10 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col group transform-gpu"
                     >
-                      <div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-50">
+                      <div className="relative aspect-[3/4] w-full overflow-hidden bg-cream">
                         <img
                           src={item.thumbnail}
                           alt={item.title}
                           loading="lazy"
                           decoding="async"
-                          className={`w-full h-full object-cover transition-transform duration-500 ${
-                            isLocked ? "blur-[2px] scale-105" : "sm:group-hover:scale-105"
-                          }`}
+                          className="w-full h-full object-cover transition-transform duration-500 sm:group-hover:scale-105"
                         />
-                        {isLocked && (
-                          <div className="absolute inset-0 bg-slate-900/20 flex items-center justify-center">
-                            <span className="bg-white/95 backdrop-blur-sm w-11 h-11 rounded-full flex items-center justify-center text-orange-500 shadow-md">
-                              <Lock className="w-5 h-5" />
-                            </span>
-                          </div>
-                        )}
-                        <span className="absolute top-3 left-3 text-[9px] font-black uppercase tracking-wider bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full text-slate-800 shadow-sm">
+                        <span className="absolute top-3 left-3 text-[9px] font-black uppercase tracking-wider bg-white px-2.5 py-1 rounded-full text-navy shadow-sm">
                           PNG · Siap Cetak
                         </span>
-                        {!isLocked && !isPremiumUser && (
-                          <span className="absolute top-3 right-3 text-[9px] font-black uppercase tracking-wider bg-emerald-500 px-2.5 py-1 rounded-full text-white shadow-sm">
-                            Gratis
-                          </span>
-                        )}
                       </div>
 
                       <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
                         <div className="space-y-1.5">
-                          <h4 className="text-sm font-bold text-slate-900 leading-snug line-clamp-2">{item.title}</h4>
-                          <p className="text-slate-500 text-[11px] leading-relaxed line-clamp-2">{item.description}</p>
+                          <h4 className="text-sm font-bold text-navy leading-snug line-clamp-2">{item.title}</h4>
+                          <p className="text-navy/50 text-[11px] leading-relaxed line-clamp-2">{item.description}</p>
                         </div>
 
                         <button
                           onClick={() => handleDownload(item)}
                           disabled={isDownloading}
-                          className={`w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-bold text-xs transition-all cursor-pointer disabled:opacity-70 disabled:cursor-wait ${
-                            isLocked
-                              ? "bg-slate-100 hover:bg-slate-200 text-slate-700"
-                              : isDone
+                          className={`w-full flex items-center justify-center gap-1.5 py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer disabled:opacity-70 disabled:cursor-wait ${
+                            isDone
                               ? "bg-emerald-500 text-white"
-                              : "bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-100"
+                              : "bg-gamedu-blue hover:bg-gamedu-blue/90 text-white shadow-sm"
                           }`}
                         >
                           {isDownloading ? (
@@ -196,10 +174,6 @@ export default function WorksheetCatalog({
                           ) : isDone ? (
                             <>
                               <CheckCircle2 className="w-3.5 h-3.5" /> Terunduh
-                            </>
-                          ) : isLocked ? (
-                            <>
-                              <Lock className="w-3.5 h-3.5" /> Buka Premium
                             </>
                           ) : (
                             <>

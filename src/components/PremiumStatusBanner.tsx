@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Sparkles, X, Clock } from "lucide-react";
+import { X, Clock } from "lucide-react";
 import { ADMIN_WHATSAPP_NUMBER } from "../lib/constants";
 
 interface PremiumStatusBannerProps {
@@ -9,7 +9,7 @@ interface PremiumStatusBannerProps {
   onClose: () => void;
 }
 
-// Muncul otomatis pas member Premium habis login (App.tsx yang nentuin
+// Muncul otomatis pas member VIP habis login (App.tsx yang nentuin
 // kapan ditampilkan). Isinya:
 // - Teks welcoming + tanggal & jam expired paket (live countdown, update
 //   tiap detik: sisa X hari Y jam Z menit W detik).
@@ -60,25 +60,25 @@ export default function PremiumStatusBanner({ name, premiumUntil, userEmail, onC
   const countdownLabel = formatCountdown(msLeft);
 
   const renewWaLink = `https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Halo Admin GamEdu, saya mau perpanjang paket premium saya sebelum habis.\nEmail akun saya: ${userEmail || "-"}`
+    `Halo Admin GamEdu, saya mau perpanjang paket VIP saya sebelum habis.\nEmail akun saya: ${userEmail || "-"}`
   )}`;
 
   return (
     <div
       className={`w-full px-4 py-3 flex items-center justify-center gap-3 text-xs sm:text-sm font-bold text-center flex-wrap ${
-        isExpiringSoon ? "bg-amber-400 text-amber-950" : "bg-blue-600 text-white"
+        isExpiringSoon ? "bg-sunny text-navy" : "bg-navy text-white"
       }`}
     >
-      {isExpiringSoon ? <Clock className="w-4 h-4 shrink-0" /> : <Sparkles className="w-4 h-4 shrink-0 fill-white" />}
+      {isExpiringSoon && <Clock className="w-4 h-4 shrink-0" />}
 
       {isExpiringSoon ? (
         <span>
-          Paket Premium <strong>{name}</strong> akan habis dalam <strong>{countdownLabel}</strong> (sampai{" "}
-          {dateLabel} pukul {timeLabel}). Yuk perpanjang biar akses game premium nggak kepotong!
+          Paket VIP <strong>{name}</strong> akan habis dalam <strong>{countdownLabel}</strong> (sampai{" "}
+          {dateLabel} pukul {timeLabel}). Yuk perpanjang biar akses game VIP nggak kepotong!
         </span>
       ) : (
         <span>
-          Selamat datang kembali, <strong>{name}</strong>! Paket Premium kamu aktif sampai <strong>{dateLabel}</strong>{" "}
+          Selamat datang kembali, <strong>{name}</strong>! Paket VIP kamu aktif sampai <strong>{dateLabel}</strong>{" "}
           pukul <strong>{timeLabel}</strong> (sisa <strong>{countdownLabel}</strong>).
         </span>
       )}
@@ -88,7 +88,7 @@ export default function PremiumStatusBanner({ name, premiumUntil, userEmail, onC
           href={renewWaLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-white text-amber-700 px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-black hover:bg-amber-50 transition-colors"
+          className="bg-white text-navy px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-black hover:bg-cream transition-colors"
         >
           Perpanjang via WhatsApp
         </a>
@@ -97,7 +97,7 @@ export default function PremiumStatusBanner({ name, premiumUntil, userEmail, onC
       <button
         onClick={onClose}
         className={`ml-1 p-1 rounded-full transition-colors cursor-pointer ${
-          isExpiringSoon ? "hover:bg-amber-500/40" : "hover:bg-blue-500"
+          isExpiringSoon ? "hover:bg-navy/10" : "hover:bg-white/10"
         }`}
         aria-label="Tutup"
       >
